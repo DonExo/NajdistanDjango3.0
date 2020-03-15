@@ -6,9 +6,9 @@ from pathlib import Path  # python3 only
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
+ADMINS = [('Don', 'admin@gmail.com')]
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ENV_SECRET_KEY = os.getenv('SECRET_KEY')
 SECRET_KEY = ENV_SECRET_KEY
@@ -18,6 +18,7 @@ DEBUG = ENV_DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend',
+
 ]
 
 MIDDLEWARE = [
@@ -77,6 +79,9 @@ if DEBUG: # If we are in Debug - means we are still developing, hence we are fin
             'NAME': os.path.join(BASE_DIR, ENV_DB_SQLITE_NAME),
         }
     }
+
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 else: # Otherwise we are using fully-fledged postgres database
     postgre_engine = 'django.db.backends.postgresql_psycopg2'
     DATABASES = {
@@ -89,6 +94,9 @@ else: # Otherwise we are using fully-fledged postgres database
             'PORT': '',
         }
     }
+
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 
 # Password validation

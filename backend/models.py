@@ -1,3 +1,5 @@
+import hashlib
+
 from django.db import models
 from django.urls import reverse
 
@@ -37,3 +39,11 @@ class User(AbstractUser, BaseModel):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    @property
+    def avatar(self):
+        base_url = "https://www.gravatar.com/avatar/"
+        gravatar_url = base_url + hashlib.md5(self.email.lower().encode('utf-8')).hexdigest() + "?d=wavatar&s=100"
+        # if self.profile_image:
+        #     return self.profile_image.url
+        return gravatar_url

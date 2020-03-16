@@ -7,6 +7,8 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 ADMINS = [('Don', 'admin@gmail.com')]
+AUTH_USER_MODEL = 'backend.User'
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 

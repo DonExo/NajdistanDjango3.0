@@ -7,7 +7,7 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 ADMINS = [('Don', 'admin@gmail.com')]
-AUTH_USER_MODEL = 'backend.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,13 +25,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'backend',
+
+    # Third party libraries
+
+
+    # Local apps
+    'users',
+    'listings',
+    'reports',
+    'api',
 
 ]
 

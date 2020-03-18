@@ -1,53 +1,9 @@
-import hashlib
-
-from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import RegexValidator
 
-from .managers import CustomUserManager
-from .configs import LISTING_TYPE, HOME_TYPE, REGEX_ZIPCODE_VALIDATOR, INTERIOR_CHOICES, UPDATE_FREQUENCIES
-
-
-class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
-class User(AbstractUser, BaseModel):
-    """
-    A base class that represents an instance of a logged-in User
-    """
-    first_name = models.CharField(max_length=255, blank=False)
-    last_name = models.CharField(max_length=255, blank=False)
-    email = models.EmailField(unique=True, blank=False)
-    telephone = models.CharField(_('Phone number'), max_length=255)
-    username = None
-    # is_active = False
-    # profile_image = models.ImageField(upload_to=image_profiles_directory_path, default=None, blank=True, null=True)
-
-    def __str__(self):
-        return self.get_full_name() or self.email
-
-    def get_absolute_url(self):
-        # return reverse('view:user-detail', args=[self.pk])
-        pass
-
-    objects = CustomUserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    @property
-    def avatar(self):
-        base_url = 'https://www.gravatar.com/avatar/'
-        gravatar_url = base_url + hashlib.md5(self.email.lower().encode('utf-8')).hexdigest() + '?d=wavatar&s=100'
-        # if self.profile_image:
-        #     return self.profile_image.url
-        return gravatar_url
+from users.models import BaseModel, User
+from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE, UPDATE_FREQUENCIES
 
 
 class Place(models.Model):
@@ -72,7 +28,7 @@ class Place(models.Model):
 
 class HeatingChoices(models.Model):
     """
-    Class that represents the heating choices of a listing
+    Class that represents the heating choices of a listings
     """
     name = models.CharField(_("Heating type"), max_length=255)
 
@@ -82,7 +38,7 @@ class HeatingChoices(models.Model):
 
 class Listing(BaseModel):
     """
-    A class that represents a listing. A listing can be a house or an apartment. A listing can be for selling or renting.
+    A class that represents a listings. A listings can be a house or an apartment. A listings can be for selling or renting.
     """
 
     # Listing dependencies
@@ -114,7 +70,7 @@ class Listing(BaseModel):
     rental_period = models.PositiveSmallIntegerField(_('Minimum rental period (in months)'), default=6, blank=True, null=True)
     is_approved = models.NullBooleanField(_('Approved?'), default=None)
     rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
-    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE, help_text=_('Designates the type of listing: rent or sell'))
+    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE, help_text=_('Designates the type of listings: rent or sell'))
 
     # Admin data
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
@@ -137,7 +93,7 @@ class Saved(models.Model):
 class SearchProfiles(BaseModel):
     """
     A class used for saving user search profiles.
-    Will be used for informing a user when a listing is in his listing criteria
+    Will be used for informing a user when a listings is in his listings criteria
 
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='searchprofiles')
@@ -155,37 +111,11 @@ class SearchProfiles(BaseModel):
 
 class Comment(BaseModel):
     """
-    A class that represent listing's comments
+    A class that represent listings's comments
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='comments')
     body = models.TextField(_('Comment body'))
 
     def __str__(self):
-        return f"{self.text}"
-
-
-class CommentReport(BaseModel):
-    """
-    A class that represents a report of a comment
-    """
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='commentreports')
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='commentreports')
-    reason = models.TextField(_('Reason for reporting this comment'), blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.comment} - {self.user}"
-
-
-class ListingReport(BaseModel):
-    """
-    A class that represents a report of a listing
-    """
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='listingreports')
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='listingreports')
-    reason = models.TextField(_('Reason for reporting this listing'), blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.listing} - {self.user}"
-
-
+        return f"{self.body}"

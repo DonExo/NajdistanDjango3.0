@@ -9,9 +9,9 @@ load_dotenv(dotenv_path=env_path)
 ADMINS = [('Don', 'admin@gmail.com')]
 AUTH_USER_MODEL = 'users.User'
 
-FIXTURES_DIRS = [
-    'users.fixtures'
-]
+
+# Needed for Debug Toolbar
+INTERNAL_IPS = [ '127.0.0.1' ]
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -21,6 +21,7 @@ SECRET_KEY = ENV_SECRET_KEY
 ENV_DEBUG = os.getenv('DEBUG', False)
 DEBUG = ENV_DEBUG
 
+# Change this when going to production
 ALLOWED_HOSTS = ["*"]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party libraries
-
+    'debug_toolbar',
 
     # Local apps
     'users',
@@ -52,9 +53,14 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'najdistandjango30.urls'

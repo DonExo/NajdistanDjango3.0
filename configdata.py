@@ -3,6 +3,11 @@ LISTING_TYPE = (
     ('sell', 'For sell')
 )
 
+LISTING_TYPE_2 = (
+    ('rent', 'For rent'),
+    ('buy', 'For buy')
+)
+
 HOME_TYPE = (
     ('house', 'A house'),
     ('apartment', 'An apartment')
@@ -25,6 +30,7 @@ UPDATE_FREQUENCIES = (
     ('instant', "Instantly") # Paid version !
 )
 
+# @TODO: To be filled with all relevant data
 REGIONS_AND_CITIES = {
     'Drenthe' : ['Assen', 'Coevorden', 'Emmen', 'Hoogeveen', 'Meppel'],
     'Flevoland': ['Almere', 'Biddinghuizen', 'Emmeloord', 'Lelystad'],

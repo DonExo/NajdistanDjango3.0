@@ -8,7 +8,7 @@ from .models import Place, Listing, HeatingChoices, Saved, SearchProfiles, Comme
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('region', 'city')
     search_fields = ('region', 'city')
-    list_filter = ('region', 'city')
+    list_filter = ('region', )
 
 
 @admin.register(Listing)
@@ -38,5 +38,5 @@ class SavedAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'listing')
+    list_display = ('user', 'listing', 'body')
 

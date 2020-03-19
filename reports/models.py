@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -17,6 +18,10 @@ class CommentReport(BaseModel):
     def __str__(self):
         return f"{self.comment} - {self.reporter}"
 
+    def clean(self):
+        if self.comment.user == self.reporter:
+            raise ValidationError(_("You can not report your own comment"))
+
 
 class ListingReport(BaseModel):
     """
@@ -28,3 +33,7 @@ class ListingReport(BaseModel):
 
     def __str__(self):
         return f"{self.listing} - {self.reporter}"
+
+    def clean(self):
+        if self.listing.user == self.reporter:
+            raise ValidationError(_("You can not report your own listing"))

@@ -9,6 +9,9 @@ load_dotenv(dotenv_path=env_path)
 ADMINS = [('Don', 'admin@gmail.com')]
 AUTH_USER_MODEL = 'users.User'
 
+FIXTURES_DIRS = [
+    'users.fixtures'
+]
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 

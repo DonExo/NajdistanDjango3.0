@@ -1,9 +1,11 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
 from users.models import BaseModel, User
-from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE, UPDATE_FREQUENCIES
+from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, \
+    LISTING_TYPE, LISTING_TYPE_2, UPDATE_FREQUENCIES
 
 
 class Place(models.Model):
@@ -70,6 +72,7 @@ class Listing(BaseModel):
     rental_period = models.PositiveSmallIntegerField(_('Minimum rental period (in months)'), default=6, blank=True, null=True)
     is_approved = models.NullBooleanField(_('Approved?'), default=None)
     rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
+    # @TODO: If the house is for selling - some fields should be deleted in the form
     listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE, help_text=_('Designates the type of listings: rent or sell'))
 
     # Admin data
@@ -99,14 +102,24 @@ class SearchProfiles(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='searchprofiles')
     title = models.CharField(_("Search profile title"), max_length=255, blank=True, null=True)
     city = models.ForeignKey(Place, on_delete=models.DO_NOTHING, related_name='searchprofiles')
+    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE_2, help_text=_('Designates the type of search profile: rent or sell'))
     rooms = models.PositiveSmallIntegerField(_("Minimum number of rooms"), default=1)
     bedrooms = models.PositiveSmallIntegerField(_("Minimum number of bedrooms"), default=1)
-    price_from = models.DecimalField(max_digits=9, decimal_places=0)
-    price_to = models.DecimalField(max_digits=9, decimal_places=0)
+    price_from = models.PositiveIntegerField(_("Price from"), default=1)
+    price_to = models.PositiveIntegerField(_("Price to"), default=1000)
     frequency = models.CharField(_("Update frequency"), choices=UPDATE_FREQUENCIES, default='weekly', max_length=255)
 
     def __str__(self):
         return f"{self.user} - {self.title}"
+
+    def clean(self):
+        if self.price_from > self.price_to:
+            raise ValidationError({'price_from': "Price_from can not be smaller than price_to"})
+        if self.rooms < self.bedrooms:
+            raise ValidationError({'rooms': "You can not have less rooms than bedrooms"})
+
+    def clean_fields(self, exclude=None):
+        pass
 
 
 class Comment(BaseModel):

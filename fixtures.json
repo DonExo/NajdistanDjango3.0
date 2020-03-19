@@ -1,0 +1,583 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$IP2mJXyO5eWU$PQIliM0rvW178E6nlBXxP8Gqe6fhGQvqQmi6Mq9D8rA=",
+        "last_login": "2020-03-19T00:35:08.770Z",
+        "is_superuser": true,
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-03-18T23:42:44Z",
+        "created_at": "2020-03-18T23:42:44.986Z",
+        "modified_at": "2020-03-18T23:46:21.112Z",
+        "first_name": "Admin",
+        "last_name": "Ovski",
+        "email": "admin@com.com",
+        "telephone": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$0jypWkf9U8PN$KpjSAOEIcnRJW3qfz2h9F3JZDMRVdRTCxZUf6D7nVGs=",
+        "last_login": "2020-03-18T23:46:11Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2020-03-18T23:44:15Z",
+        "created_at": "2020-03-18T23:44:15.782Z",
+        "modified_at": "2020-03-18T23:46:12.698Z",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@doe.com",
+        "telephone": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$XAEhzQ13PuEi$U2KmhssqsGi2ZZ6p7G9sCEzYK3lK3GNuOpOFfmJmzgo=",
+        "last_login": null,
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2020-03-18T23:48:48Z",
+        "created_at": "2020-03-18T23:48:48.522Z",
+        "modified_at": "2020-03-18T23:48:57.208Z",
+        "first_name": "Jack",
+        "last_name": "Sparrow",
+        "email": "jack@sparrow.com",
+        "telephone": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 1,
+    "fields": {
+        "region": "Drenthe",
+        "city": "Assen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 2,
+    "fields": {
+        "region": "Drenthe",
+        "city": "Coevorden"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 3,
+    "fields": {
+        "region": "Drenthe",
+        "city": "Emmen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 4,
+    "fields": {
+        "region": "Drenthe",
+        "city": "Hoogeveen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 5,
+    "fields": {
+        "region": "Drenthe",
+        "city": "Meppel"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 6,
+    "fields": {
+        "region": "Flevoland",
+        "city": "Almere"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 7,
+    "fields": {
+        "region": "Flevoland",
+        "city": "Biddinghuizen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 8,
+    "fields": {
+        "region": "Flevoland",
+        "city": "Emmeloord"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 9,
+    "fields": {
+        "region": "Flevoland",
+        "city": "Lelystad"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 10,
+    "fields": {
+        "region": "Friesland",
+        "city": "Bolsward"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 11,
+    "fields": {
+        "region": "Friesland",
+        "city": "Dokkum"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 12,
+    "fields": {
+        "region": "Friesland",
+        "city": "Franeker"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 13,
+    "fields": {
+        "region": "Friesland",
+        "city": "Harlingen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 14,
+    "fields": {
+        "region": "Friesland",
+        "city": "Hindeloopen"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 15,
+    "fields": {
+        "region": "Friesland",
+        "city": "IJlst"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 16,
+    "fields": {
+        "region": "Friesland",
+        "city": "Leeuwarden"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 17,
+    "fields": {
+        "region": "Friesland",
+        "city": "Sloten"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 18,
+    "fields": {
+        "region": "Friesland",
+        "city": "Sneek"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 19,
+    "fields": {
+        "region": "Friesland",
+        "city": "Stavoren"
+    }
+},
+{
+    "model": "listings.place",
+    "pk": 20,
+    "fields": {
+        "region": "Friesland",
+        "city": "Workum"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 1,
+    "fields": {
+        "name": "Electricity"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 2,
+    "fields": {
+        "name": "Woods"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 3,
+    "fields": {
+        "name": "Gas"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 4,
+    "fields": {
+        "name": "Central heating"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 5,
+    "fields": {
+        "name": "Other"
+    }
+},
+{
+    "model": "listings.heatingchoices",
+    "pk": 6,
+    "fields": {
+        "name": "None"
+    }
+},
+{
+    "model": "listings.listing",
+    "pk": 1,
+    "fields": {
+        "created_at": "2020-03-18T23:59:53.179Z",
+        "modified_at": "2020-03-18T23:59:53.179Z",
+        "user": 1,
+        "city": 3,
+        "title": "Beautiful apartment in the city center",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu feugiat turpis. Phasellus laoreet urna nulla, quis tempor elit placerat mattis. Sed tincidunt risus in luctus ultrices. Cras nec justo id eros scelerisque faucibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut porta justo urna, finibus pharetra tellus ornare vel. Sed hendrerit rhoncus metus eget accumsan. Quisque lacinia tristique tristique. Donec facilisis eros a libero imperdiet sagittis. Phasellus sed enim eros. Etiam tempor, orci sit amet finibus laoreet, turpis nibh elementum lorem, vitae fermentum quam nisl id leo. Sed lacus mauris, bibendum ut varius ac, scelerisque quis orci. Nullam nec felis in enim vulputate vehicula id nec libero.",
+        "address": "Van Grobendonkclaa 151",
+        "zip_code": "5213AV",
+        "home_type": "apartment",
+        "quadrature": 65,
+        "rooms": 3,
+        "bedrooms": 1,
+        "floor": 2,
+        "interior": "furnished",
+        "price": "1100",
+        "basement": false,
+        "parking": true,
+        "elevator": true,
+        "balcony": true,
+        "times_visited": 0,
+        "is_available": true,
+        "available_from": null,
+        "rental_period": 3,
+        "is_approved": true,
+        "rejection_reason": null,
+        "listing_type": "rent",
+        "soft_deleted": false,
+        "heating": [
+            4
+        ]
+    }
+},
+{
+    "model": "listings.listing",
+    "pk": 2,
+    "fields": {
+        "created_at": "2020-03-19T00:02:04.088Z",
+        "modified_at": "2020-03-19T00:02:04.088Z",
+        "user": 3,
+        "city": 3,
+        "title": "City center view",
+        "description": "Integer arcu nulla, interdum ac tellus in, iaculis porttitor sem. Praesent feugiat ac mi vitae interdum. Sed varius sit amet enim sit amet viverra. Sed a elit scelerisque, luctus erat quis, bibendum arcu. Donec nibh sem, porttitor in tincidunt et, efficitur vitae nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi sed odio luctus sapien hendrerit ultricies. Quisque ligula ante, suscipit in aliquam cursus, sagittis ultrices ipsum. Integer hendrerit massa at tortor sollicitudin euismod.",
+        "address": "De Viulenstraat 55",
+        "zip_code": "4231GG",
+        "home_type": "apartment",
+        "quadrature": 89,
+        "rooms": 4,
+        "bedrooms": 2,
+        "floor": 2,
+        "interior": "upholstered",
+        "price": "300000",
+        "basement": true,
+        "parking": true,
+        "elevator": false,
+        "balcony": true,
+        "times_visited": 0,
+        "is_available": false,
+        "available_from": null,
+        "rental_period": null,
+        "is_approved": null,
+        "rejection_reason": null,
+        "listing_type": "sell",
+        "soft_deleted": false,
+        "heating": [
+            5
+        ]
+    }
+},
+{
+    "model": "listings.listing",
+    "pk": 3,
+    "fields": {
+        "created_at": "2020-03-19T00:03:35.423Z",
+        "modified_at": "2020-03-19T00:03:35.423Z",
+        "user": 2,
+        "city": 6,
+        "title": "Zirandi ziran",
+        "description": "Fusce dignissim lorem a dapibus placerat. Morbi hendrerit nulla felis. Morbi ac erat ante. Quisque luctus sed leo in luctus. Etiam cursus enim non enim rhoncus, imperdiet efficitur metus suscipit. Sed elementum feugiat nibh, ac cursus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus ac mauris non est tincidunt faucibus non in magna. Aenean sit amet gravida turpis, vitae sodales elit. Morbi tellus velit, iaculis quis lacinia vel, faucibus non turpis. Nulla mollis vehicula diam eget fermentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed molestie dolor orci, euismod faucibus ante fringilla ac. Donec rhoncus lacus ut lectus consequat, eu sollicitudin est finibus. Cras non egestas ante. Maecenas non odio ac tellus lacinia posuere et sed mauris.",
+        "address": "De Donck 122",
+        "zip_code": "6513AF",
+        "home_type": "house",
+        "quadrature": 44,
+        "rooms": 2,
+        "bedrooms": 1,
+        "floor": 1,
+        "interior": "furnished",
+        "price": "990",
+        "basement": false,
+        "parking": false,
+        "elevator": false,
+        "balcony": true,
+        "times_visited": 0,
+        "is_available": false,
+        "available_from": "2020-04-10",
+        "rental_period": 12,
+        "is_approved": true,
+        "rejection_reason": null,
+        "listing_type": "rent",
+        "soft_deleted": false,
+        "heating": [
+            2,
+            4
+        ]
+    }
+},
+{
+    "model": "listings.listing",
+    "pk": 4,
+    "fields": {
+        "created_at": "2020-03-19T00:04:55.306Z",
+        "modified_at": "2020-03-19T00:04:55.306Z",
+        "user": 1,
+        "city": 18,
+        "title": "Amsterdam pent-house",
+        "description": "Ut a ipsum tempor nulla pretium facilisis. Aenean eu porta mauris. Proin malesuada eros fermentum eleifend interdum. Ut pretium non leo eu rhoncus. Proin viverra scelerisque lectus, id fermentum ante maximus id. Donec euismod luctus elit eu dapibus. Vestibulum eu diam pretium, tempus metus nec, blandit mauris. Nulla eleifend lectus augue, a tincidunt mauris faucibus nec. Duis pulvinar pellentesque ante ut bibendum. Pellentesque id mollis massa. Aliquam eu justo nisl. Cras bibendum ante mauris, quis ultrices arcu aliquet at. Duis felis urna, venenatis id ultricies sed, varius eget urna.",
+        "address": "Ams kanaals 44",
+        "zip_code": "2432PL",
+        "home_type": "apartment",
+        "quadrature": 80,
+        "rooms": 4,
+        "bedrooms": 2,
+        "floor": 11,
+        "interior": "unfurnished",
+        "price": "250000",
+        "basement": true,
+        "parking": true,
+        "elevator": true,
+        "balcony": true,
+        "times_visited": 0,
+        "is_available": true,
+        "available_from": null,
+        "rental_period": null,
+        "is_approved": true,
+        "rejection_reason": null,
+        "listing_type": "sell",
+        "soft_deleted": false,
+        "heating": [
+            3
+        ]
+    }
+},
+{
+    "model": "listings.saved",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "listing": 2
+    }
+},
+{
+    "model": "listings.saved",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "listing": 3
+    }
+},
+{
+    "model": "listings.saved",
+    "pk": 3,
+    "fields": {
+        "user": 2,
+        "listing": 4
+    }
+},
+{
+    "model": "listings.searchprofiles",
+    "pk": 1,
+    "fields": {
+        "created_at": "2020-03-19T00:43:18.274Z",
+        "modified_at": "2020-03-19T00:43:18.274Z",
+        "user": 1,
+        "title": "SP 1 - 50k+",
+        "city": 3,
+        "listing_type": "buy",
+        "rooms": 3,
+        "bedrooms": 2,
+        "price_from": 50000,
+        "price_to": 100000,
+        "frequency": "biweekly"
+    }
+},
+{
+    "model": "listings.searchprofiles",
+    "pk": 2,
+    "fields": {
+        "created_at": "2020-03-19T00:43:54.084Z",
+        "modified_at": "2020-03-19T00:43:54.084Z",
+        "user": 3,
+        "title": "Amsterdam SP1",
+        "city": 1,
+        "listing_type": "rent",
+        "rooms": 2,
+        "bedrooms": 1,
+        "price_from": 1000,
+        "price_to": 1200,
+        "frequency": "daily"
+    }
+},
+{
+    "model": "listings.searchprofiles",
+    "pk": 3,
+    "fields": {
+        "created_at": "2020-03-19T00:44:15.756Z",
+        "modified_at": "2020-03-19T00:44:15.756Z",
+        "user": 3,
+        "title": "Amsterdam SP2",
+        "city": 1,
+        "listing_type": "buy",
+        "rooms": 3,
+        "bedrooms": 2,
+        "price_from": 150000,
+        "price_to": 300000,
+        "frequency": "weekly"
+    }
+},
+{
+    "model": "listings.comment",
+    "pk": 1,
+    "fields": {
+        "created_at": "2020-03-19T00:35:49.349Z",
+        "modified_at": "2020-03-19T00:35:49.350Z",
+        "user": 1,
+        "listing": 1,
+        "body": "Comment 1"
+    }
+},
+{
+    "model": "listings.comment",
+    "pk": 2,
+    "fields": {
+        "created_at": "2020-03-19T00:35:54.740Z",
+        "modified_at": "2020-03-19T00:35:54.740Z",
+        "user": 3,
+        "listing": 3,
+        "body": "Comment 2"
+    }
+},
+{
+    "model": "listings.comment",
+    "pk": 3,
+    "fields": {
+        "created_at": "2020-03-19T00:36:04.754Z",
+        "modified_at": "2020-03-19T00:36:04.755Z",
+        "user": 2,
+        "listing": 4,
+        "body": "A very cool third comment!"
+    }
+},
+{
+    "model": "reports.commentreport",
+    "pk": 4,
+    "fields": {
+        "created_at": "2020-03-19T00:50:30.647Z",
+        "modified_at": "2020-03-19T00:50:30.647Z",
+        "reporter": 3,
+        "comment": 1,
+        "reason": "Comment 1 is very rude!"
+    }
+},
+{
+    "model": "reports.commentreport",
+    "pk": 5,
+    "fields": {
+        "created_at": "2020-03-19T00:50:43.443Z",
+        "modified_at": "2020-03-19T00:50:43.443Z",
+        "reporter": 1,
+        "comment": 2,
+        "reason": "Comment 2 does not make any sense!"
+    }
+},
+{
+    "model": "reports.commentreport",
+    "pk": 6,
+    "fields": {
+        "created_at": "2020-03-19T00:50:53.566Z",
+        "modified_at": "2020-03-19T00:50:53.566Z",
+        "reporter": 2,
+        "comment": 2,
+        "reason": "Comment two is non-sense!"
+    }
+},
+{
+    "model": "reports.listingreport",
+    "pk": 1,
+    "fields": {
+        "created_at": "2020-03-19T00:51:14.234Z",
+        "modified_at": "2020-03-19T00:51:14.234Z",
+        "reporter": 1,
+        "listing": 3,
+        "reason": "Not a valid listing. please delete"
+    }
+},
+{
+    "model": "reports.listingreport",
+    "pk": 2,
+    "fields": {
+        "created_at": "2020-03-19T00:51:26.992Z",
+        "modified_at": "2020-03-19T00:51:26.992Z",
+        "reporter": 3,
+        "listing": 1,
+        "reason": "This is fake listing. please delete"
+    }
+},
+{
+    "model": "reports.listingreport",
+    "pk": 3,
+    "fields": {
+        "created_at": "2020-03-19T00:51:38.407Z",
+        "modified_at": "2020-03-19T00:51:38.407Z",
+        "reporter": 2,
+        "listing": 4,
+        "reason": "It is to cheap to be real."
+    }
+}
+]

@@ -26,16 +26,26 @@ ALLOWED_HOSTS = ["*"]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Application definition
+# Django-registration-redux things
+ACCOUNT_ACTIVATION_DAYS = 1
+SITE_ID = 1
+
+
+LOGIN_REDIRECT_URL = '/'
+
 
 INSTALLED_APPS = [
     # Django apps
-    'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+    'registration',
+    'django.contrib.admin',
 
     # Third party libraries
     'debug_toolbar',
@@ -54,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

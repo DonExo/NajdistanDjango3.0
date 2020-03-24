@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Profile page</h1>
+
+    <h3>Hello {{ user.first_name }}</h3><br/>
+    <img src="{{ user.get_profile_image }}" alt="Profile image"/>
+    <h6>Last login: {{ user.last_login|naturaltime }}</h6>
+
+    Fullname: {{ user.get_full_name }} <br/>
+    Phone: {{ user.telephone }}
+
+
+
+    <h3>Go to <a href="{% url 'list' %}">Listings</a> </h3>
+    <h4>Go to <a href="{% url 'auth_password_change' %}">Change your password</a> </h4>
+
+{% endblock %}

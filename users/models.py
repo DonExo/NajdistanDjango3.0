@@ -25,7 +25,8 @@ class User(AbstractUser, BaseModel):
     email = models.EmailField(unique=True, blank=False)
     telephone = models.CharField(_('Phone number'), max_length=255)
     username = None
-    profile_image = models.ImageField(upload_to=profile_image_directory_path, default=None, blank=True, null=True)
+    profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
+    # uuid = models.UUIDField(blank=True, null=True)
 
     def __str__(self):
         return self.get_full_name() or self.email
@@ -43,9 +44,13 @@ class User(AbstractUser, BaseModel):
     def avatar(self):
         base_url = 'https://www.gravatar.com/avatar/'
         gravatar_url = base_url + hashlib.md5(self.email.lower().encode('utf-8')).hexdigest() + '?d=wavatar&s=100'
-        # if self.profile_image:
-        #     return self.profile_image.url
         return gravatar_url
+
+    @property
+    def get_profile_image(self):
+        if self.profile_image:
+            return self.profile_image.url
+        return self.avatar
 
 
 

@@ -1,4 +1,5 @@
 import hashlib
+import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -26,14 +27,14 @@ class User(AbstractUser, BaseModel):
     telephone = models.CharField(_('Phone number'), max_length=255)
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
-    # uuid = models.UUIDField(blank=True, null=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
         return self.get_full_name() or self.email
 
-    def get_absolute_url(self):
-        # return reverse('view:user-detail', args=[self.pk])
-        pass
+    # def get_absolute_url(self):
+    #     # return reverse('view:user-detail', args=[self.pk])
+    #     pass
 
     objects = CustomUserManager()
 
@@ -52,7 +53,5 @@ class User(AbstractUser, BaseModel):
             return self.profile_image.url
         return self.avatar
 
-
-
-
-
+    def get_listings(self):
+        return self.listings.all()

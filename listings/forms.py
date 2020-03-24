@@ -7,6 +7,7 @@ class ListingCreateForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = ('title', 'description', 'city', 'zip_code', 'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price')
+        # @TODO: Add all necessary values
 
     def clean_title(self):
         title = self.cleaned_data['title']

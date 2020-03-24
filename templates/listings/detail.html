@@ -13,6 +13,7 @@
             <b>Title:</b> {{ object.title }} <br/>
             <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
             <b>Zip-code:</b> {{ object.zip_code }} <br/>
+            <b>Listed by</b> <a href="#">{{ object.user }}</a> <br/>  {# Leave it for later until there is: /user/pk/ #}
             {% lorem %}
         </div>
     <a href="{% url 'list' %}">Back</a>

@@ -43,9 +43,11 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         for file in request.FILES.getlist('images'):
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            uploaded_file_url = fs.url(filename)
+            print(file)
+            # @TODO: Handle listing images upload logic
+            # fs = FileSystemStorage()
+            # filename = fs.save(file.name, file)
+            # uploaded_file_url = fs.url(filename)
         return super().post(request, *args, **kwargs)
 
 
@@ -83,6 +85,5 @@ def delete_listing(request, pk):
         return HttpResponseForbidden("You don't have access for this action")
     listing.delete()
     messages.info(request, "Deleted listing!")
-    return HttpResponseForbidden("You don't have access for this action")
-    # return redirect(reverse('list'))
+    return redirect(reverse('profile'))
 

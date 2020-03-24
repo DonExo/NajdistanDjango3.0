@@ -24,9 +24,6 @@ class Place(models.Model):
     class Meta:
         unique_together = ('region', 'city')
 
-    # def get_cities_by_region(self, value):
-    #     pass
-
 
 class HeatingChoices(models.Model):
     """

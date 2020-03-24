@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
+from .utils import profile_image_directory_path
 
 
 class BaseModel(models.Model):
@@ -24,7 +25,7 @@ class User(AbstractUser, BaseModel):
     email = models.EmailField(unique=True, blank=False)
     telephone = models.CharField(_('Phone number'), max_length=255)
     username = None
-    # profile_image = models.ImageField(upload_to=image_profiles_directory_path, default=None, blank=True, null=True)
+    profile_image = models.ImageField(upload_to=profile_image_directory_path, default=None, blank=True, null=True)
 
     def __str__(self):
         return self.get_full_name() or self.email

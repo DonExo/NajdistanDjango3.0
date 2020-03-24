@@ -9,6 +9,6 @@
         {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>
-    <a href="{% url 'detail' object.pk %}">Back</a>
+    <a href="{% url 'listings:detail' object.pk %}">Back</a>
 
 {% endblock %}

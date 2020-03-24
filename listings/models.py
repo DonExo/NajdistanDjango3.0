@@ -116,8 +116,8 @@ class SearchProfiles(BaseModel):
         if self.rooms < self.bedrooms:
             raise ValidationError({'rooms': "You can not have less rooms than bedrooms"})
 
-    def clean_fields(self, exclude=None):
-        pass
+    # def clean_fields(self, exclude=None):
+    #     pass
 
 
 class Comment(BaseModel):

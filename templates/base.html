@@ -6,8 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
     {% block title %}
         <title>Najdistan Django 3.0</title>
     {% endblock %}
@@ -41,7 +39,7 @@
         {% if request.user.is_superuser %}
             <a href="/admin/">Administration</a> |
         {% endif %}
-        <a href="{% url 'profile' %}">Account</a> |
+        <a href="{% url 'accounts:profile' %}">Account</a> |
         <a href="{% url 'auth_logout' %}">Logout</a>
     {% else %}
         <a href="{% url 'registration_register' %}">Register</a> |
@@ -51,6 +49,43 @@
 
     {% block content %}
     {% endblock %}
+
+    <script>
+        function generateRandom() {
+            random = Math.floor(Math.random() * 15);
+
+            var title = document.getElementById('id_title');
+            title.value = "Title #" + random;
+
+            var description = document.getElementById('id_description');
+            description.value = "Description #" + random;
+
+            var city = document.getElementById('id_city');
+            city.value = random;
+
+            var zip_code = document.getElementById('id_zip_code');
+            random1000 = Math.floor(1000 + Math.random() * 9000);
+            zip_code.value = random1000 + "AB";
+
+            var quadrature = document.getElementById('id_quadrature');
+            quadrature.value = 5;
+
+            var rooms = document.getElementById('id_rooms');
+            rooms.value = 4;
+
+            var bedrooms = document.getElementById('id_bedrooms');
+            bedrooms.value = 3;
+
+            var floor = document.getElementById('id_floor');
+            floor.value = 2;
+
+            var heating = document.getElementById('id_heating');
+            heating.value = 2;
+
+            var price = document.getElementById('id_price');
+            price.value = random1000;
+        }
+    </script>
 
 
 </body>

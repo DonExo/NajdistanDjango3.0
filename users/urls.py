@@ -4,6 +4,5 @@ from users import views
 
 urlpatterns = [
     path('profile/', views.profile, name='profile'),
-    path('profile/update/', views.update, name='update_user'),  ## SREDI NAMESPACING
-
+    path('profile/update/', views.update, name='update_user'),
 ]

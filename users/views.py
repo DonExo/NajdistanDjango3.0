@@ -13,9 +13,6 @@ def index(request):
 
 @login_required
 def profile(request):
-    # if request.method == 'POST':
-    # @TODO: Add ability to edit Profile image
-
     listings = request.user.get_listings()
 
     context = {}
@@ -38,7 +35,7 @@ def update(request):
         form = UserUpdateProfileForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect(reverse('profile'))
+            return redirect(reverse('accounts:profile'))
 
     context = {'title': "Update profile"}
     context['form'] = form

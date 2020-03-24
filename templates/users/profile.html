@@ -14,23 +14,23 @@
 
     Fullname: {{ user.get_full_name }} <br/>
 
-    <h3>Go to <a href="{% url 'list' %}">Listings</a> </h3>
-    <h3>Create <a href="{% url 'create' %}">New listing</a> </h3>
+    <h3>Go to <a href="{% url 'listings:list' %}">Listings</a> </h3>
+    <h3>Create <a href="{% url 'listings:create' %}">New listing</a> </h3>
     <h4><a href="{% url 'auth_password_change' %}">Change your password</a> </h4>
-    <h4><a href="{% url 'update_user' %}">Update your profile</a> </h4>
+    <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4>
 
     <h4>Your listings:</h4>
     {% if listings %}
         {% for listing in listings %}
             <div class="listing" style="border: 1px solid black; margin: 10px; padding: 10px">
-                <h4><a href="{% url 'detail' listing.pk %}">{{ listing.title }}</a></h4>
+                <h4><a href="{% url 'listings:detail' listing.pk %}">{{ listing.title }}</a></h4>
                 <h4>{{ listing.zip_code }}</h4>
                 <h4>{{ listing.price }}</h4>
                 <h4>{{ listing.is_available }}</h4>
             </div>
         {% endfor %}
     {% else %}
-        <p>You don't have any listings. Would you like to <a href="{% url 'create' %}">create one?</a></p>
+        <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
     {% endif %}
 
 {% endblock %}

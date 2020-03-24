@@ -5,8 +5,8 @@
     <h2>Listing details</h2>
 
     {% if user == object.user %}
-        <a href="{% url 'update' object.pk %}">Update</a>
-        <a href="{% url 'delete' object.pk %}" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</a>
+        <a href="{% url 'listings:update' object.pk %}">Update</a>
+        <a href="{% url 'listings:delete' object.pk %}" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</a>
 
     {% endif %}
         <div style="border: 1px solid black; margin: 5px; padding: 5px;">
@@ -16,5 +16,5 @@
             <b>Listed by</b> <a href="#">{{ object.user }}</a> <br/>  {# Leave it for later until there is: /user/pk/ #}
             {% lorem %}
         </div>
-    <a href="{% url 'list' %}">Back</a>
+    <a href="{% url 'listings:list' %}">Back</a>
 {% endblock %}

@@ -2,8 +2,6 @@ from django.db import transaction
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.files.storage import FileSystemStorage
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -33,7 +31,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     success_message = "Listing successfully created!"
 
     def get_success_url(self):
-        return reverse_lazy('detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('listings:detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -63,7 +61,7 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     permission_denied_message = "NECES PROCI"
 
     def get_success_url(self):
-        return reverse_lazy('detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('listings:detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         return super().form_valid(form)
@@ -85,5 +83,5 @@ def delete_listing(request, pk):
         return HttpResponseForbidden("You don't have access for this action")
     listing.delete()
     messages.info(request, "Deleted listing!")
-    return redirect(reverse('profile'))
+    return redirect(reverse('accounts:profile'))
 

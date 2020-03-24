@@ -11,5 +11,4 @@ urlpatterns = [
     path('<int:pk>/update/', views.ListingUpdateView.as_view(), name='update'),
     # path('detail/<int:pk>/delete/', views.ListingDetailView.as_view(), name='delete'),
     path('<int:pk>/delete/', views.delete_listing, name='delete'),
-
 ]

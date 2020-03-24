@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>ALL Listings</h2>
+
+    <p>Create a new <a href="{% url 'create' %}">listing?</a> </p>
+
+    {% for object in objects %}
+        <div style="border: 1px solid black; margin: 5px; padding: 5px;">
+            <b>Title:</b> <a href="{% url 'detail' object.pk %}"> {{ object.title }}</a> <br/>
+            <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
+            <b>Zip-code:</b> {{ object.zip_code }} <br/>
+            {% lorem %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

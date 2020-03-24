@@ -23,6 +23,18 @@
 
 <body>
 
+    <a href="{% url 'index' %}"><h4>HOME</h4></a>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message" style="width: 80%; height: 15px; background-color: antiquewhite;">
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <p style="float: right;">
     {% if request.user.is_authenticated %}
         Welcome {{  request.user }}

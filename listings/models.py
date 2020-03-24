@@ -47,6 +47,7 @@ class Listing(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
     city = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True, related_name='listings')
 
+
     # Listing specification
     title = models.CharField(_('Title'), max_length=255)
     description = models.TextField(_('Description'))

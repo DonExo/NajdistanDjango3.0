@@ -6,6 +6,9 @@ __pycache__/
 .idea/
 *.db
 
+# Static & media files
+/media
+
 todos.txt
 
 # C extensions

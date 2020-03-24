@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Listing details</h2>
+
+    {% if user == object.user %}
+        <a href="{% url 'update' object.pk %}">Update</a>
+        <a href="{% url 'delete' object.pk %}" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</a>
+
+    {% endif %}
+        <div style="border: 1px solid black; margin: 5px; padding: 5px;">
+            <b>Title:</b> {{ object.title }} <br/>
+            <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
+            <b>Zip-code:</b> {{ object.zip_code }} <br/>
+            {% lorem %}
+        </div>
+    <a href="{% url 'list' %}">Back</a>
+{% endblock %}

@@ -15,10 +15,16 @@ class PlaceAdmin(admin.ModelAdmin):
 class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
 
-    list_display = ('zip_code', 'title', 'user', 'city')
+    list_display = ('zip_code', 'title', 'user', 'city', 'is_approved')
     search_fields = ('city', 'title', 'description', 'user')
-    list_filter = ('city', 'zip_code')
+    list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('times_visited', 'soft_deleted' )
+    actions = ['approve', ]
+
+    def approve(self, request, queryset):
+        count = queryset.filter(is_approved=None).update(is_approved=True)
+        self.message_user(request, f"{count} listings have been approved!")
+    approve.short_description = 'Approve listings'
 
 
 @admin.register(SearchProfiles)

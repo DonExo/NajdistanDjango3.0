@@ -6,14 +6,10 @@ from pathlib import Path  # python3 only
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 ADMINS = [('Don', 'admin@gmail.com')]
 AUTH_USER_MODEL = 'users.User'
-
-
-# Needed for Debug Toolbar
-INTERNAL_IPS = [ '127.0.0.1' ]
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 ENV_SECRET_KEY = os.getenv('SECRET_KEY')
 SECRET_KEY = ENV_SECRET_KEY
@@ -21,22 +17,41 @@ SECRET_KEY = ENV_SECRET_KEY
 ENV_DEBUG = os.getenv('DEBUG', False)
 DEBUG = ENV_DEBUG
 
-# Change this when going to production
 ALLOWED_HOSTS = ["*"]
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Needed for Debug Toolbar
+INTERNAL_IPS = [ '127.0.0.1' ]
 
-# Django-registration-redux things
+# AWS Related
+ENV_SECRET_KEY = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_ACCESS_KEY_ID = ENV_SECRET_KEY
+ENV_AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = ENV_AWS_SECRET_ACCESS_KEY
+ENV_AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_STORAGE_BUCKET_NAME = ENV_AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'listings.s3_backend.MediaStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Django-registration-redux
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1
 
-
 LOGIN_REDIRECT_URL = '/'
-
 
 INSTALLED_APPS = [
     # Django apps
-
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -50,6 +65,7 @@ INSTALLED_APPS = [
 
     # Third party libraries
     'debug_toolbar',
+    'storages',
 
     # Local apps
     'users',
@@ -65,13 +81,12 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 
+    # Django debug toolbar
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-
 ]
 
 ROOT_URLCONF = 'najdistandjango30.urls'
@@ -94,13 +109,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'najdistandjango30.wsgi.application'
 
-
 ENV_DB_SQLITE_NAME = os.getenv("DB_SQLITE_NAME", 'najdistan.db')
 ENV_DB_POSTGRE_NAME = os.getenv("DB_POSTGRE_NAME")
 ENV_DB_USERNAME = os.getenv('DB_USERNAME')
 ENV_DB_PASSWORD = os.getenv('DB_PASSWORD')
 ENV_DB_HOST = os.getenv('DB_HOST')
-
 
 if DEBUG: # If we are in Debug - means we are still developing, hence we are fine with an SQlite database
     sqlite_engine = 'django.db.backends.sqlite3',
@@ -127,8 +140,6 @@ else: # Otherwise we are using fully-fledged postgres database
     }
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -166,9 +177,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# ENV_STATIC_URL = os.getenv('STATIC_URL', "'/static/'")
-STATIC_URL = '/static/'
 
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

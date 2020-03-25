@@ -6,7 +6,7 @@ __pycache__/
 .idea/
 *.db
 
-# Static & media files
+# media files
 /media
 
 todos.txt

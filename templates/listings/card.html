@@ -7,8 +7,8 @@
             <td>
                 <b>Title:</b> <a href="{% url 'listings:detail' object.slug %}"> {{ object.title }}</a> <br/>
                 <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
-                <b>Zip-code:</b> {{ object.zip_code }} <br/>
-                <b>Owner:</b> {{ object.user }} <br/>
+                <b>Location:</b> {{ object.city }} - {{ object.zip_code }}<br/>
+                <b>Owner:</b> <a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user }}</a> <br/>
             </td>
         </tr>
     </table>

@@ -16,7 +16,7 @@ class ListingListView(generic.ListView):
     context_object_name = 'objects'
 
     def get_queryset(self):
-        return self.queryset.all()  # for testing purposes
+        return self.queryset.prefetch_related('user', 'city')  # for testing purposes
         # return self.queryset.filter(is_approved=True)
 
     def get_context_data(self, **kwargs):
@@ -59,6 +59,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
 class ListingDetailView(generic.DetailView):
     model = Listing
     template_name = 'listings/detail.html'
+    queryset = Listing.objects.select_related('user')
 
 
 class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
@@ -72,9 +73,8 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
-        # return redirect(reverse_lazy('list'))
 
-    # Check if the listing user is == to the request user trying to delete it
+    # Checks if the listing owner is different than the request user
     def test_func(self):
         return self.request.user == self.get_object().user
 

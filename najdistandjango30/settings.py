@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
 
     # Third party libraries
-    # 'debug_toolbar',
+    'debug_toolbar',
     'storages',
 
     # Local apps
@@ -78,7 +78,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
 
     # Django debug toolbar
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

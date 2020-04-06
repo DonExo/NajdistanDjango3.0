@@ -3,6 +3,7 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
@@ -27,14 +28,10 @@ class User(AbstractUser, BaseModel):
     telephone = models.CharField(_('Phone number'), max_length=255)
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
-        return self.get_full_name() or self.email
-
-    # def get_absolute_url(self):
-    #     # return reverse('view:user-detail', args=[self.pk])
-    #     pass
+        return self.get_full_name()
 
     objects = CustomUserManager()
 
@@ -55,3 +52,6 @@ class User(AbstractUser, BaseModel):
 
     def get_listings(self):
         return self.listings.all()
+
+    def get_absolute_url(self):
+        return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})

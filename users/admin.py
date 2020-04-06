@@ -12,7 +12,7 @@ class UserAdmin(DjangoUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'telephone', 'profile_image', 'uuid' )}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'telephone', 'profile_image', )}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -23,9 +23,9 @@ class UserAdmin(DjangoUserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'uuid', 'first_name', 'last_name', 'is_staff')
+    list_display = ('identifier' ,'email', 'first_name', 'last_name', 'is_staff')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
-    readonly_fields = ('uuid', )
+    readonly_fields = ('identifier', )
 
 admin.site.unregister(Group)

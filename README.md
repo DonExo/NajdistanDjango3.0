@@ -54,4 +54,13 @@ The codename of this project is "NajdistanDjango3.0". When it is ready for produ
 
 
 ## Local development and playground
-* ... instructions to be added.
+  1. Clone the repo locally (`git clone git@github.com:DonExo/NajdistanDjango3.0.git`)
+  2. Create virtual environment with (at least) python3.7 as interpreter (`mkvirtualenv --python=`which python3.7\` najdistanvenv) - for this you need to have virtualenvwrapper activated and python3.7 on your machine. Activate the venv if it is not (`workon najdistanvenv`)
+  3. CD into newly cloned project. (`cd Najdistandjango3.0`)
+  4. Install the requirements (`pip install -r requirements.txt`)
+  5. Rename the .env.example file to just .env (`mv .env.example .env`)
+  6. Run migrations (`./manage.py migrate`)
+  7. Optional: Load fixtures (`./manage.py loaddata fixtures.py`) (Currently outdated!)
+  8. Optional: Create super uesr for easy admin access (`./manage.py createsuperuser`)
+  9. Run local server (`./manage.py runserver`)
+  10. Play around!

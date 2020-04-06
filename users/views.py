@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -30,6 +31,7 @@ def update(request):
         form = UserUpdateProfileForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
+            messages.info(request, "Account updated successfully!")
             return redirect(reverse('accounts:profile'))
     context = {'title': "Update profile"}
     context['form'] = form

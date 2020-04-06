@@ -1,5 +1,9 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
@@ -46,7 +50,6 @@ class Listing(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
     city = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True, related_name='listings')
 
-
     # Listing specification
     title = models.CharField(_('Title'), max_length=255)
     description = models.TextField(_('Description'))
@@ -78,12 +81,23 @@ class Listing(BaseModel):
 
     # Admin data
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
+    slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):
         return f"({self.zip_code}) {self.title}"
 
     def get_images(self):
         return self.images.all()
+
+    def get_absolute_url(self):
+        return reverse('listings:detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Let's create unique slug for the article
+            date_time_object = datetime.utcnow().strftime("%d%m%Y%H%M%S")
+            self.slug = "-".join([slugify(self.title), date_time_object])
+        super().save(*args, **kwargs)
 
 
 class Image(BaseModel):

@@ -32,7 +32,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     success_message = "Listing successfully created!"
 
     def get_success_url(self):
-        return reverse_lazy('listings:detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -68,24 +68,23 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     permission_denied_message = "NECES PROCI"
 
     def get_success_url(self):
-        return reverse_lazy('listings:detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
         return super().form_valid(form)
         # return redirect(reverse_lazy('list'))
 
+    # Check if the listing user is == to the request user trying to delete it
     def test_func(self):
-        # Check if the listing user is == to the request user trying to delete it
         return self.request.user == self.get_object().user
 
 
 # class ListingDeleteView(View):
-#
 #     def get_object(self):
 
 
-def delete_listing(request, pk):
-    listing = get_object_or_404(Listing, pk=pk)
+def delete_listing(request, slug):
+    listing = get_object_or_404(Listing, slug=slug)
     if listing.user != request.user:
         return HttpResponseForbidden("You don't have access for this action")
     listing.delete()

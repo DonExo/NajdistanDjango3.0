@@ -1,0 +1,15 @@
+<div style="border: 1px solid black; margin: 5px; padding: 5px; width: 80%;">
+    <table>
+        <tr>
+            <td>
+                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}" height="150px" />
+            </td>
+            <td>
+                <b>Title:</b> <a href="{% url 'listings:detail' object.slug %}"> {{ object.title }}</a> <br/>
+                <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
+                <b>Zip-code:</b> {{ object.zip_code }} <br/>
+                <b>Owner:</b> {{ object.user }} <br/>
+            </td>
+        </tr>
+    </table>
+</div>

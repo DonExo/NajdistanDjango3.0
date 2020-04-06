@@ -14,6 +14,7 @@ def index(request):
 @login_required
 def profile(request):
     listings = request.user.get_listings()
+    print(listings)
 
     context = {}
     context.update({

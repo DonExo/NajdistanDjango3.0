@@ -84,7 +84,7 @@ class Listing(BaseModel):
     slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):
-        return f"({self.zip_code}) {self.title}"
+        return self.slug
 
     def get_images(self):
         return self.images.all()

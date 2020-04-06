@@ -1,4 +1,3 @@
-from django.db import transaction
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -6,8 +5,9 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
-from .models import Listing, Image
+from .models import Listing
 from .forms import ListingCreateForm, ListingUpdateForm
+from configdata import FORBIDDEN_MESAGE
 
 
 class ListingListView(generic.ListView):
@@ -65,7 +65,7 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'
     form_class = ListingUpdateForm
-    permission_denied_message = "NECES PROCI"
+    permission_denied_message = FORBIDDEN_MESAGE
 
     def get_success_url(self):
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
@@ -86,7 +86,7 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
 def delete_listing(request, slug):
     listing = get_object_or_404(Listing, slug=slug)
     if listing.user != request.user:
-        return HttpResponseForbidden("You don't have access for this action")
+        return HttpResponseForbidden(FORBIDDEN_MESAGE)
     listing.delete()
     messages.info(request, "Deleted listing!")
     return redirect(reverse('accounts:profile'))

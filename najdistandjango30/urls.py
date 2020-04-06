@@ -7,25 +7,22 @@ from users import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-
     path('admin/', admin.site.urls),
-
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
-
     path('accounts/', include('registration.backends.default.urls')),
     path('accounts/', include(('users.urls', 'users'), namespace='accounts')),
-
 ]
 
 
-
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-] + urlpatterns
-
+#     import debug_toolbar
+#     urlpatterns = [
+#         path('__debug__/', include(debug_toolbar.urls)),
+# ] + urlpatterns
+#
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 
 # accounts/ ^activate/complete/$ [name='registration_activation_complete']

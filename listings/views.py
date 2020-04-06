@@ -6,7 +6,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
-from .models import Listing
+from .models import Listing, Image
 from .forms import ListingCreateForm, ListingUpdateForm
 
 
@@ -16,7 +16,8 @@ class ListingListView(generic.ListView):
     context_object_name = 'objects'
 
     def get_queryset(self):
-        return self.queryset.filter(is_approved=True)
+        return self.queryset.all()  # for testing purposes
+        # return self.queryset.filter(is_approved=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,15 +39,21 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return super().form_valid(form)
 
 
-    @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        for file in request.FILES.getlist('images'):
-            print(file)
-            # @TODO: Handle listing images upload logic
-            # fs = FileSystemStorage()
-            # filename = fs.save(file.name, file)
-            # uploaded_file_url = fs.url(filename)
-        return super().post(request, *args, **kwargs)
+    # @transaction.atomic
+    # def post(self, request, *args, **kwargs):
+    #
+    #
+    #     # for file in request.FILES.getlist('images'):
+    #     #     instance = Image.objects.create(
+    #     #         listing=Listing.objects.first(),
+    #     #         image=file
+    #     #     )
+    #     #     print(file)
+    #     #     # @TODO: Handle listing images upload logic
+    #     #     # fs = FileSystemStorage()
+    #         # filename = fs.save(file.name, file)
+    #         # uploaded_file_url = fs.url(filename)
+    #     return super().post(request, *args, **kwargs)
 
 
 class ListingDetailView(generic.DetailView):

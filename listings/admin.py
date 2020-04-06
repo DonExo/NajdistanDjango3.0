@@ -1,7 +1,5 @@
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
-
-from .models import Place, Listing, HeatingChoices, Saved, SearchProfiles, Comment
+from .models import Place, Listing, HeatingChoices, Saved, SearchProfiles, Comment, Image
 
 
 @admin.register(Place)
@@ -14,8 +12,9 @@ class PlaceAdmin(admin.ModelAdmin):
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
+    # @TODO: Add images inline for each listing
 
-    list_display = ('zip_code', 'title', 'user', 'city', 'is_approved')
+    list_display = ('zip_code', 'cover_image', 'title', 'user', 'city', 'is_approved')
     search_fields = ('city', 'title', 'description', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('times_visited', 'soft_deleted' )
@@ -23,7 +22,8 @@ class ListingAdmin(admin.ModelAdmin):
 
     def approve(self, request, queryset):
         count = queryset.filter(is_approved=None).update(is_approved=True)
-        self.message_user(request, f"{count} listings have been approved!")
+        if count:
+            self.message_user(request, f"{count} listings have been approved!")
     approve.short_description = 'Approve listings'
 
 
@@ -45,4 +45,11 @@ class SavedAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'listing', 'body')
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('listing', 'image', 'order')
+    list_filter = ('listing', )
+    search_fields = ('listing', )
 

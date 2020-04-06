@@ -11,24 +11,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ADMINS = [('Don', 'admin@gmail.com')]
 AUTH_USER_MODEL = 'users.User'
 
-ENV_SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = ENV_SECRET_KEY
-
-ENV_DEBUG = os.getenv('DEBUG', False)
-DEBUG = ENV_DEBUG
-
+SECRET_KEY = os.getenv('SECRET_KEY', 'very_secret_key')
+DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = ["*"]
 
 # Needed for Debug Toolbar
 INTERNAL_IPS = [ '127.0.0.1' ]
 
 # AWS Related
-# ENV_SECRET_KEY = os.getenv('AWS_ACCESS_KEY_ID')
-# AWS_ACCESS_KEY_ID = ENV_SECRET_KEY
-# ENV_AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-# AWS_SECRET_ACCESS_KEY = ENV_AWS_SECRET_ACCESS_KEY
-# ENV_AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-# AWS_STORAGE_BUCKET_NAME = ENV_AWS_STORAGE_BUCKET_NAME
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 # AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS_S3_OBJECT_PARAMETERS = {
 #     'CacheControl': 'max-age=86400',
@@ -37,12 +30,15 @@ INTERNAL_IPS = [ '127.0.0.1' ]
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 # ]
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # DEFAULT_FILE_STORAGE = 'listings.s3_backend.MediaStorage'
+#
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
 
 # Django-registration-redux
 ACCOUNT_ACTIVATION_DAYS = 1
@@ -56,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     'django.contrib.humanize',
 
     'django.contrib.sites',
@@ -64,7 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
 
     # Third party libraries
-    'debug_toolbar',
+    # 'debug_toolbar',
     'storages',
 
     # Local apps
@@ -82,7 +78,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
 
     # Django debug toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -172,9 +168,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-

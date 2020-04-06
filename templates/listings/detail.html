@@ -10,6 +10,7 @@
 
     {% endif %}
         <div style="border: 1px solid black; margin: 5px; padding: 5px;">
+            <img src="{{ object.cover_image.url }}"/><br/>
             <b>Title:</b> {{ object.title }} <br/>
             <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
             <b>Zip-code:</b> {{ object.zip_code }} <br/>

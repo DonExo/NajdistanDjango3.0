@@ -4,9 +4,10 @@ from .models import Listing
 
 
 class ListingCreateForm(forms.ModelForm):
+
     class Meta:
         model = Listing
-        fields = ('title', 'description', 'city', 'zip_code', 'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price')
+        fields = ('title', 'description', 'city', 'zip_code', 'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price', 'cover_image')
         # @TODO: Add all necessary values
 
     def clean_title(self):

@@ -54,6 +54,7 @@ The codename of this project is "NajdistanDjango3.0". When it is ready for produ
 
 
 ## Local development and playground
+
   1. Clone the repo locally (`git clone git@github.com:DonExo/NajdistanDjango3.0.git`)
   2. Create virtual environment with (at least) python3.7 as interpreter (`mkvirtualenv --python=`which python3.7\` najdistanvenv) - for this you need to have virtualenvwrapper activated and python3.7 on your machine. Activate the venv if it is not (`workon najdistanvenv`)
   3. CD into newly cloned project. (`cd Najdistandjango3.0`)
@@ -64,3 +65,11 @@ The codename of this project is "NajdistanDjango3.0". When it is ready for produ
   8. Optional: Create super uesr for easy admin access (`./manage.py createsuperuser`)
   9. Run local server (`./manage.py runserver`)
   10. Play around!
+  
+*NOTE:*
+
+The default settings.py have been changed with a more robust solution: local.py and production.py settings. This project now loads `settings/local.py` by default. 
+
+If for whatever reason you'd like to run it with production settings - start your server with `./manage.py runserver --settings=najdistandjango30.settings.production`. Any `./manage.py ...` command should have the new settings added.
+
+Also, do not forget to add the proper settings values in your local `.env` file (i.e. SMTP settings, DB settings, AWS...)

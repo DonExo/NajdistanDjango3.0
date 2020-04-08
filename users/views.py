@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import UserUpdateProfileForm
@@ -25,23 +26,26 @@ def profile(request):
 
 @login_required()
 def update(request):
-    instance = get_object_or_404(User, id=request.user.id)
-    form = UserUpdateProfileForm(instance=instance)
+    form = UserUpdateProfileForm(instance=request.user)
     if request.method == 'POST':
-        form = UserUpdateProfileForm(request.POST, request.FILES, instance=instance)
+        form = UserUpdateProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.info(request, "Account updated successfully!")
             return redirect(reverse('accounts:profile'))
-    context = {'title': "Update profile"}
-    context['form'] = form
+    context = {'title': 'Update profile', 'form': form}
     return render(request, 'users/update.html', context)
 
 
-# Leave it simple for the time being. More context data to follow.
 def user_identifier(request, identifier):
-    # user = get_object_or_404(User, identifier=identifier)
-    user = User.objects.prefetch_related('listings__city').get(identifier=identifier)
+    try:
+        user = User.objects.prefetch_related('listings__city').get(identifier=identifier)
+    except User.DoesNotExist:
+        raise Http404("User does not exist.")
+    if user == request.user:
+        messages.info(request, "You have been redirected to your own profile.")
+        return redirect(reverse('accounts:profile'))
+
     context = {
         'user': user,
         'listings': user.get_listings()

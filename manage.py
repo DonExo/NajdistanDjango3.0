@@ -5,7 +5,8 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'najdistandjango30.settings')
+    # IMPORTANT: The default settings.py has been changed !
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'najdistandjango30.settings.local')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

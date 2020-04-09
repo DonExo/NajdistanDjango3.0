@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index),
 
     path('admin/', admin.site.urls),
+    path('api/v1/', include('api.urls'))
 ]
 
 

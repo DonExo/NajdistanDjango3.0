@@ -1,6 +1,5 @@
 from rest_framework import viewsets, exceptions
-from rest_framework.permissions import IsOwnerOrReadOnly
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from api.serializers import UserSerializer, ListingReportSerializer, CommentReportSerializer, ListingSerializer, PlaceSerializer
 from users.models import User
 from listings.models import Listing, Comment, Place
@@ -9,7 +8,7 @@ from reports.models import ListingReport, CommentReport
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     lookup_field = 'pk'
     queryset = User.objects.all()
 

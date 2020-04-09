@@ -6,7 +6,11 @@ __pycache__/
 .idea/
 *.db
 
+# media files
+/media
+
 todos.txt
+.ideas_for_premium
 
 # C extensions
 *.so

@@ -1,11 +1,17 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
 from users.models import BaseModel, User
 from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, \
     LISTING_TYPE, LISTING_TYPE_2, UPDATE_FREQUENCIES
+
+from users.utils import listing_image_directory_path
 
 
 class Place(models.Model):
@@ -23,9 +29,6 @@ class Place(models.Model):
 
     class Meta:
         unique_together = ('region', 'city')
-
-    # def get_cities_by_region(self, value):
-    #     pass
 
 
 class HeatingChoices(models.Model):
@@ -74,12 +77,36 @@ class Listing(BaseModel):
     rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
     # @TODO: If the house is for selling - some fields should be deleted in the form
     listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE, help_text=_('Designates the type of listings: rent or sell'))
+    cover_image = models.ImageField(upload_to=listing_image_directory_path)
 
     # Admin data
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
+    slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):
-        return f"({self.zip_code}) {self.title}"
+        return self.slug
+
+    def get_images(self):
+        return self.images.all()
+
+    def get_absolute_url(self):
+        return reverse('listings:detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Let's create unique slug for the article
+            date_time_object = datetime.utcnow().strftime("%d%m%Y%H%M%S")
+            self.slug = "-".join([slugify(self.title), date_time_object])
+        super().save(*args, **kwargs)
+
+
+class Image(BaseModel):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=listing_image_directory_path)
+    order = models.PositiveSmallIntegerField(default=1, blank=True, null=True)
+
+    def __str__(self):
+        return self.image.name
 
 
 class Saved(models.Model):
@@ -118,8 +145,8 @@ class SearchProfiles(BaseModel):
         if self.rooms < self.bedrooms:
             raise ValidationError({'rooms': "You can not have less rooms than bedrooms"})
 
-    def clean_fields(self, exclude=None):
-        pass
+    # def clean_fields(self, exclude=None):
+    #     pass
 
 
 class Comment(BaseModel):

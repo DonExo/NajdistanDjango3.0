@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Create Listing!</h2>
+
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="button" value="Generate dummy data" onclick="generateRandom()" />
+        <input type="submit" value="Submit" />
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+
+{% endblock %}

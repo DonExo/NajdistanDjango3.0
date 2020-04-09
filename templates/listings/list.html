@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>ALL Listings</h2>
+
+    <p>Create a new <a href="{% url 'listings:create' %}">listing?</a> </p>
+
+    {% for object in objects %}
+        {% include 'listings/card.html' %}
+    {% endfor %}
+
+{% endblock %}

@@ -1,37 +1,31 @@
 import os
 
-# .env file
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 from datetime import timedelta
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
+BASE_DIR = os.path.dirname(os.path.dirname((os.path.dirname(os.path.abspath(__file__)))))
+
 ADMINS = [('Don', 'admin@gmail.com')]
 AUTH_USER_MODEL = 'users.User'
 
+SECRET_KEY = os.getenv('SECRET_KEY', 'very_secret_key')
 
-# Needed for Debug Toolbar
-INTERNAL_IPS = [ '127.0.0.1' ]
+ALLOWED_HOSTS = [""]
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ENV_SECRET_KEY = os.getenv('SECRET_KEY')
-SECRET_KEY = ENV_SECRET_KEY
+# Django-registration-redux
+ACCOUNT_ACTIVATION_DAYS = 1
+SITE_ID = 1
 
-ENV_DEBUG = os.getenv('DEBUG', False)
-DEBUG = ENV_DEBUG
-
-# Change this when going to production
-ALLOWED_HOSTS = ["*"]
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Application definition
+LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     # Django apps
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -39,8 +33,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
+    'django.contrib.humanize',
+
+    'django.contrib.sites',
+    'registration', # django-registration-redux, needs to be at this position
+    'django.contrib.admin',
+
     # Third party libraries
-    'debug_toolbar',
+    'storages',
 
     # Local apps
     'users',
@@ -55,14 +55,9 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-
 ]
 
 ROOT_URLCONF = 'najdistandjango30.urls'
@@ -70,7 +65,7 @@ ROOT_URLCONF = 'najdistandjango30.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -106,45 +101,6 @@ SIMPLE_JWT = {
 
 WSGI_APPLICATION = 'najdistandjango30.wsgi.application'
 
-
-ENV_DB_SQLITE_NAME = os.getenv("DB_SQLITE_NAME", 'najdistan.db')
-ENV_DB_POSTGRE_NAME = os.getenv("DB_POSTGRE_NAME")
-ENV_DB_USERNAME = os.getenv('DB_USERNAME')
-ENV_DB_PASSWORD = os.getenv('DB_PASSWORD')
-ENV_DB_HOST = os.getenv('DB_HOST')
-
-
-if DEBUG: # If we are in Debug - means we are still developing, hence we are fine with an SQlite database
-    sqlite_engine = 'django.db.backends.sqlite3',
-    DATABASES = {
-        'default': {
-            'ENGINE': sqlite_engine,
-            'NAME': os.path.join(BASE_DIR, ENV_DB_SQLITE_NAME),
-        }
-    }
-
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-else: # Otherwise we are using fully-fledged postgres database
-    postgre_engine = 'django.db.backends.postgresql_psycopg2'
-    DATABASES = {
-        'default': {
-            'ENGINE': postgre_engine,
-            'NAME': ENV_DB_POSTGRE_NAME,
-            'USER': ENV_DB_USERNAME,
-            'PASSWORD': ENV_DB_PASSWORD,
-            'HOST': ENV_DB_HOST,
-            'PORT': '',
-        }
-    }
-
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -160,10 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -173,10 +125,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-# ENV_STATIC_URL = os.getenv('STATIC_URL', "'/static/'")
-STATIC_URL = '/static/'

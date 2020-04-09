@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Profile page</h1>
+    <h3>Hello {{ user.first_name }}</h3><br/>
+    <img src="{{ user.get_profile_image }}" alt="Profile image" width="150" height="150"/>
+    <h6>Last login: {{ user.last_login|naturaltime }}</h6>
+    Fullname: {{ user.get_full_name }} <br/>
+    <h3>Create <a href="{% url 'listings:create' %}">New listing</a> </h3>
+    <h4><a href="{% url 'auth_password_change' %}">Change your password</a> </h4>
+    <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4>
+    <h4>Your listings:</h4>
+    {% if listings %}
+        {% for object in listings %}
+            {% include 'listings/card.html' %}
+        {% endfor %}
+    {% else %}
+        <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
+    {% endif %}
+{% endblock %}

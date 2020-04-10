@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Place, Listing, HeatingChoices, Saved, SearchProfiles, Comment, Image
+from .models import Place, Listing, HeatingChoices, Saved, Comment, Image
 
 
 @admin.register(Place)
@@ -14,7 +14,7 @@ class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
     # @TODO: Add images inline for each listing
 
-    list_display = ('slug', 'title', 'user', 'city', 'is_approved')
+    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved')
     search_fields = ('city', 'title', 'description', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
@@ -25,11 +25,6 @@ class ListingAdmin(admin.ModelAdmin):
         if count:
             self.message_user(request, f"{count} listings have been approved!")
     approve.short_description = 'Approve listings'
-
-
-@admin.register(SearchProfiles)
-class SearchProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title', 'city', 'price_from', 'price_to', 'frequency')
 
 
 @admin.register(HeatingChoices)

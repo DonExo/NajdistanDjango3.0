@@ -22,4 +22,20 @@
     {% else %}
         <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
     {% endif %}
+
+    <br/>
+
+    <h3>Add new <a href="{% url 'accounts:sp_create' %}">Search Profile</a></h3>
+    <h4>Your Search Profiles:</h4>
+    {% if search_profiles %}
+        {% for sp in search_profiles %}
+            <p>
+            {{ sp.title }} - {{ sp.city }} - {{ sp.listing_type }} - {{ sp.min_rooms }}
+            - {{ sp.min_bedrooms }} - Price range: {{ sp.min_price }}: {{ sp.max_price }}
+            - {{ sp.interior }} - {{ sp.frequency }} <a href="#">Update</a> - <a href="#">Delete</a>
+            </p>
+        {% endfor %}
+    {% else %}
+        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
+    {% endif %}
 {% endblock %}

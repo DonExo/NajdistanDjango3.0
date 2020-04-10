@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .forms import UserUpdateProfileForm
+from .forms import UserUpdateProfileForm, UserSearchProfileForm
 from .models import User
 
 
@@ -14,13 +14,12 @@ def index(request):
 
 @login_required
 def profile(request):
-    listings = request.user.get_listings()
-    context = {}
-    context.update({
-        'user': request.user,
+    context = {
         'title': "Profile be",
-        'listings': listings
-    })
+        'user': request.user,
+        'listings': request.user.get_listings(),
+        'search_profiles': request.user.get_search_profiles(),
+    }
     return render(request, 'users/profile.html', context)
 
 
@@ -51,3 +50,18 @@ def user_identifier(request, identifier):
         'listings': user.get_listings()
     }
     return render(request, 'users/user.html', context)
+
+@login_required()
+def search_profile_create(request):
+    form = UserSearchProfileForm(user=request.user)
+
+    if request.method == 'POST':
+        form = UserSearchProfileForm(request.POST, user=request.user)
+        if form.is_valid():
+            sp = form.save(commit=False)
+            sp.user = request.user
+            sp.save()
+            messages.info(request, "Search Profile form added!")
+            return redirect(reverse('accounts:profile'))
+
+    return render(request, 'users/search_profile.html', {'form': form})

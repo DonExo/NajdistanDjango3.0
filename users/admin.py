@@ -3,13 +3,11 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User
+from .models import User, SearchProfiles
 
 
 @admin.register(User)
 class UserAdmin(DjangoUserAdmin):
-    """Define admin model for custom User model with no email field."""
-
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'telephone', 'profile_image', )}),
@@ -27,5 +25,12 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     readonly_fields = ('identifier', )
+
+
+@admin.register(SearchProfiles)
+class SearchProfileAdmin(admin.ModelAdmin):
+    list_display = ('title', 'user', 'city', 'min_price', 'max_price', 'frequency')
+
+
 
 admin.site.unregister(Group)

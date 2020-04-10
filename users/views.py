@@ -64,4 +64,7 @@ def search_profile_create(request):
             messages.info(request, "Search Profile form added!")
             return redirect(reverse('accounts:profile'))
 
-    return render(request, 'users/search_profile.html', {'form': form})
+    return render(request, 'users/search_profile.html', {
+        'form': form,
+        'reached_max_sp': request.user.has_search_profile(),
+    })

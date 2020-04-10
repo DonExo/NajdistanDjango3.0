@@ -62,6 +62,10 @@ class User(AbstractUser, BaseModel):
     def get_search_profiles(self):
         return self.searchprofiles.all()
 
+    def has_search_profile(self):
+        #@TODO: Change is_staff with PREMIUM user
+        return not self.is_staff and self.searchprofiles.all().count() >= 1
+
 
 class SearchProfiles(BaseModel):
     """

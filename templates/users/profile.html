@@ -36,6 +36,6 @@
             </p>
         {% endfor %}
     {% else %}
-        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
+        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'accounts:sp_create' %}">create one?</a></p>
     {% endif %}
 {% endblock %}

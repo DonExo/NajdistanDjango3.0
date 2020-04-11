@@ -82,6 +82,7 @@ class SearchProfiles(BaseModel):
     max_price = models.DecimalField(_("Maximum price"),  max_digits=9, decimal_places=0)
     interior = models.CharField(max_length=15, choices=INTERIOR_CHOICES, default='unspecified')
     frequency = models.CharField(_("Update frequency"), choices=UPDATE_FREQUENCIES, default='weekly', max_length=255)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ('user', 'title')

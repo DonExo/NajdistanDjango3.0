@@ -30,9 +30,13 @@
     {% if search_profiles %}
         {% for sp in search_profiles %}
             <p>
-            {{ sp.title }} - {{ sp.city }} - {{ sp.listing_type }} - {{ sp.min_rooms }}
-            - {{ sp.min_bedrooms }} - Price range: {{ sp.min_price }}: {{ sp.max_price }}
-            - {{ sp.interior }} - {{ sp.frequency }} <a href="#">Update</a> - <a href="#">Delete</a>
+                {{ sp.title }} - {{ sp.city }} - {{ sp.listing_type }} - {{ sp.min_rooms }}
+                - {{ sp.min_bedrooms }} - Price range: {{ sp.min_price }}: {{ sp.max_price }}
+                - {{ sp.interior }} - {{ sp.frequency }}
+                - <a href="{% url 'accounts:sp_update' sp.pk %}">Update</a>
+                - <a href="{% url 'accounts:sp_delete' sp.pk %}"
+                     onclick="return confirm('Are you sure you want to delete this listing?')">Delete
+                  </a>
             </p>
         {% endfor %}
     {% else %}

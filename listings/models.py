@@ -53,7 +53,7 @@ class Listing(BaseModel):
     description = models.TextField(_('Description'))
     address = models.CharField(_('Address'), max_length=80, blank=True)
     zip_code = models.CharField(_('Zip-code'), max_length=10, validators=[RegexValidator(regex=REGEX_ZIPCODE_VALIDATOR, message='Zip code must be in format 1234AB', code='invalid_zipcode')])
-    home_type = models.CharField(_('Type of home'), max_length=10, default='house', choices=HOME_TYPE, help_text=_('Designates the type of home: House or Apartment'))
+    home_type = models.CharField(_('Type of home'), max_length=10, default='house', choices=HOME_TYPE)
     quadrature = models.PositiveSmallIntegerField(_('Quadrature'))
     rooms = models.PositiveSmallIntegerField(_('Rooms'))
     bedrooms = models.PositiveSmallIntegerField(_('Bedrooms'))
@@ -74,7 +74,7 @@ class Listing(BaseModel):
     is_approved = models.NullBooleanField(_('Approved?'), default=None)
     rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
     # @TODO: If the house is for selling - some fields should be deleted in the form
-    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE, help_text=_('Designates the type of listings: rent or sell'))
+    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE)
     cover_image = models.ImageField(upload_to=listing_image_directory_path)
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
     slug = models.SlugField(max_length=255, unique=True)

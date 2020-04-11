@@ -17,7 +17,7 @@ class UserSearchProfileForm(forms.ModelForm):
 
     class Meta:
         model = SearchProfiles
-        exclude = ('user', )
+        exclude = ('user', 'is_active')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

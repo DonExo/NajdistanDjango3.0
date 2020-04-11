@@ -67,7 +67,7 @@ def search_profile_create(request):
             messages.info(request, _("Search Profile added!"))
             return redirect(reverse('accounts:profile'))
 
-    return render(request, 'users/sp_create.html', {
+    return render(request, 'sp/sp_create.html', {
         'form': form,
         'reached_max_sp': request.user.has_search_profile(),
     })
@@ -97,8 +97,20 @@ def search_profile_update(request, pk):
             return redirect(reverse('accounts:profile'))
         else:
             context.update({'form': form})
-            return render(request, 'users/sp_update.html', context)
+            return render(request, 'sp/sp_update.html', context)
 
     form = UserSearchProfileForm(user=request.user, instance=search_profile, update=True)
     context.update({'form': form})
-    return render(request, 'users/sp_update.html', context)
+    return render(request, 'sp/sp_update.html', context)
+
+
+#@TODO: Make this Ajax request with no page refresh
+@login_required()
+def toggle_sp_status(request, pk):
+    search_profile = get_object_or_404(SearchProfiles, pk=pk)
+    if search_profile.user != request.user:
+        return HttpResponseForbidden(_(FORBIDDEN_MESAGE))
+    search_profile.is_active = not search_profile.is_active
+    search_profile.save()
+    messages.info(request, _("Search Profile Updated."))
+    return redirect(reverse('accounts:profile'))

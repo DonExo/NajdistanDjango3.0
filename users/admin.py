@@ -29,7 +29,7 @@ class UserAdmin(DjangoUserAdmin):
 
 @admin.register(SearchProfiles)
 class SearchProfileAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'city', 'min_price', 'max_price', 'frequency')
+    list_display = ('title', 'pk', 'user', 'city', 'min_price', 'max_price', 'frequency', 'is_active')
 
 
 

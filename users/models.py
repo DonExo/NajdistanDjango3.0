@@ -54,13 +54,13 @@ class User(AbstractUser, BaseModel):
         return self.avatar
 
     def get_listings(self):
-        return self.listings.all()
+        return self.listings.prefetch_related('city').all()
 
     def get_absolute_url(self):
         return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
 
     def get_search_profiles(self):
-        return self.searchprofiles.all()
+        return self.searchprofiles.prefetch_related('city').all()
 
     def has_search_profile(self):
         #@TODO: Change is_staff with PREMIUM user

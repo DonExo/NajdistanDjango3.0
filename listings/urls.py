@@ -9,6 +9,5 @@ urlpatterns = [
     path('create/', views.ListingCreateView.as_view(), name='create'),
     path('<slug:slug>/', views.ListingDetailView.as_view(), name='detail'), # Remove the last slash if Django complains
     path('<slug:slug>/update/', views.ListingUpdateView.as_view(), name='update'),
-    # path('detail/<int:pk>/delete/', views.ListingDetailView.as_view(), name='delete'),
-    path('<slug:slug>/delete/', views.delete_listing, name='delete'),
+    path('<slug:slug>/delete/', views.ListingDeleteView.as_view(), name='delete'),
 ]

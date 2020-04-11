@@ -7,9 +7,10 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
 from users.models import BaseModel, User
+from users.utils import listing_image_directory_path
 from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE
 
-from users.utils import listing_image_directory_path
+from .managers import CustomListingQuerySet
 
 
 class Place(models.Model):
@@ -79,6 +80,8 @@ class Listing(BaseModel):
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
     slug = models.SlugField(max_length=255, unique=True)
 
+    objects = CustomListingQuerySet.as_manager()
+
     def __str__(self):
         return self.slug
 
@@ -94,6 +97,10 @@ class Listing(BaseModel):
             date_time_object = datetime.utcnow().strftime("%d%m%Y%H%M%S")
             self.slug = "-".join([slugify(self.title), date_time_object])
         super().save(*args, **kwargs)
+
+    def delete(self, using=None, keep_parents=False):
+        self.cover_image.storage.delete(self.cover_image.name)
+        super().delete()
 
 
 class Image(BaseModel):

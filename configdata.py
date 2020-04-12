@@ -20,8 +20,6 @@ INTERIOR_CHOICES = (
     ('upholstered', 'Semi furnished')
 )
 
-# HEATING_TYPE = ('Central', 'Electricity', 'Woods', 'Gas', 'Other', 'None')
-
 UPDATE_FREQUENCIES = (
     ('daily', "Daily"),
     ('weekly', "Weekly"),

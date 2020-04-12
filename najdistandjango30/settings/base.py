@@ -17,6 +17,10 @@ ALLOWED_HOSTS = [""]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 # Django-registration-redux
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1

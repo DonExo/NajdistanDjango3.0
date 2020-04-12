@@ -6,7 +6,7 @@
 
     <form action="." method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="button" value="Generate dummy data" onclick="generateRandom()" />
+        <input type="button" value="Generate dummy data" onclick="generateListingData()" />
         <input type="submit" value="Submit" />
         {{ form.as_p }}
         <input type="submit" value="Submit" />

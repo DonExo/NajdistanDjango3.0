@@ -1,28 +1,19 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     {% block title %}
         <title>Najdistan Django 3.0</title>
     {% endblock %}
-
     {% block meta %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endblock %}
 
-
 </head>
 
-
 <body>
-
     <a href="{% url 'index' %}"><h4>HOME</h4></a>
-
     {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -51,41 +42,6 @@
     {% block content %}
     {% endblock %}
 
-    <script>
-        function generateRandom() {
-            var title = document.getElementById('id_title');
-            title.value = "Title #" + Math.floor(1000 + Math.random() * 9000);
-
-            var description = document.getElementById('id_description');
-            description.value = "Description #" + Math.floor(1000 + Math.random() * 9000);
-
-            var city = document.getElementById('id_city');
-            city.value = Math.floor(2 + Math.random() * 7);
-
-            var zip_code = document.getElementById('id_zip_code');
-            random1000 = Math.floor(1000 + Math.random() * 9000);
-            zip_code.value = random1000 + "AB";
-
-            var quadrature = document.getElementById('id_quadrature');
-            quadrature.value = Math.floor(50 + Math.random() * 100);
-
-            var rooms = document.getElementById('id_rooms');
-            rooms.value = Math.floor(2 + Math.random() * 3);
-
-            var bedrooms = document.getElementById('id_bedrooms');
-            bedrooms.value = Math.floor(1 + Math.random() * 3);
-
-            var floor = document.getElementById('id_floor');
-            floor.value = Math.floor(1 + Math.random() * 8);
-
-            var heating = document.getElementById('id_heating');
-            heating.value = Math.floor(3 + Math.random() * 3);
-
-            var price = document.getElementById('id_price');
-            price.value = random1000;
-        }
-    </script>
-
-
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

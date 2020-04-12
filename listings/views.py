@@ -63,12 +63,13 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
         return self.request.user == self.get_object().user
 
 
-class ListingDeleteView(generic.RedirectView):
+class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        slug = self.kwargs.get('slug')
-        listing = get_object_or_404(Listing, slug=slug)
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
         if listing.user != self.request.user:
-            return HttpResponseForbidden(FORBIDDEN_MESAGE)
+            messages.error(self.request, FORBIDDEN_MESAGE)
+            return reverse('listings:detail', kwargs={'slug': listing.slug})
+            # return HttpResponseForbidden(FORBIDDEN_MESAGE)  # This raises error otherwise
         listing.delete()
         messages.info(self.request, "Deleted listing!")
         return reverse('accounts:profile')

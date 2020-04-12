@@ -8,7 +8,7 @@ from django.core.validators import RegexValidator
 
 from users.models import BaseModel, User
 from users.utils import listing_image_directory_path
-from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE
+from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE, HEATING_CHOICES
 
 from .managers import CustomListingQuerySet
 
@@ -28,16 +28,6 @@ class Place(models.Model):
 
     class Meta:
         unique_together = ('region', 'city')
-
-
-class HeatingChoices(models.Model):
-    """
-    Class that represents the heating choices of a listings
-    """
-    name = models.CharField(_("Heating type"), max_length=255)
-
-    def __str__(self):
-        return self.name
 
 
 class Listing(BaseModel):
@@ -60,7 +50,7 @@ class Listing(BaseModel):
     bedrooms = models.PositiveSmallIntegerField(_('Bedrooms'))
     floor = models.PositiveSmallIntegerField(_('Floor'))
     interior = models.CharField(max_length=255, choices=INTERIOR_CHOICES, default='unspecified')
-    heating = models.ManyToManyField(HeatingChoices)
+    heating = models.CharField(max_length=50, choices=HEATING_CHOICES, default='Gas')
     price = models.DecimalField(_('Price in EUR'), max_digits=9, decimal_places=0)
     basement = models.BooleanField(_('Basement'), default=False)
     parking = models.BooleanField(_('Parking place'), default=False)

@@ -20,6 +20,14 @@ INTERIOR_CHOICES = (
     ('upholstered', 'Semi furnished')
 )
 
+HEATING_CHOICES = (
+    ('central', 'Central Heating'),
+    ('gas', 'Gas'),
+    ('ac', 'AC'),
+    ('other', 'Other...'),
+    ('none', 'None')
+)
+
 UPDATE_FREQUENCIES = (
     ('daily', "Daily"),
     ('weekly', "Weekly"),

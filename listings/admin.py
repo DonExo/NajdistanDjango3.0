@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Place, Listing, HeatingChoices, Saved, Comment, Image
+from .models import Place, Listing, Saved, Comment, Image
 
 
 @admin.register(Place)
@@ -25,11 +25,6 @@ class ListingAdmin(admin.ModelAdmin):
         if count:
             self.message_user(request, f"{count} listings have been approved!")
     approve.short_description = 'Approve listings'
-
-
-@admin.register(HeatingChoices)
-class HeatingChoicesAdmin(admin.ModelAdmin):
-    list_display = ('name', )
 
 
 @admin.register(Saved)

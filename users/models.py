@@ -86,6 +86,7 @@ class SearchProfiles(BaseModel):
 
     class Meta:
         unique_together = ('user', 'title')
+        verbose_name_plural = 'Search profiles'
 
     def __str__(self):
         return self.title

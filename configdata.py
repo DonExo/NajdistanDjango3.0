@@ -21,9 +21,11 @@ INTERIOR_CHOICES = (
 )
 
 HEATING_CHOICES = (
-    ('central', 'Central Heating'),
+    ('central', 'Central heating'),
+    ('solar', 'Solar energy'),
+    ('electricity', 'Electricity'),
     ('gas', 'Gas'),
-    ('ac', 'AC'),
+    ('wood', 'Wood stove'),
     ('other', 'Other...'),
     ('none', 'None')
 )

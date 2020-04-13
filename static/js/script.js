@@ -25,7 +25,7 @@ function generateListingData() {
             floor.value = Math.floor(1 + Math.random() * 8);
 
             var heating = document.getElementById('id_heating');
-            heating.value = Math.floor(3 + Math.random() * 3);
+            heating.value = 'central'
 
             var price = document.getElementById('id_price');
             price.value = random1000;

@@ -14,17 +14,23 @@ class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
     # @TODO: Add images inline for each listing
 
-    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved')
+    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count')
     search_fields = ('city', 'title', 'description', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
-    actions = ['approve', ]
+    actions = ['approve', 'reject', ]
 
     def approve(self, request, queryset):
         count = queryset.filter(is_approved=None).update(is_approved=True)
         if count:
             self.message_user(request, f"{count} listings have been approved!")
     approve.short_description = 'Approve listings'
+
+    def reject(self, request, queryset):
+        count = queryset.update(is_approved=False)
+        if count:
+            self.message_user(request, f"{count} listings have been rejected!")
+    reject.short_description = 'Reject listings'
 
 
 @admin.register(Saved)

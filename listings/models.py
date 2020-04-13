@@ -78,6 +78,9 @@ class Listing(BaseModel):
     def get_images(self):
         return self.images.all()
 
+    def get_images_count(self):
+        return int(self.images.all().count()  + 1)  # this is the cover_image
+
     def get_absolute_url(self):
         return reverse('listings:detail', kwargs={'slug': self.slug})
 
@@ -88,8 +91,12 @@ class Listing(BaseModel):
             self.slug = "-".join([slugify(self.title), date_time_object])
         super().save(*args, **kwargs)
 
+    # This ensures that all related images are deleted from the system
     def delete(self, using=None, keep_parents=False):
         self.cover_image.storage.delete(self.cover_image.name)
+        for image in self.images.all():
+            image.delete()
+            image.image.storage.delete(image.image.name)
         super().delete()
 
 

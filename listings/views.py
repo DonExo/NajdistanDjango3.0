@@ -1,22 +1,25 @@
 import imghdr # internal python library for checking image type
+
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django_filters.views import FilterView
+
 from .models import Listing, Image
 from .forms import ListingCreateForm, ListingUpdateForm
+from .filters import ListingFilter
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
 
-class ListingListView(generic.ListView):
-    # queryset = Listing.objects.approved()
-    # queryset = Listing.objects.all().order_by('?')
-    queryset = Listing.objects.all()
+class ListingListView(FilterView):
+    queryset = Listing.objects.all() # .approved()
     template_name = 'listings/list.html'
     context_object_name = 'objects'
-    paginate_by = PAGINATOR_ITEMS_PER_PAGE
+    paginate_by = 2  # PAGINATOR_ITEMS_PER_PAGE
+    filterset_class = ListingFilter
 
     def get_queryset(self):
         return self.queryset.prefetch_related('user', 'city')

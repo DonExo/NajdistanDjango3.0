@@ -7,14 +7,16 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from .models import Listing, Image
 from .forms import ListingCreateForm, ListingUpdateForm
-from configdata import FORBIDDEN_MESAGE
+from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
 
 class ListingListView(generic.ListView):
     # queryset = Listing.objects.approved()
+    # queryset = Listing.objects.all().order_by('?')
     queryset = Listing.objects.all()
     template_name = 'listings/list.html'
     context_object_name = 'objects'
+    paginate_by = PAGINATOR_ITEMS_PER_PAGE
 
     def get_queryset(self):
         return self.queryset.prefetch_related('user', 'city')
@@ -31,6 +33,11 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
+
+    # def get_initial(self):
+    #     initial = super().get_initial()
+    #     initial['title'] = 'Test title'
+    #     return initial
 
     def get_success_url(self):
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})

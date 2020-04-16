@@ -9,6 +9,10 @@ class PlaceAdmin(admin.ModelAdmin):
     list_filter = ('region', )
 
 
+class InlineImagelAdmin(admin.TabularInline):
+    model = Image
+
+
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
@@ -19,6 +23,7 @@ class ListingAdmin(admin.ModelAdmin):
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
     actions = ['approve', 'reject', ]
+    inlines = [InlineImagelAdmin, ]
 
     def approve(self, request, queryset):
         count = queryset.filter(is_approved=None).update(is_approved=True)
@@ -41,6 +46,8 @@ class SavedAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'listing', 'body')
+
+
 
 
 @admin.register(Image)

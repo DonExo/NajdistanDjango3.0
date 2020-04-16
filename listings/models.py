@@ -72,6 +72,9 @@ class Listing(BaseModel):
 
     objects = CustomListingQuerySet.as_manager()
 
+    class Meta:
+        ordering = ['-created_at', ]
+
     def __str__(self):
         return self.slug
 

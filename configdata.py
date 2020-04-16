@@ -48,3 +48,5 @@ REGIONS_AND_CITIES = {
 REGEX_ZIPCODE_VALIDATOR = "^[0-9]{4}[a-zA-Z]{2}$"
 
 FORBIDDEN_MESAGE = "You don't have sufficient access to do this action"
+
+PAGINATOR_ITEMS_PER_PAGE = 10

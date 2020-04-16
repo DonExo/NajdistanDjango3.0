@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # Third party libraries
     'storages',
+    'django_filters',
 
     # Local apps
     'users',

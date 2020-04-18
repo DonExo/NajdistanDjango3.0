@@ -14,7 +14,7 @@
     <h4>Listings:</h4>
     {% if listings %}
         {% for object in listings %}
-            {% include 'listings/card.html' %}
+            {% include 'includes/listings/card.html' %}
         {% endfor %}
     {% else %}
         <p>{{ user.first_name }} doens't have any homes listed for sale :(

@@ -17,7 +17,7 @@
     <h4>Your listings:</h4>
     {% if listings %}
         {% for object in listings %}
-            {% include 'listings/card.html' %}
+            {% include 'includes/listings/card.html' %}
         {% endfor %}
     {% else %}
         <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
@@ -29,16 +29,7 @@
     <h4>Your Search Profiles:</h4>
     {% if search_profiles %}
         {% for sp in search_profiles %}
-            <p>
-                {{ sp.title }} - {{ sp.city }} - {{ sp.listing_type }} - {{ sp.min_rooms }}
-                - {{ sp.min_bedrooms }} - Price range: {{ sp.min_price }}: {{ sp.max_price }}
-                - {{ sp.interior }} - {{ sp.frequency }} - {{ sp.is_active }}
-                - <a href="{% url 'accounts:sp_update' sp.pk %}">Update</a>
-                - <a href="{% url 'accounts:sp_delete' sp.pk %}"
-                     onclick="return confirm('Are you sure you want to delete this listing?')">Delete
-                  </a>
-                - <a href="{% url 'accounts:sp_toggle' sp.pk %}">{% if sp.is_active %}Disable{% else %}Enable{% endif %}</a>
-            </p>
+            {% include 'includes/users/search_profile.html' %}
         {% endfor %}
     {% else %}
         <p>You don't have any Search Profiles. Would you like to <a href="{% url 'accounts:sp_create' %}">create one?</a></p>

@@ -24,11 +24,11 @@ class ListingListView(FilterView):
     def get_queryset(self):
         return self.queryset.prefetch_related('user', 'city')
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['foo'] = 'bar'  # Let's add something to the context
         return context
+
 
 class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = reverse_lazy('auth_login')

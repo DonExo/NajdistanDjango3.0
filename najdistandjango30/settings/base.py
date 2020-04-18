@@ -28,6 +28,8 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
     # Django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'django.contrib.sites',
-    'registration', # django-registration-redux, needs to be at this position
+    'registration',  # django-registration-redux, needs to be at this position
+
     'django.contrib.admin',
 
     # Third party libraries

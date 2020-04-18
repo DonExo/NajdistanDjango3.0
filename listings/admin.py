@@ -20,6 +20,7 @@ class ListingAdmin(admin.ModelAdmin):
 
     list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count')
     search_fields = ('city', 'title', 'description', 'user')
+    autocomplete_fields = ('city', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
     actions = ['approve', 'reject', ]

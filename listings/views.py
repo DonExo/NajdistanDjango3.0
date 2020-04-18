@@ -18,7 +18,7 @@ class ListingListView(FilterView):
     queryset = Listing.objects.all() # .approved()
     template_name = 'listings/list.html'
     context_object_name = 'objects'
-    paginate_by = 2  # PAGINATOR_ITEMS_PER_PAGE
+    paginate_by = PAGINATOR_ITEMS_PER_PAGE
     filterset_class = ListingFilter
 
     def get_queryset(self):

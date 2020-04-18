@@ -18,7 +18,7 @@ def index(request):
 @login_required
 def profile(request):
     context = {
-        'title': "Profile be",
+        'title': 'Profile',
         'user': request.user,
         'listings': request.user.get_listings(),
         'search_profiles': request.user.get_search_profiles(),
@@ -26,16 +26,21 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
-@login_required()
+@login_required
 def update(request):
-    form = UserUpdateForm(instance=request.user)
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.info(request, "Account updated successfully!")
             return redirect(reverse('accounts:profile'))
-    context = {'title': 'Update profile', 'form': form}
+
+    form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'title': 'Profile update',
+        'form': form
+    }
     return render(request, 'users/update.html', context)
 
 
@@ -49,6 +54,7 @@ def user_identifier(request, identifier):
         return redirect(reverse('accounts:profile'))
 
     context = {
+        'title': 'User profile',
         'user': user,
         'listings': user.get_listings()
     }
@@ -56,8 +62,6 @@ def user_identifier(request, identifier):
 
 @login_required()
 def search_profile_create(request):
-    form = UserSearchProfileForm(user=request.user)
-
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, user=request.user)
         if form.is_valid():
@@ -67,10 +71,14 @@ def search_profile_create(request):
             messages.info(request, _("Search Profile added!"))
             return redirect(reverse('accounts:profile'))
 
-    return render(request, 'sp/sp_create.html', {
+    form = UserSearchProfileForm(user=request.user)
+
+    context = {
+        'title': "Search Profile",
         'form': form,
-        'reached_max_sp': request.user.has_search_profile(),
-    })
+        'reached_max_sp': request.user.has_search_profile()
+    }
+    return render(request, 'sp/sp_create.html', context)
 
 @login_required()
 def search_profile_delete(request, pk):
@@ -88,7 +96,6 @@ def search_profile_update(request, pk):
     if search_profile.user != request.user:
         return HttpResponseForbidden(_(FORBIDDEN_MESAGE))
 
-    context = {'title': _('Update Search Profile')}
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, instance=search_profile, user=request.user, update=True)
         if form.is_valid():
@@ -96,11 +103,14 @@ def search_profile_update(request, pk):
             messages.info(request, _("Search Profile updated!"))
             return redirect(reverse('accounts:profile'))
         else:
-            context.update({'form': form})
-            return render(request, 'sp/sp_update.html', context)
+            return render(request, 'sp/sp_update.html', {'form': form})
 
     form = UserSearchProfileForm(user=request.user, instance=search_profile, update=True)
-    context.update({'form': form})
+
+    context = {
+        'title': 'Update Search Profile',
+        'form': form
+    }
     return render(request, 'sp/sp_update.html', context)
 
 

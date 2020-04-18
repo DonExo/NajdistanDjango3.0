@@ -1,3 +1,5 @@
+PROJECT_NAME = "Najdistan v3.0"
+
 LISTING_TYPE = (
     ('rent', 'For rent'),
     ('sell', 'For sell')
@@ -49,4 +51,4 @@ REGEX_ZIPCODE_VALIDATOR = "^[0-9]{4}[a-zA-Z]{2}$"
 
 FORBIDDEN_MESAGE = "You don't have sufficient access to do this action"
 
-PAGINATOR_ITEMS_PER_PAGE = 10
+PAGINATOR_ITEMS_PER_PAGE = 5

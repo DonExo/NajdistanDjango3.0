@@ -28,8 +28,6 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
-    'dal',
-    'dal_select2',
     # Django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,12 +38,13 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'registration',  # django-registration-redux, needs to be at this position
-
     'django.contrib.admin',
 
     # Third party libraries
     'storages',
     'django_filters',
+    'dal',  # Django-autocomplete-simple
+    'dal_select2',
 
     # Local apps
     'users',

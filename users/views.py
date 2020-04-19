@@ -11,10 +11,6 @@ from .models import User, SearchProfiles
 from configdata import FORBIDDEN_MESAGE
 
 
-def index(request):
-    return render(request, 'users/index.html', {'foo': 'bar'})
-
-
 @login_required
 def profile(request):
     context = {

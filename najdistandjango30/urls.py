@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 
-from users import views
+from listings.views import ListingListView
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', ListingListView.as_view(), name='list'),
     path('admin/', admin.site.urls),
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
     path('accounts/', include('registration.backends.default.urls')),
@@ -21,8 +21,6 @@ if settings.DEBUG:
 ] + urlpatterns
 #
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
 
 
 # accounts/ ^activate/complete/$ [name='registration_activation_complete']

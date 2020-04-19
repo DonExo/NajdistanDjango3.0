@@ -24,10 +24,9 @@ class ListingListView(FilterView):
     def get_queryset(self):
         return self.queryset.prefetch_related('user', 'city')
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['foo'] = 'bar'  # Let's add something to the context
+        context['title'] = 'All Listings'
         return context
 
 class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
@@ -48,6 +47,11 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Create Listing'
+        return context
 
 
 class ListingDetailView(generic.DetailView):
@@ -96,6 +100,11 @@ class ListingDetailView(generic.DetailView):
         Image.objects.bulk_create(image_objects)
         return redirect(request.get_raw_uri())
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listing details'
+        return context
+
 
 class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Listing
@@ -112,6 +121,11 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     # Checks if the listing owner is different than the request user
     def test_func(self):
         return self.request.user == self.get_object().user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Update Listing'
+        return context
 
 
 class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):

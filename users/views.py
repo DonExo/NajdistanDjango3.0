@@ -26,10 +26,10 @@ def profile(request):
 def update(request):
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
+        if form.changed_data and form.is_valid():
             form.save()
             messages.info(request, "Account updated successfully!")
-            return redirect(reverse('accounts:profile'))
+        return redirect(reverse('accounts:profile'))
 
     form = UserUpdateForm(instance=request.user)
 

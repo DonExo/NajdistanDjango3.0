@@ -56,6 +56,7 @@ The codename of this project is "Najdistan v3.0". When it is ready for productio
 * SMS verification
 * Show listings on map
 * Cron jobs for the Search Profiles
+* Translations
 * Unit tests
 * ...
 

@@ -6,14 +6,17 @@
 
 {% block content %}
 
-    <h2>ALL Listings</h2>
-
-    <p>Create a new <a href="{% url 'listings:create' %}">listing?</a> </p>
+    <h2>Search Listings</h2>
 
     <form action="{% url 'listings:search' %}" method="get" autocomplete="off">
         {{ filter.form.as_p }}
         <input type="submit" value="Search">
     </form>
 
+    {% for object in object_list %}
+        {% include 'includes/listings/card.html' %}
+    {% endfor %}
+
+    {% include 'includes/listings/pagination.html' %}
 
 {% endblock %}

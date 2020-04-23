@@ -3,10 +3,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from listings.views import ListingListView
+from listings.views import ListingIndexView
 
 urlpatterns = [
-    path('', ListingListView.as_view(), name='list'),
+    path('', ListingIndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
     path('accounts/', include('registration.backends.default.urls')),

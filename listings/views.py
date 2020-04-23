@@ -14,9 +14,20 @@ from .filters import ListingFilter
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
 
-class ListingListView(FilterView):
-    queryset = Listing.objects.all() # .approved()
+class ListingIndexView(FilterView):
     template_name = 'listings/list.html'
+    filterset_class = ListingFilter
+
+    # TODO: Check why it has slow database connection on this view
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'All Listings'
+        return context
+
+class ListingSearchView(FilterView):
+    queryset = Listing.objects.all()  # .approved()
+    template_name = 'listings/search.html'
     context_object_name = 'objects'
     paginate_by = PAGINATOR_ITEMS_PER_PAGE
     filterset_class = ListingFilter
@@ -26,7 +37,7 @@ class ListingListView(FilterView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'All Listings'
+        context['title'] = 'Search Listings'
         return context
 
 class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
@@ -35,11 +46,6 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
-
-    # def get_initial(self):
-    #     initial = super().get_initial()
-    #     initial['title'] = 'Test title'
-    #     return initial
 
     def get_success_url(self):
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})

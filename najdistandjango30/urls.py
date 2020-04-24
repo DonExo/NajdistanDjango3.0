@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('accounts/', include('registration.backends.default.urls')),
 
-    path('accounts/', include(('users.urls', 'users'), namespace='accounts')),
+    path('user/', include(('users.urls', 'users'), namespace='accounts')),
 
     path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
 ]

@@ -1,5 +1,6 @@
 import os
 
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 env_path = Path('.') / '.env'
@@ -25,8 +26,8 @@ STATICFILES_DIRS = [
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = reverse_lazy('accounts:profile')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 INSTALLED_APPS = [
     # Django apps

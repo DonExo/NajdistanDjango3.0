@@ -25,7 +25,8 @@ STATICFILES_DIRS = [
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     # Django apps
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     # Local apps
+    'authy',
     'users',
     'listings',
     'reports',

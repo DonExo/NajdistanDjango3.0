@@ -9,8 +9,12 @@ urlpatterns = [
     path('', ListingIndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
+
     path('accounts/', include('registration.backends.default.urls')),
+
     path('accounts/', include(('users.urls', 'users'), namespace='accounts')),
+
+    path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
 ]
 
 

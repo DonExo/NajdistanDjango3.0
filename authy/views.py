@@ -7,12 +7,12 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView
 
 from registration.backends.default.views import RegistrationView
 
 from authy.forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm
+from configdata import LOGIN_COOKIE_EXPIRY
 
 
 class LoginView(auth_views.LoginView):
@@ -22,7 +22,7 @@ class LoginView(auth_views.LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Log-in'
+        context['title'] = _('Log-in')
         return context
 
     def get_success_url(self):
@@ -34,7 +34,7 @@ class LoginView(auth_views.LoginView):
         remember_me = form.cleaned_data.get('remember_me', None)
         auth_login(self.request, form.get_user())
         if remember_me:
-            self.request.session.set_expiry(1209600)  # 2 weeks
+            self.request.session.set_expiry(LOGIN_COOKIE_EXPIRY)
         return super().form_valid(form)
 
 
@@ -53,6 +53,15 @@ class LogoutView(auth_views.LogoutView):
             messages.error(request, _("You can not access this route if you are not logged in!"))
             return HttpResponseRedirect('/')
         return super().dispatch(request, *args, **kwargs)
+
+
+class RegisterView(RegistrationView):
+    form_class = CustomRegisterForm
+    redirect_authenticated_user = True
+    template_name = 'authy/register.html'
+    success_url = 'authy:register_complete'
+    disallowed_url = 'authy:register_closed'
+    extra_context = {'title': _('Register')}
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
@@ -89,7 +98,7 @@ class PasswordResetView(auth_views.PasswordResetView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Password reset'
+        context['title'] = _('Password reset')
         return context
 
     @method_decorator(never_cache)
@@ -101,51 +110,11 @@ class PasswordResetView(auth_views.PasswordResetView):
         return super().dispatch(request, *args, **kwargs)
 
 
-# TODO: Pass the e-mail value from the upper CBV (session)
-class PasswordResetDoneView(TemplateView):
-    template_name = 'authy/password-reset-done.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Password reset initiated'
-        return context
-
-
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     success_url = reverse_lazy('authy:password_reset_complete')
     template_name = 'authy/password_reset_confirm.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Set new password'
-        return context
-
-
-class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
-    template_name = 'authy/password_reset_complete.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Password reset completed'
-        return context
-
-
-class RegisterView(RegistrationView):
-    template_name = 'authy/register.html'
-    success_url = 'authy:register_complete'
-    redirect_authenticated_user = True
-    form_class = CustomRegisterForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Register'
-        return context
-
-
-class RegisterCompleteView(RegistrationView):
-    template_name = 'authy/register_complete.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Registration complete'
+        context['title'] = _('Set new password')
         return context

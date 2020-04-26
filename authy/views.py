@@ -18,20 +18,12 @@ from configdata import LOGIN_COOKIE_EXPIRY
 class LoginView(auth_views.LoginView):
     redirect_authenticated_user = True
     form_class = CustomLoginForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = _('Log-in')
-        return context
-
-    def get_success_url(self):
-        url = super().get_success_url()
-        messages.info(self.request, _("You've successfully logged in!"))
-        return url
+    extra_context = {'title': _('Log-in')}
 
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me', None)
         auth_login(self.request, form.get_user())
+        messages.info(self.request, _("You've successfully logged in!"))
         if remember_me:
             self.request.session.set_expiry(LOGIN_COOKIE_EXPIRY)
         return super().form_valid(form)

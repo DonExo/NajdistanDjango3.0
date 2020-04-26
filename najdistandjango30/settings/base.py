@@ -33,9 +33,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # REGISTRATION_OPEN = False  # Disables registering of new users
 
-# TODO: SREDI gi utre ovie, isto izbrisi nepotrebnite url-a od bas.html i slicno
-# INCLUDE_REGISTER_URL = False
-# INCLUDE_AUTH_URLS = False
+INCLUDE_REGISTER_URL = False
+INCLUDE_AUTH_URLS = False
 
 INSTALLED_APPS = [
     # Django apps

@@ -22,25 +22,19 @@ urlpatterns = [
         extra_context={'title': _('Registration closed')},
     ), name='register_closed'),
 
-
-
-
-
     path('pw/change/', views.PasswordChangeView.as_view(), name='password_change'),
 
     path('pw/change-done/', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
 
-
-
     path('pw/reset/', views.PasswordResetView.as_view(), name='password_reset'),
 
     path('pw/reset-done/', TemplateView.as_view(
-        template_name = 'authy/password-reset-done.html',
+        template_name ='registration/password_reset_done.html',
         extra_context={'title': _('Password reset initiated')},
     ), name='password_reset_done'),
 
     path('pw/reset-complete/', TemplateView.as_view(
-        template_name='authy/password_reset_complete.html',
+        template_name='registration/password_reset_complete.html',
         extra_context={'title': _("Password reset completed")},
     ), name='password_reset_complete'),
 

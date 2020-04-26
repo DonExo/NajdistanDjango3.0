@@ -64,11 +64,7 @@ class RegisterView(RegistrationView):
 
 class PasswordChangeView(auth_views.PasswordChangeView):
     success_url = reverse_lazy('authy:password_change_done')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Password change'
-        return context
+    extra_context = {'title': _('Password change')}
 
 
 class PasswordChangeDoneView(RedirectView):
@@ -87,16 +83,10 @@ class PasswordChangeDoneView(RedirectView):
 
 
 class PasswordResetView(auth_views.PasswordResetView):
-    template_name = 'authy/password-reset.html'
-    email_template_name = 'authy/password_reset_email.html'
-    success_url = reverse_lazy('authy:password_reset_done')
-    redirect_authenticated_user = True
     form_class = CustomPasswordResetForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = _('Password reset')
-        return context
+    redirect_authenticated_user = True
+    extra_context = {'title': _('Password reset')}
+    success_url = reverse_lazy('authy:password_reset_done')
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
@@ -109,9 +99,4 @@ class PasswordResetView(auth_views.PasswordResetView):
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     success_url = reverse_lazy('authy:password_reset_complete')
-    template_name = 'authy/password_reset_confirm.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = _('Set new password')
-        return context
+    extra_context = {'title': _('Set new password')}

@@ -1,17 +1,24 @@
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.generic import RedirectView
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.generic import RedirectView, TemplateView
+
+from registration.backends.default.views import RegistrationView
+
+from authy.forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm
 
 
 class LoginView(auth_views.LoginView):
     template_name = "authy/login.html"
     redirect_authenticated_user = True
+    form_class = CustomLoginForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,6 +29,13 @@ class LoginView(auth_views.LoginView):
         url = super().get_success_url()
         messages.info(self.request, _("You've successfully logged in!"))
         return url
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me', None)
+        auth_login(self.request, form.get_user())
+        if remember_me:
+            self.request.session.set_expiry(1209600)  # 2 weeks
+        return super().form_valid(form)
 
 
 class LogoutView(auth_views.LogoutView):
@@ -64,3 +78,74 @@ class PasswordChangeDoneView(RedirectView):
     def send_password_change_confirmation_email(self):
         # TODO: Add the e-mail confirmation here
         print("Email confirmation: Password changed!")
+
+
+class PasswordResetView(auth_views.PasswordResetView):
+    template_name = 'authy/password-reset.html'
+    email_template_name = 'authy/password_reset_email.html'
+    success_url = reverse_lazy('authy:password_reset_done')
+    redirect_authenticated_user = True
+    form_class = CustomPasswordResetForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Password reset'
+        return context
+
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        # Prevent accessing the URL if user is not authenticated
+        if self.redirect_authenticated_user and self.request.user.is_authenticated:
+            messages.error(request, _("You can not access this route if you are logged in!"))
+            return HttpResponseRedirect('/user/profile/')
+        return super().dispatch(request, *args, **kwargs)
+
+
+# TODO: Pass the e-mail value from the upper CBV (session)
+class PasswordResetDoneView(TemplateView):
+    template_name = 'authy/password-reset-done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Password reset initiated'
+        return context
+
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    success_url = reverse_lazy('authy:password_reset_complete')
+    template_name = 'authy/password_reset_confirm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Set new password'
+        return context
+
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'authy/password_reset_complete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Password reset completed'
+        return context
+
+
+class RegisterView(RegistrationView):
+    template_name = 'authy/register.html'
+    success_url = 'authy:register_complete'
+    redirect_authenticated_user = True
+    form_class = CustomRegisterForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Register'
+        return context
+
+
+class RegisterCompleteView(RegistrationView):
+    template_name = 'authy/register_complete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Registration complete'
+        return context

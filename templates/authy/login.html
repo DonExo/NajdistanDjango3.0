@@ -9,11 +9,12 @@
 <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
+{#    <label for="remember_me">Remember me</label> <input type="checkbox" name="remember_me" id="remember_me">#}
     <input type="submit" value="{% trans 'Log in' %}" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-<p>{% trans "Forgot your password?" %} <a href="#">{% trans "Reset it" %}</a>.</p>
+<p>{% trans "Forgot your password?" %} <a href="{% url 'authy:password_reset' %}">{% trans "Reset it" %}</a>.</p>
 {#<p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>#}
 <p>{% trans "Not a member?" %} <a href="#">{% trans "Register" %}</a>.</p>
 {#<p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p>#}

@@ -5,16 +5,18 @@ from django.urls import path, include
 
 from listings.views import ListingIndexView
 
+from authy.views import LoginView
+
+
 urlpatterns = [
     path('', ListingIndexView.as_view(), name='index'),
-    path('admin/', admin.site.urls),
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
-
-    path('accounts/', include('registration.backends.default.urls')),
-
+    path('accounts/', include('registration.backends.default.urls')),  # Used only for the Activation part
     path('user/', include(('users.urls', 'users'), namespace='accounts')),
-
     path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
+    # Hack alert, this is needed for the ?next issue when changing the 'auth_login'..
+    path('login/', LoginView.as_view(), name='auth_login'),
+    path('admin/', admin.site.urls),
 ]
 
 

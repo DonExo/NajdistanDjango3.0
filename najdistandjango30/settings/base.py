@@ -31,7 +31,7 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# REGISTRATION_OPEN = False  # Disables registering of new users
+REGISTRATION_OPEN = False  # Disables registering of new users
 
 INCLUDE_REGISTER_URL = False
 INCLUDE_AUTH_URLS = False

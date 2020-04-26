@@ -13,18 +13,24 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
 
     path('register/complete/', TemplateView.as_view(
-        template_name='authy/register_complete.html',
+        template_name='registration/register_complete.html',
         extra_context={'title': _('Registration complete')},
     ), name='register_complete'),
 
     path('register/closed/', TemplateView.as_view(
-        template_name='authy/register_closed.html',
+        template_name='registration/register_closed.html',
         extra_context={'title': _('Registration closed')},
     ), name='register_closed'),
+
+
+
+
 
     path('pw/change/', views.PasswordChangeView.as_view(), name='password_change'),
 
     path('pw/change-done/', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+
+
 
     path('pw/reset/', views.PasswordResetView.as_view(), name='password_reset'),
 

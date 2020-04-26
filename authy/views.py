@@ -16,7 +16,6 @@ from configdata import LOGIN_COOKIE_EXPIRY
 
 
 class LoginView(auth_views.LoginView):
-    template_name = "authy/login.html"
     redirect_authenticated_user = True
     form_class = CustomLoginForm
 
@@ -58,14 +57,12 @@ class LogoutView(auth_views.LogoutView):
 class RegisterView(RegistrationView):
     form_class = CustomRegisterForm
     redirect_authenticated_user = True
-    template_name = 'authy/register.html'
     success_url = 'authy:register_complete'
     disallowed_url = 'authy:register_closed'
     extra_context = {'title': _('Register')}
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
-    template_name = 'authy/password-change.html'
     success_url = reverse_lazy('authy:password_change_done')
 
     def get_context_data(self, **kwargs):

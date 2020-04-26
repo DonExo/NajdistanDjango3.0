@@ -14,9 +14,10 @@ urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),  # Used only for the Activation part
     path('user/', include(('users.urls', 'users'), namespace='accounts')),
     path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
+    path('office/', admin.site.urls),
+
     # Hack alert, this is needed for the ?next issue when changing the 'auth_login'..
     path('login/', LoginView.as_view(), name='auth_login'),
-    path('admin/', admin.site.urls),
 ]
 
 

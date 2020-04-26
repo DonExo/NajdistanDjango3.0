@@ -7,7 +7,7 @@
 {% block content %}
     <h1>Update profile page</h1>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" autocomplete="off">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit">

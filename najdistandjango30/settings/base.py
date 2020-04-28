@@ -1,5 +1,6 @@
 import os
 
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path  # python3 only
 env_path = Path('.') / '.env'
@@ -25,7 +26,15 @@ STATICFILES_DIRS = [
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = reverse_lazy('accounts:profile')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# REGISTRATION_OPEN = False  # Disables registering of new users
+
+INCLUDE_REGISTER_URL = False
+INCLUDE_AUTH_URLS = False
 
 INSTALLED_APPS = [
     # Django apps
@@ -45,6 +54,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     # Local apps
+    'authy',
     'users',
     'listings',
     'reports',

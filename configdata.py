@@ -1,5 +1,7 @@
 PROJECT_NAME = "Najdistan v3.0"
 
+LOGIN_COOKIE_EXPIRY = 1209600  # in seconds, equals to 2 weeks
+
 LISTING_TYPE = (
     ('rent', 'For rent'),
     ('sell', 'For sell')

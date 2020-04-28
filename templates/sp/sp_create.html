@@ -7,7 +7,7 @@
 {% block content %}
     <h1>Create new Search Profile</h1>
 
-    <form method="post" >
+    <form method="post" autocomplete="off">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" {% if reached_max_sp %} disabled {% endif %}/>

@@ -5,12 +5,19 @@ from django.urls import path, include
 
 from listings.views import ListingIndexView
 
+from authy.views import LoginView
+
+
 urlpatterns = [
     path('', ListingIndexView.as_view(), name='index'),
-    path('admin/', admin.site.urls),
     path('listings/', include(('listings.urls', 'listings'), namespace='listings')),
-    path('accounts/', include('registration.backends.default.urls')),
-    path('accounts/', include(('users.urls', 'users'), namespace='accounts')),
+    path('accounts/', include('registration.backends.default.urls')),  # Used only for the Activation part
+    path('user/', include(('users.urls', 'users'), namespace='accounts')),
+    path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
+    path('office/', admin.site.urls),
+
+    # Hack alert, this is needed for the ?next issue when changing the 'auth_login'..
+    path('login/', LoginView.as_view(), name='auth_login'),
 ]
 
 
@@ -21,19 +28,3 @@ if settings.DEBUG:
 ] + urlpatterns
 #
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-# accounts/ ^activate/complete/$ [name='registration_activation_complete']
-# accounts/ ^activate/resend/$ [name='registration_resend_activation']
-# accounts/ ^activate/(?P<activation_key>\w+)/$ [name='registration_activate']
-# accounts/ ^register/complete/$ [name='registration_complete']
-# accounts/ ^register/closed/$ [name='registration_disallowed']
-# accounts/ ^register/$ [name='registration_register']
-# accounts/ ^login/$ [name='auth_login']
-# accounts/ ^logout/$ [name='auth_logout']
-# accounts/ ^password/change/$ [name='auth_password_change']
-# accounts/ ^password/change/done/$ [name='auth_password_change_done']
-# accounts/ ^password/reset/$ [name='auth_password_reset']
-# accounts/ ^password/reset/complete/$ [name='auth_password_reset_complete']
-# accounts/ ^password/reset/done/$ [name='auth_password_reset_done']
-# accounts/ ^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$ [name='auth_password_reset_confirm']

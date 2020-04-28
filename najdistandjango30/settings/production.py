@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = False
-ALLOWED_HOSTS = ["my-future-host", 'localhost', '127.0.0.1']
+DEBUG = True
+ALLOWED_HOSTS = ["128.199.34.43", 'crelayo.shop', 'www.crelayo.shop']
 
 # AWS Related / Static & Media files
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')

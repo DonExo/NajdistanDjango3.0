@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["128.199.34.43", 'crelayo.shop', 'www.crelayo.shop']
 
 # AWS Related / Static & Media files

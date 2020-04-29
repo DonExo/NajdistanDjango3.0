@@ -10,8 +10,10 @@
 
     <form method="post" enctype="multipart/form-data" autocomplete="off">
         {% csrf_token %}
-        <input type="button" value="Generate dummy data" onclick="generateListingData()" />
-        <input type="submit" value="Submit" />
+            {% if generate_dummy_listing %}
+                <input type="button" value="Generate dummy data" onclick="generateListingData()" />
+                <input type="submit" value="Submit" />
+            {% endif %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>

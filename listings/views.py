@@ -1,5 +1,6 @@
 import imghdr # internal python library for checking image type
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -57,6 +58,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Create Listing'
+        context['generate_dummy_listing'] = settings.GENERATE_DUMMY_LISTING
         return context
 
 

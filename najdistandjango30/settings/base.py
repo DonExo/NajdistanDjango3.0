@@ -37,6 +37,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 INCLUDE_REGISTER_URL = False
 INCLUDE_AUTH_URLS = False
 
+GENERATE_DUMMY_LISTING = True
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 INSTALLED_APPS = [

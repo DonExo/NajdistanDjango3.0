@@ -31,6 +31,9 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+
 # REGISTRATION_OPEN = False  # Disables registering of new users
 
 # Required by django-registration-redux
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     # Third party libraries
     'storages',
     'django_filters',
+    'captcha',
 
     # Local apps
     'authy',

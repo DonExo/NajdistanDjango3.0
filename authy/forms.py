@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
 
+from captcha.fields import ReCaptchaField
+
 from registration.forms import RegistrationFormTermsOfService
 
 from users.models import User
@@ -27,3 +29,4 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
 
 class CustomLoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+    captcha = ReCaptchaField()

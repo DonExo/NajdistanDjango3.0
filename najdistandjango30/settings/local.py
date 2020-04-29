@@ -35,5 +35,3 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'najdistan.db'),
     }
 }
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -33,8 +33,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # REGISTRATION_OPEN = False  # Disables registering of new users
 
+# Required by django-registration-redux
 INCLUDE_REGISTER_URL = False
 INCLUDE_AUTH_URLS = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 INSTALLED_APPS = [
     # Django apps

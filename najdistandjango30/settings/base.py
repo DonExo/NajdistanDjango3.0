@@ -32,9 +32,10 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# Google ReCaptcha
-RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
-RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+# Google ReCaptcha keys (and their TEST keys as default values)
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 # Required by django-registration-redux
 INCLUDE_REGISTER_URL = False

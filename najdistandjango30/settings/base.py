@@ -8,7 +8,8 @@ load_dotenv(dotenv_path=env_path)
 
 BASE_DIR = os.path.dirname(os.path.dirname((os.path.dirname(os.path.abspath(__file__)))))
 
-ADMINS = [('Don', 'admin@gmail.com')]
+ADMINS = [('Admin', os.getenv('EMAIL_HOST_USER'))]
+MANAGERS = ADMINS
 AUTH_USER_MODEL = 'users.User'
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'very_secret_key')
@@ -31,14 +32,14 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# Google ReCaptcha
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
-
-# REGISTRATION_OPEN = False  # Disables registering of new users
 
 # Required by django-registration-redux
 INCLUDE_REGISTER_URL = False
 INCLUDE_AUTH_URLS = False
+# REGISTRATION_OPEN = False  # Disables registering of new users
 
 GENERATE_DUMMY_LISTING = True
 
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
     'django.contrib.sites',
     'registration', # django-registration-redux, needs to be at this position
     'django.contrib.admin',
@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'listings',
     'reports',
     'api',
-
 ]
 
 MIDDLEWARE = [

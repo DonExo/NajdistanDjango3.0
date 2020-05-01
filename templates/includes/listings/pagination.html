@@ -1,20 +1,37 @@
 {% load custom_paginator_tag %}
 
 {% if is_paginated %}
-    {% if page_obj.has_previous %}
-        <a href="?{% param_replace page=1 %}">First</a>
-        {% if page_obj.previous_page_number != 1 %}
-            <a href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
-        {% endif %}
-    {% endif %}
+    <div class="pagination-container margin-top-20">
+        <nav class="pagination">
+            <div class="margin-top-10">Page {{ page_obj.number }} of {{ paginator.num_pages }}</div>
+            <!-- <ul>
+                <li></li>
+                <li><a href="#" class="current-page">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li class="blank">...</li>
+                <li><a href="#">22</a></li>
+            </ul> -->
+        </nav>
 
-    Page {{ page_obj.number }} of {{ paginator.num_pages }}
-
-    {% if page_obj.has_next %}
-        {% if page_obj.next_page_number != paginator.num_pages %}
-            <a href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
-        {% endif %}
-            <a href="?{% param_replace page=paginator.num_pages %}">Last</a>
-    {% endif %}
+        <nav class="pagination-next-prev">
+            <ul>
+                {% if page_obj.has_previous %}
+                    <li><a href="?{% param_replace page=1 %}" class="prev">First</a></li>
+                    {% if page_obj.previous_page_number != 1 %}
+                        <li><a href="?{% param_replace page=page_obj.previous_page_number %}" class="prev">Previous</a></li>
+                    {% endif %}
+                {% endif %}
+                
+                {% if page_obj.has_next %}
+                    {% if page_obj.next_page_number != paginator.num_pages %}
+                        <li><a href="?{% param_replace page=page_obj.next_page_number %}" class="next">Next</a></li>
+                    {% endif %}
+                        <li><a href="?{% param_replace page=paginator.num_pages %}" class="next">Last</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    
+    <small>Total objects: {{ paginator.count }}</small>
 {% endif %}
-<p>Total objects: {{ paginator.count }}</p>

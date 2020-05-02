@@ -2187,6 +2187,10 @@ body .search-container button:before {
 	margin: 0;
 }
 
+.main-search-box label {
+	display: none;
+}
+
 
 /* Search Type Buttons*/
 .search-type {

@@ -11,14 +11,14 @@ class ListingFilter(filters.FilterSet):
         field_name='title',
         lookup_expr='icontains',
         widget=TextInput(
-            attrs={'placeholder': 'zelka'}
+            attrs={'placeholder': 'Enter address e.g. street, city and state or zip'}
         )
     )
     price = filters.RangeFilter(
         field_name='price',
         widget=MinMaxRangeWidget(
-            from_attrs={'placeholder': 'melka'},
-            to_attrs={'placeholder': 'kelka'}
+            from_attrs={'placeholder': 'Min Price'},
+            to_attrs={'placeholder': 'Max Price'}
         )
     )
 

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -40,16 +41,18 @@
     <div class="container">
         <div class="row margin-bottom-50">
             <div class="col-md-12">
-            
+                            
                 <!-- Slider -->
                 <div class="property-slider default">
+                    <a href="{{ object.cover_image.url }}" data-background-image="{{ object.cover_image.url }}" class="item mfp-gallery"></a>
                     {% for image in object.get_images %}
-                        <a href="{{ image.image.url }}}" data-background-image="{{ image.image.url }}" class="item mfp-gallery"></a>
+                        <a href="{{ image.image.url }}" data-background-image="{{ image.image.url }}" class="item mfp-gallery"></a>
                     {% endfor %}
                 </div>
 
                 <!-- Slider Thumbs -->
                 <div class="property-slider-nav">
+                    <div class="item"><img src="{{ object.cover_image.url }}" alt="Cover image" /></div>
                     {% for image in object.get_images %}
                         <div class="item"><img src="{{ image.image.url }}" alt="{{ image.title }}" /></div>
                     {% endfor %}

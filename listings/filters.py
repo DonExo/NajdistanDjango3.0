@@ -11,7 +11,7 @@ class ListingFilter(filters.FilterSet):
         field_name='title',
         lookup_expr='icontains',
         widget=TextInput(
-            attrs={'placeholder': 'Enter a keyword....'}
+            attrs={'placeholder': 'Enter address e.g. street, city and state or zip'}
         )
     )
     price = filters.RangeFilter(

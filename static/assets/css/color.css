@@ -149,8 +149,12 @@ a.button.border.white:hover {
 .pagination ul li a.current-page,
 .pagination ul li a:hover,
 .pagination-next-prev ul li a:hover,
-.property-features.checkboxes li:before {
+.property-features.checkboxes li.property-features-on:before {
     background-color: #6449E7
+}
+
+.property-features.checkboxes li.property-features-off:before {
+    color: #6449E7
 }
 
 .post-img:after,

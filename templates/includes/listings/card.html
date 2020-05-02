@@ -12,10 +12,17 @@
             <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
         </div>
 
-        <div class="listing-carousel">
-            <div><img src="{{ object.cover_image.url }}" alt="{{ object.title }}"></div>
-            <div><img src="{{ object.cover_image.url }}" alt="{{ object.title }}"></div>
-        </div>
+        {% if object.get_images_count > 1 %}
+            <div class="listing-carousel">
+                {% for item in object.get_images %}
+                    <div><img src="{{ item.image.url }}" alt="{{ object.title }}"></div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <img src="{{ object.cover_image.url }}" alt="{{ object.title }}">
+        {% endif %}
+
+        
     </a>
 
     <div class="listing-content">

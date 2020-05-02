@@ -3804,7 +3804,7 @@ button.fs-map-btn.button {
 }
 
 .listing-img-content .listing-price i {
-	display: block;
+	/* display: block; */
 	font-style: normal;
 	font-size: 16px;
 	padding: 0;
@@ -6872,6 +6872,8 @@ body .carousel {
 	display: none;
 	position: relative;
 	width: 100%;
+	height: 100%;
+	min-height: 100px;
 	-ms-touch-action: pan-y;
 }
 

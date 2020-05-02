@@ -1,6 +1,7 @@
 {% load custom_paginator_tag %}
 
 {% if is_paginated %}
+    <div class="clearfix"></div>
     <div class="pagination-container margin-top-20">
         <nav class="pagination">
             <div class="margin-top-10">Page {{ page_obj.number }} of {{ paginator.num_pages }}</div>

@@ -243,8 +243,8 @@ img.footer-logo { max-height: 43px; width: auto; transform: translate3d(0,0,0); 
 
 .header-widget .sign-in i {
     padding-right: 4px;
-    vertical-align: top;
-    padding-top: 5px;
+    vertical-align: middle;
+    /* padding-top: 5px; */
 }
 
 .sign-in i.fa.fa-user:before {
@@ -8217,6 +8217,16 @@ img.mfp-img {
     -o-transform: scale(1);
     transform: scale(1); } }
 
+#propertyUploadImages {
+	margin-bottom: 60px;
+}
+
+#propertyUploadImages button[type="submit"] {
+	position: absolute;
+    width: 100%;
+    left: 0;
+    top: 105%;
+}
 
 .dropzone, .dropzone * {
 box-sizing: border-box; }

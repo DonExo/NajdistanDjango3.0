@@ -6,13 +6,80 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" autocomplete="off">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% trans 'Log in' %}" />
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Log In</h2>
+				<!-- Breadcrumbs -->
+				<nav id="breadcrumbs">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li>Log In</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
 
-<p>{% trans "Forgot your password?" %} <a href="{% url 'authy:password_reset' %}">{% trans "Reset it" %}</a>.</p>
-<p>{% trans "Not a member?" %} <a href="{% url 'authy:register' %}">{% trans "Register" %}</a>.</p>
+	<div class="row">
+        <div class="col-md-4 col-md-offset-4">
+
+            <!--Tab -->
+            <div class="my-account style-1 margin-top-5 margin-bottom-40">
+
+                <div class="tabs-container alt">
+
+                    <!-- Login -->
+                    <div class="tab-content">
+                        <form method="post" autocomplete="off" class="login">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <!-- <p class="form-row form-row-wide">
+                                <label for="username">Username:
+                                    <i class="im im-icon-Male"></i>
+                                    <input type="text" class="input-text" name="username" id="username" value="" />
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="password">Password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    <input class="input-text" type="password" name="password" id="password"/>
+                                </label>
+                            </p> -->
+
+                            <p class="form-row">
+                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
+                                <input type="hidden" name="next" value="{{ next }}" />
+
+                                <!-- <label for="rememberme" class="rememberme">
+                                <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label> -->
+                            </p>
+
+                            <p class="margin-top-10 lost_password">
+                                <a href="{% url 'authy:password_reset' %}">{% trans "Forgot your password?" %}</a>
+                            </p>
+
+                            <p class="margin-top-10 lost_password">
+                                <a href="{% url 'authy:register' %}">{% trans "Not a member?" %} {% trans "Register" %}</a>
+                            </p>
+                            
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+	</div>
+
+</div>
+<!-- Container / End -->
+
 {% endblock %}

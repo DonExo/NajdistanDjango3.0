@@ -1,8 +1,8 @@
-import django_filters as filters
-
 from django.forms.widgets import TextInput
 
-from .models import Listing
+import django_filters as filters
+
+from .models import Listing, Place
 from .filter_utils import MinMaxRangeWidget
 
 
@@ -17,14 +17,17 @@ class ListingFilter(filters.FilterSet):
     price = filters.RangeFilter(
         field_name='price',
         widget=MinMaxRangeWidget(
-            from_attrs={'placeholder': 'Min Price'},
-            to_attrs={'placeholder': 'Max Price'}
+            from_attrs={'placeholder': 'Min price (in EUR)'},
+            to_attrs={'placeholder': 'Max price (in EUR)'}
         )
     )
-
-    # city = filters.ChoiceFilter(field_name='city',  widget=Select(attrs={'placeholder': 'city'}))
-    #@TODO: Make sure to add all the needed filters with right properties (i.e. quadrature, balcony etc)
+    city = filters.ChoiceFilter(
+        field_name='city',
+        lookup_expr='exact',
+        empty_label='All cities',
+        choices=[(obj.pk, obj) for obj in Place.objects.all()],
+    )
 
     class Meta:
         model = Listing
-        fields = ('title', 'city', 'price')
+        fields = ['title', 'city', 'price']

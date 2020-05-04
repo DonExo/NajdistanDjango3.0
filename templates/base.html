@@ -23,10 +23,11 @@
         <!-- Header Container / End -->
 
         {% if messages %}
-            <div class="messages">
+            <div class="toast">
                 {% for message in messages %}
-                    <div class="message" style="width: 80%; height: 15px; background-color: antiquewhite;">
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
+                        <p>{{ message }}</p>
+                        <div class="toast-message-close"><i class="sl sl-icon-arrow-right"></i></div>
                     </div>
                 {% endfor %}
             </div>

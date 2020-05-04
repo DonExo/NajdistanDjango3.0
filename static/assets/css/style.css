@@ -33,6 +33,7 @@
 		# Image Hovers
 		# Contact Form
 		# Blog Styles
+		# Toast messages
 
 	03. Script Styles ....................... jQuery add-ons CSS.
 		# Google Maps
@@ -6137,6 +6138,60 @@ body .comment-content p { padding: 5px 0; }
 #posts-nav li.next-post a:hover:before { transform: translate3d(5px,-50%,0); }
 #posts-nav li.prev-post a:hover:before { transform: translate3d(-5px,-50%,0); }
 
+/* ---------------------------------- */
+/* Toast Messages
+------------------------------------- */
+.toast {
+	position: fixed;
+    right: 70px;
+	top: 110px;
+	transition: right, 0.3s;
+    z-index: 9999;
+}
+
+.toast.toast-hidden {
+	right: -100%;
+}
+
+.toast-message {
+	padding: 10px 60px 10px 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+.toast-message p {
+	margin: 0;
+}
+
+.toast-message-info {
+	background-color: #e5ffe8;
+	color: #21bb33;
+}
+
+.toast-message-error {
+	background-color: #ffe1e1;
+	color: #ff2929;
+}
+
+.toast-message-close {
+	position: absolute;
+    width: 26px;
+    height: 26px;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    cursor: pointer;
+}
+
+.toast-message-close i {
+	transition: margin-left, 0.2s;
+}
+
+.toast-message-close:hover i {
+	margin-left: -20px;
+}
 
 /* ------------------------------------------------------------------- */
 /* 03. Scripts

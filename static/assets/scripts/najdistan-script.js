@@ -32,26 +32,39 @@ function generateListingData() {
 }
 
 
+let toastClose = $(".toast-message-close");
 
-    Dropzone.autoDiscover = false;
+toastClose.on('click', function () {
+  let thisToast = $(this).parent().parent();
+  //remove element after timeout
+  let timeout;
+  thisToast.addClass("toast-hidden");
+  timeout = setTimeout(function(){
+    thisToast.remove();
+    clearTimeout(timeout);
+  }, 1000);
+});
 
-    propertyImg = new Dropzone("#propertyUploadImages", {
-        headers: {
-            'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
-        },
-        url: ".",
-        paramName: "images", // The name that will be used to transfer the file
-        dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
-        dictResponseError: 'Error uploading file!',
-        uploadMultiple: true,
-        maxFiles: 5,
-        maxFilesize: 2, // MB
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true
-    });
 
-    propertyImg.on("addedfile", function(file) {
-      file.previewElement.addEventListener("click", function() {
-        propertyImg.removeFile(file);
-      });
-    });
+Dropzone.autoDiscover = false;
+
+propertyImg = new Dropzone("#propertyUploadImages", {
+    headers: {
+        'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
+    },
+    url: ".",
+    paramName: "images", // The name that will be used to transfer the file
+    dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
+    dictResponseError: 'Error uploading file!',
+    uploadMultiple: true,
+    maxFiles: 5,
+    maxFilesize: 2, // MB
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true
+});
+
+propertyImg.on("addedfile", function(file) {
+  file.previewElement.addEventListener("click", function() {
+    propertyImg.removeFile(file);
+  });
+});

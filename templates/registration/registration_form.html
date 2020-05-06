@@ -6,27 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<!-- Titlebar
-================================================== -->
-<div id="titlebar">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
 
-				<h2>Register</h2>
-				
-				<!-- Breadcrumbs -->
-				<nav id="breadcrumbs">
-					<ul>
-						<li><a href="#">Home</a></li>
-						<li>Register</li>
-					</ul>
-				</nav>
-
-			</div>
-		</div>
-	</div>
-</div>
+{% include 'includes/shared/breadcrumbs.html' %}
 
 <!-- Contact
 ================================================== -->
@@ -47,11 +28,63 @@
                         <form method="post" autocomplete="off" class="register">
 
                             {% csrf_token %}
-                            {{ form.as_p }}
 
-                        <p class="form-row">
-                            <input type="submit" value="{% trans 'Submit' %}" class="button border fw margin-top-10" name="register"  />
-                        </p>
+                            <p class="form-row form-row-wide">
+                                <label for="id_email">Email:
+                                    <i class="im im-icon-Mail"></i>
+                                    {{ form.email }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_first_name">First Name:
+                                    <i class="im im-icon-Font-Name"></i>
+                                    {{ form.first_name }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_last_name">Last Name:
+                                    <i class="im im-icon-Font-Name"></i>
+                                    {{ form.last_name }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_telephone">Phone:
+                                    <i class="im im-icon-Phone-2"></i>
+                                    {{ form.telephone }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_password1">Password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    {{ form.password1 }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_password2">Repeat password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    {{ form.password2 }}
+                                </label>
+                            </p>
+
+                            <p class="form-row">        
+                                <label for="id_tos" class="rememberme">
+                                    {{ form.tos }}
+                                    I have read and agree to the Terms of Service
+                                </label>
+                            </p>
+
+                            <p class="form-row">
+                                <input type="submit" value="{% trans 'Submit' %}" class="button border fw margin-top-10" name="register"  />
+                            </p>
+
+                            <!-- include helptext here -->
+
+                            
 
                         </form>
                     </div>

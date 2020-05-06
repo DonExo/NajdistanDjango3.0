@@ -18,7 +18,7 @@ from configdata import LOGIN_COOKIE_EXPIRY
 class LoginView(auth_views.LoginView):
     redirect_authenticated_user = True
     form_class = CustomLoginForm
-    extra_context = {'title': _('Log-in')}
+    extra_context = {'title': _('Log in')}
 
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me', None)

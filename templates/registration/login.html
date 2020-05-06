@@ -6,24 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<!-- Titlebar
-================================================== -->
-<div id="titlebar">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2>Log In</h2>
-				<!-- Breadcrumbs -->
-				<nav id="breadcrumbs">
-					<ul>
-						<li><a href="#">Home</a></li>
-						<li>Log In</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
-</div>
+
+{% include 'includes/shared/breadcrumbs.html' %}
+
 <div class="container">
 
 	<div class="row">
@@ -38,28 +23,32 @@
                     <div class="tab-content">
                         <form method="post" autocomplete="off" class="login">
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            <!-- {{ form.as_p }} -->
 
-                            <!-- <p class="form-row form-row-wide">
-                                <label for="username">Username:
+                            <p class="form-row form-row-wide">
+                                <label for="id_username">Username:
                                     <i class="im im-icon-Male"></i>
-                                    <input type="text" class="input-text" name="username" id="username" value="" />
+                                    {{ form.username }}
                                 </label>
                             </p>
 
                             <p class="form-row form-row-wide">
-                                <label for="password">Password:
+                                <label for="id_password">Password:
                                     <i class="im im-icon-Lock-2"></i>
-                                    <input class="input-text" type="password" name="password" id="password"/>
+                                    {{ form.password }}
                                 </label>
-                            </p> -->
+                            </p>
 
                             <p class="form-row">
                                 <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
                                 <input type="hidden" name="next" value="{{ next }}" />
-
-                                <!-- <label for="rememberme" class="rememberme">
-                                <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label> -->
+                            </p>
+                            
+                            <p class="form-row">        
+                                <label for="id_remember_me" class="rememberme">
+                                    {{ form.remember_me }}
+                                    Remember Me
+                                </label>
                             </p>
 
                             <p class="margin-top-10 lost_password">

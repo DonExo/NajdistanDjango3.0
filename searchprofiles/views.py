@@ -16,11 +16,14 @@ def search_profile_create(request):
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, user=request.user)
         if form.is_valid():
+            print(form.cleaned_data)
             sp = form.save(commit=False)
             sp.user = request.user
             sp.save()
             messages.info(request, _("Search Profile added!"))
             return redirect(reverse('accounts:profile'))
+        else:
+            return render(request, 'searchprofile/create.html', {'form': form})
 
     form = UserSearchProfileForm(user=request.user)
 
@@ -29,7 +32,7 @@ def search_profile_create(request):
         'form': form,
         'reached_max_sp': request.user.has_search_profile()
     }
-    return render(request, 'sp/sp_create.html', context)
+    return render(request, 'searchprofile/create.html', context)
 
 @login_required()
 def search_profile_delete(request, pk):
@@ -54,7 +57,7 @@ def search_profile_update(request, pk):
             messages.info(request, _("Search Profile updated!"))
             return redirect(reverse('accounts:profile'))
         else:
-            return render(request, 'sp/sp_update.html', {'form': form})
+            return render(request, 'searchprofile/update.html', {'form': form})
 
     form = UserSearchProfileForm(user=request.user, instance=search_profile, update=True)
 
@@ -62,12 +65,12 @@ def search_profile_update(request, pk):
         'title': 'Update Search Profile',
         'form': form
     }
-    return render(request, 'sp/sp_update.html', context)
+    return render(request, 'searchprofile/update.html', context)
 
 
 #@TODO: Make this Ajax request with no page refresh
 @login_required()
-def toggle_sp_status(request, pk):
+def search_profile_toggle_status(request, pk):
     search_profile = get_object_or_404(SearchProfiles, pk=pk)
     if search_profile.user != request.user:
         return HttpResponseForbidden(_(FORBIDDEN_MESAGE))

@@ -19,7 +19,7 @@ class UserSearchProfileForm(forms.ModelForm):
         self.is_updating = kwargs.pop('update', None)
         super().__init__(*args, **kwargs)
 
-        if not self.user.is_staff:  #@TODO: Change this to PREMIUM user once the logic is there
+        if not self.user.is_staff:  #TODO: Change this to PREMIUM user once the logic is there
             self.fields['frequency'].widget.disabled_choices = ['instant',]
             if not self.is_updating and self.user.has_search_profile():
                 for key, value in self.fields.items():
@@ -31,3 +31,4 @@ class UserSearchProfileForm(forms.ModelForm):
         if exists:
             raise forms.ValidationError(_('You already have a Search Profile with this exact title.'))
         return title
+

@@ -24,13 +24,13 @@
 
     <br/>
 
-    <h3>Add new <a href="{% url 'accounts:sp_create' %}">Search Profile</a></h3>
+    <h3>Add new <a href="{% url 'sp:sp_create' %}">Search Profile</a></h3>
     <h4>Your Search Profiles:</h4>
     {% if search_profiles %}
         {% for sp in search_profiles %}
             {% include 'includes/users/search_profile.html' %}
         {% endfor %}
     {% else %}
-        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'accounts:sp_create' %}">create one?</a></p>
+        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'sp:sp_create' %}">create one?</a></p>
     {% endif %}
 {% endblock %}

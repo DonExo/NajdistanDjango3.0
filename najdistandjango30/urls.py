@@ -14,6 +14,7 @@ urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),  # Used only for the Activation part
     path('user/', include(('users.urls', 'users'), namespace='accounts')),
     path('auth/', include(('authy.urls', 'authy'), namespace='authy')),
+    path('sp/', include(('searchprofiles.urls', 'searchprofiles'), namespace='sp')),
     path('office/', admin.site.urls),
 
     # Hack alert, this is needed for the ?next issue when changing the 'auth_login'..

@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'authy',
     'users',
     'listings',
+    'searchprofiles',
     'reports',
     'api',
 ]

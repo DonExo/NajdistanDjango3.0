@@ -13,25 +13,23 @@ from .models import SearchProfiles
 
 @login_required()
 def search_profile_create(request):
+    context = {'title': "Search Profile"}
+
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, user=request.user)
+        context.update({'form': form})
         if form.is_valid():
-            print(form.cleaned_data)
             sp = form.save(commit=False)
             sp.user = request.user
             sp.save()
             messages.info(request, _("Search Profile added!"))
             return redirect(reverse('accounts:profile'))
         else:
-            return render(request, 'searchprofile/create.html', {'form': form})
+            return render(request, 'searchprofile/create.html', context)
 
     form = UserSearchProfileForm(user=request.user)
 
-    context = {
-        'title': "Search Profile",
-        'form': form,
-        'reached_max_sp': request.user.has_search_profile()
-    }
+    context.update({'form': form, 'reached_max_sp': request.user.has_search_profile()})
     return render(request, 'searchprofile/create.html', context)
 
 @login_required()
@@ -50,21 +48,20 @@ def search_profile_update(request, pk):
     if search_profile.user != request.user:
         return HttpResponseForbidden(_(FORBIDDEN_MESAGE))
 
+    context = {'title': _('Update Search Profile')}
+
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, instance=search_profile, user=request.user, update=True)
+        context.update({'form': form})
         if form.is_valid():
             form.save()
             messages.info(request, _("Search Profile updated!"))
             return redirect(reverse('accounts:profile'))
         else:
-            return render(request, 'searchprofile/update.html', {'form': form})
+            return render(request, 'searchprofile/update.html', context)
 
     form = UserSearchProfileForm(user=request.user, instance=search_profile, update=True)
-
-    context = {
-        'title': 'Update Search Profile',
-        'form': form
-    }
+    context.update({'form': form})
     return render(request, 'searchprofile/update.html', context)
 
 

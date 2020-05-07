@@ -35,5 +35,5 @@ class UserSearchProfileForm(forms.ModelForm):
     def clean_frequency(self):
         frequency = self.cleaned_data['frequency']
         if frequency == 'instant' and not self.user.is_staff: # TODO: Here too!
-            raise forms.ValidationError(_("Please upgrade to Premium user to user this feature"))
+            raise forms.ValidationError(_("Please upgrade to Premium use to user this feature"))
         return frequency

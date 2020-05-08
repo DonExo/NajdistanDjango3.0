@@ -1,3 +1,4 @@
+{% load humanize %}
 <div style="border: 1px solid black; margin: 5px; padding: 5px; width: 80%;">
     <table>
         <tr>
@@ -10,6 +11,7 @@
                 <b>Location:</b> {{ object.city }} - {{ object.zip_code }}<br/>
                 <b>Price:</b> {{ object.price }} EUR<br/>
                 <b>Owner:</b> <a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user }}</a> <br/>
+                <b>Created:</b> {{ object.created_at|naturalday }} <br/>
             </td>
         </tr>
     </table>

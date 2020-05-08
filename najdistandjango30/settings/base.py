@@ -27,6 +27,7 @@ STATICFILES_DIRS = [
 ACCOUNT_ACTIVATION_DAYS = 1
 SITE_ID = 1
 
+LOGIN_URL = reverse_lazy('authy:login')
 LOGIN_REDIRECT_URL = reverse_lazy('accounts:profile')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
@@ -67,6 +68,7 @@ INSTALLED_APPS = [
     'authy',
     'users',
     'listings',
+    'searchprofiles',
     'reports',
     'api',
 ]

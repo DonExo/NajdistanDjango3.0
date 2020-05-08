@@ -79,6 +79,7 @@ class PasswordResetView(auth_views.PasswordResetView):
     redirect_authenticated_user = True
     extra_context = {'title': _('Password reset')}
     success_url = reverse_lazy('authy:password_reset_done')
+    html_email_template_name = 'registration/password_reset_email.html'
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):

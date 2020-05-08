@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <div class="listing-item">
     <a href="{% url 'listings:detail' object.slug %}" class="listing-img-container">
 
@@ -46,7 +48,7 @@
 
         <div class="listing-footer">
             <a href="{% url 'accounts:user_identifier' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
-            <span><i class="fa fa-calendar-o"></i> 1 day ago</span>
+            <span><i class="fa fa-calendar-o"></i>{{ object.created_at|naturalday }}</span>
         </div>
 
     </div>

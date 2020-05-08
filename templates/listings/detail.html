@@ -22,7 +22,7 @@
         <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
         <b>Zip-code:</b> {{ object.zip_code }} <br/>
         <b>Listed by</b> <a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user }}</a> <br/>
-        <b>Opened: </b> {{ object.times_visited }} time(s). <br/>
+        <b>Visited: </b> {{ object.times_visited }} time{{ object.times_visited|pluralize }}. <br/>
         {% lorem %} <br>
         <img src="{{ object.cover_image.url }}" alt="{{ object.title }}" width="250px"/><br/>
         {% for image in object.get_images %}

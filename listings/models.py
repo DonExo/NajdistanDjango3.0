@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.db.models import F
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -86,6 +87,13 @@ class Listing(BaseModel):
 
     def get_absolute_url(self):
         return reverse('listings:detail', kwargs={'slug': self.slug})
+
+    def increment_visited_counter(self):
+        # Django suggests using F objects for such operation
+        self._meta.model.objects.filter(pk=self.pk).update(times_visited=F('times_visited') + 1)
+        # instead of the regular retrieve&manipulate object
+        # self.times_visited = self.times_visited + 1
+        # self.save()
 
     def save(self, *args, **kwargs):
         if not self.id:

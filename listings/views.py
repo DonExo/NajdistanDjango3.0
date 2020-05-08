@@ -67,12 +67,10 @@ class ListingDetailView(generic.DetailView):
     template_name = 'listings/detail.html'
     queryset = Listing.objects.select_related('user')
 
-    # def get(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     self.model.times_visited = self.model.times_visited + 1
-    #     self.model.save()
-    #     context = self.get_context_data(object=self.object)
-    #     return self.render_to_response(context)
+    def get_object(self, queryset=None):
+        object = super().get_object()
+        object.increment_visited_counter()
+        return object
 
     def post(self, request, *args, **kwargs):
         """

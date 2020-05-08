@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User, SearchProfiles
+from .models import User
 
 
 @admin.register(User)
@@ -25,12 +25,6 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     readonly_fields = ('identifier', )
-
-
-@admin.register(SearchProfiles)
-class SearchProfileAdmin(admin.ModelAdmin):
-    list_display = ('title', 'pk', 'user', 'city', 'min_price', 'max_price', 'frequency', 'is_active')
-
 
 
 admin.site.unregister(Group)

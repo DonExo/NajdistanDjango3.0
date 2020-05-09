@@ -71,7 +71,12 @@ INSTALLED_APPS = [
     'searchprofiles',
     'reports',
     'api',
+
+    'django_celery_results',
 ]
+
+# https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
+CELERY_RESULT_BACKEND = 'django-db'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 
 {% block title %}
@@ -6,31 +7,93 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Profile page</h1>
-    <h3>Hello {{ user.first_name }}</h3><br/>
-    <img src="{{ user.get_profile_image }}" alt="Profile image" width="150" height="150"/>
-    <h6>Last login: {{ user.last_login|naturaltime }}</h6>
-    Fullname: {{ user.get_full_name }} <br/>
-    <h3>Create <a href="{% url 'listings:create' %}">New listing</a> </h3>
-    <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4>
-    <h4>Your listings:</h4>
-    {% if listings %}
-        {% for object in listings %}
-            {% include 'includes/listings/card.html' %}
-        {% endfor %}
-    {% else %}
-        <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
-    {% endif %}
 
-    <br/>
+{% include 'includes/shared/breadcrumbs.html' %}
 
-    <h3>Add new <a href="{% url 'searchprofiles:create' %}">Search Profile</a></h3>
-    <h4>Your Search Profiles:</h4>
-    {% if search_profiles %}
-        {% for sp in search_profiles %}
-            {% include 'includes/users/search_profile.html' %}
-        {% endfor %}
-    {% else %}
-        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
-    {% endif %}
+<div class="container">
+	<div class="row">
+
+        <!-- Widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+
+				<div class="my-account-nav-container">
+					
+					<ul class="my-account-nav">
+						<li class="sub-nav-title">Manage Account</li>
+						<li><a href="my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+						<li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarked Listings</a></li>
+					</ul>
+					
+					<ul class="my-account-nav">
+						<li class="sub-nav-title">Manage Listings</li>
+						<li><a href="my-properties.html" class="current"><i class="sl sl-icon-docs"></i> My Properties</a></li>
+						<li><a href="submit-property.html"><i class="sl sl-icon-action-redo"></i> Submit New Property</a></li>
+					</ul>
+
+					<ul class="my-account-nav">
+						<li><a href="change-password.html"><i class="sl sl-icon-lock"></i> Change Password</a></li>
+						<li><a href="{% url 'authy:logout' %}"><i class="sl sl-icon-power"></i> Log Out</a></li>
+					</ul>
+
+				</div>
+
+			</div>
+        </div>
+        
+        <div class="col-md-8">
+            {% if listings %}
+                
+            
+                <table class="manage-table responsive-table">
+
+                    <tr>
+                        <th><i class="fa fa-file-text"></i> Property</th>
+                        <th class="expire-date"><i class="fa fa-calendar"></i> Creation Date</th>
+                        <th></th>
+                    </tr>
+
+                    {% for object in listings %}
+                        <tr>
+                            <td class="title-container">
+                                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}">
+                                <div class="title">
+                                    <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title }}</a></h4>
+                                    <span>{{ object.zip_code }}, {{ object.city }} </span>
+                                    <span class="table-property-price">{{ object.price }} <i>&euro;</i></span>
+                                </div>
+                            </td>
+                            <td class="expire-date">{{ object.created_at|naturalday }}</td>
+                            <td class="action">
+                                <a href="#"><i class="fa fa-pencil"></i> Edit</a>
+                                <a href="#"><i class="fa  fa-eye-slash"></i> Hide</a>
+                                <a href="#" class="delete"><i class="fa fa-remove"></i> Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+                <a href="{% url 'listings:create' %}" class="margin-top-40 button">Submit New Property</a>
+            {% else %}
+                <p>You don't have any listings. Would you like to <a class="margin-top-40 button" href="{% url 'listings:create' %}">create one?</a></p>
+            {% endif %}
+		</div>
+
+        
+        
+        <br/>
+        
+        <h3>Add new <a href="{% url 'searchprofiles:create' %}">Search Profile</a></h3>
+        <h4>Your Search Profiles:</h4>
+        {% if search_profiles %}
+            {% for sp in search_profiles %}
+                {% include 'includes/users/search_profile.html' %}
+            {% endfor %}
+        {% else %}
+            <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
+        {% endif %}
+
+    </div>
+</div>
+
 {% endblock %}

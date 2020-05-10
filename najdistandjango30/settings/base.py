@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'captcha',
+    # Celery libraries
+    'django_celery_results',
+    'django_celery_beat',
 
     # Local apps
     'authy',
@@ -72,14 +75,14 @@ INSTALLED_APPS = [
     'reports',
     'api',
 
-    'django_celery_results',
-    'django_celery_beat',
+
 ]
 
 # https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
 CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
 # CELERY_ACCEPT_CONTENT = ['application/json']
 # CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TASK_SERIALIZER = 'json'

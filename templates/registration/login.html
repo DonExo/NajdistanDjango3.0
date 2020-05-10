@@ -58,6 +58,8 @@
                             <p class="margin-top-10 lost_password">
                                 <a href="{% url 'authy:register' %}">{% trans "Not a member?" %} {% trans "Register" %}</a>
                             </p>
+
+                            {{ form.captcha }}
                             
                         </form>
                     </div>

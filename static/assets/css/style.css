@@ -4311,16 +4311,22 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 	color: #fff;
 }
 
-.pagination-next-prev ul { list-style: none; }
+.pagination-next-prev ul { 
+	display: flex;
+	list-style: none;
+    margin-top: -35px;
+}
 
-.pagination-next-prev a.next,
+/* .pagination-next-prev a.next,
 .pagination-next-prev a.prev {
 	position: absolute;
 	top: 0;
 }
 
 .pagination-next-prev a.next { right: 0; }
-.pagination-next-prev a.prev { left: 0; }
+.pagination-next-prev a.prev { left: 0; } */
+.pagination-next-prev li.pagination-btn-left {margin-right: auto; margin-left: 10px;}
+.pagination-next-prev li.pagination-btn-right {margin-left: auto; margin-right: 10px;}
 
 
 .pagination-next-prev ul li a {
@@ -6186,11 +6192,12 @@ body .comment-content p { padding: 5px 0; }
 }
 
 .toast-message-close i {
-	transition: margin-left, 0.2s;
+	line-height: 26px;
+	transition: font-size, 0.2s;
 }
 
 .toast-message-close:hover i {
-	margin-left: -20px;
+	font-size: 2rem;
 }
 
 /* ------------------------------------------------------------------- */
@@ -12727,16 +12734,16 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 	.sidebar.right { padding-left: 0; margin-top: 55px; }
 
 	/* Pagination */
-	.pagination-next-prev a.next,
+	/* .pagination-next-prev a.next,
 	.pagination-next-prev a.prev {
 		position:relative;
 		top: 0;
-	}
+	} */
 
 	.pagination {  text-align: left; }
 	.pagination li {  text-align: center; }
 
-	.pagination-next-prev ul { padding: 15px 0 0 0; }
+	.pagination-next-prev ul { padding: 15px 0 0 0; margin-top: 0; }
 	.pagination-next-prev li { display: inline-block }
 
 	.my-profile { padding-right: 20px; }

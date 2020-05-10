@@ -32,19 +32,33 @@ function generateListingData() {
 }
 
 
-let toastClose = $(".toast-message-close");
+let $window = $(window);
+let toastEle = $(".toast");
+let toastCloseBtn = $(".toast-message-close");
 
-toastClose.on('click', function () {
-  let thisToast = $(this).parent().parent();
-  //remove element after timeout
+function removeToast($this) {
+  //let toastEle = $this.parent().parent();
   let timeout;
-  thisToast.addClass("toast-hidden");
+  toastEle.addClass("toast-hidden");
+  //remove element after timeout
   timeout = setTimeout(function(){
-    thisToast.remove();
+    toastEle.remove();
     clearTimeout(timeout);
   }, 1000);
+}
+
+toastCloseBtn.on('click', function () {
+  removeToast();
 });
 
+$window.on('load', function() {
+  if(toastCloseBtn.length > 0) {
+    autoRemoveToast = setTimeout(function() {
+      removeToast();
+      clearTimeout(autoRemoveToast);
+    }, 6000);
+  }
+});
 
 Dropzone.autoDiscover = false;
 

@@ -38,6 +38,7 @@ def get_new_listings(value): # i.e. 'daily', 'weekly'
 
     offset = get_time_offset(value)
 
+    # TODO: This should rather be "approved_at__gte", but that field does not exists in the model yet
     listings_pk = Listing.objects.filter(created_at__gte=offset).values_list('pk', flat=True)
     print(f"Found {len(listings_pk)} listings!")
 

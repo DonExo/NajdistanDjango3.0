@@ -10,23 +10,8 @@ def add(x, y):
     return x + y
 
 @shared_task
-def minus(x, y):
-    print(x-y)
-    return x - y
-
-@shared_task
-def mnozi(x, y):
-    print(x*y)
-    return x * y
-
-@shared_task
-def something():
-    print(mnozi(2, 3) + 4)
-
-@shared_task
-def xx(pk):
-    obj = Listing.objects.get(pk=pk)
-    print(obj.pk)
+def xx():
     import random
-    obj.title = f"Zelka melka: {random.random()}"
-    obj.save()
+    deli = random.randint(0, 1)
+    deli2 = random.randint(50, 100)
+    return deli2 / deli

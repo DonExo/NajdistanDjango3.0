@@ -23,3 +23,5 @@ app.autodiscover_tasks()
 
 # Make sure to have the celery worker up and running
 # celery -A najdistandjango30 worker --loglevel=info
+# or
+# celery -A najdistandjango30 worker --beat --scheduler django --loglevel=info

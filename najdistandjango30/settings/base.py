@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'api',
 
     'django_celery_results',
+    'django_celery_beat',
 ]
 
 # https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions

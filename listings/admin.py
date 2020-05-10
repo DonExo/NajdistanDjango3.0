@@ -16,9 +16,7 @@ class InlineImagelAdmin(admin.TabularInline):
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
-    # @TODO: Add images inline for each listing
-
-    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count')
+    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count', 'created_at')
     search_fields = ('city', 'title', 'description', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
@@ -38,21 +36,18 @@ class ListingAdmin(admin.ModelAdmin):
     reject.short_description = 'Reject listings'
 
 
-@admin.register(Saved)
+# @admin.register(Saved)
 class SavedAdmin(admin.ModelAdmin):
     list_display = ('user', 'listing')
 
 
-@admin.register(Comment)
+# @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'listing', 'body')
 
 
-
-
-@admin.register(Image)
+# @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('listing', 'image', 'order')
     list_filter = ('listing', )
     search_fields = ('listing', )
-

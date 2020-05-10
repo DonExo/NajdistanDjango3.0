@@ -18,7 +18,7 @@ class ListingAdmin(admin.ModelAdmin):
     # @TODO: Add fieldsets for better overview in the Admin
     # @TODO: Add images inline for each listing
 
-    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count')
+    list_display = ('slug', 'title', 'user', 'city', 'price', 'is_approved', 'get_images_count', 'created_at')
     search_fields = ('city', 'title', 'description', 'user')
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )

@@ -6,6 +6,9 @@ __pycache__/
 .idea/
 *.db
 
+# weird file after installing celery
+django
+
 # media files
 /media
 

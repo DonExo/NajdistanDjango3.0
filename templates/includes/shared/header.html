@@ -184,7 +184,7 @@
                     {% if request.user.is_authenticated %}
                     <!-- User Menu -->
                     <div class="user-menu">
-                        <div class="user-name"><span><img src="{% static 'assets/images/agent-03.jpg' %}" alt="user avatar"></span>Hi, {{  request.user }}</div>
+                        <div class="user-name"><span><img src="{{ user.get_profile_image }}" alt="user avatar"></span>Hi, {{ request.user }}</div>
                         <ul>
                             <li><a href="{% url 'accounts:update_user' %}"><i class="sl sl-icon-user"></i> My Profile</a></li>
                             {% if request.user.is_superuser %}

@@ -10,7 +10,7 @@
 
 {% include 'includes/shared/breadcrumbs.html' %}
 
-<div class="container">
+<div class="container padding-bottom-70">
 	<div class="row">
 
         <!-- Widget -->
@@ -79,9 +79,9 @@
             {% endif %}
 		</div>
 
-        
-        
-        <br/>
+        <!--
+        <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
+        <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4> -->
         
         <h3>Add new <a href="{% url 'searchprofiles:create' %}">Search Profile</a></h3>
         <h4>Your Search Profiles:</h4>

@@ -1,0 +1,169 @@
+[
+  {
+    "model": "django_celery_beat.crontabschedule",
+    "pk": 1,
+    "fields": {
+      "minute": "30",
+      "hour": "6",
+      "day_of_week": "*",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Europe/Amsterdam"
+    }
+  },
+  {
+    "model": "django_celery_beat.crontabschedule",
+    "pk": 2,
+    "fields": {
+      "minute": "0",
+      "hour": "7",
+      "day_of_week": "1",
+      "day_of_month": "*",
+      "month_of_year": "*",
+      "timezone": "Europe/Amsterdam"
+    }
+  },
+  {
+    "model": "django_celery_beat.crontabschedule",
+    "pk": 3,
+    "fields": {
+      "minute": "30",
+      "hour": "7",
+      "day_of_week": "*",
+      "day_of_month": "1,15",
+      "month_of_year": "*",
+      "timezone": "Europe/Amsterdam"
+    }
+  },
+  {
+    "model": "django_celery_beat.crontabschedule",
+    "pk": 4,
+    "fields": {
+      "minute": "0",
+      "hour": "8",
+      "day_of_week": "*",
+      "day_of_month": "2",
+      "month_of_year": "*",
+      "timezone": "Europe/Amsterdam"
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictasks",
+    "pk": 1,
+    "fields": {
+      "last_update": "2020-05-10T20:11:37.891Z"
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictask",
+    "pk": 1,
+    "fields": {
+      "name": "DAILY - 06:30h",
+      "task": "searchprofiles.tasks.get_new_listings",
+      "interval": null,
+      "crontab": 1,
+      "solar": null,
+      "clocked": null,
+      "args": "[\"daily\"]",
+      "kwargs": "{}",
+      "queue": null,
+      "exchange": null,
+      "routing_key": null,
+      "headers": "{}",
+      "priority": null,
+      "expires": null,
+      "expire_seconds": null,
+      "one_off": false,
+      "start_time": null,
+      "enabled": true,
+      "last_run_at": null,
+      "total_run_count": 0,
+      "date_changed": "2020-05-10T20:08:19.040Z",
+      "description": "Cronjob to be run on a daily basis to check if new Listings have been submitted (and approved) in the PAST DAY."
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictask",
+    "pk": 2,
+    "fields": {
+      "name": "WEEKLY - 07:00h",
+      "task": "searchprofiles.tasks.get_new_listings",
+      "interval": null,
+      "crontab": 2,
+      "solar": null,
+      "clocked": null,
+      "args": "[\"weekly\"]",
+      "kwargs": "{}",
+      "queue": null,
+      "exchange": null,
+      "routing_key": null,
+      "headers": "{}",
+      "priority": null,
+      "expires": null,
+      "expire_seconds": null,
+      "one_off": false,
+      "start_time": null,
+      "enabled": true,
+      "last_run_at": null,
+      "total_run_count": 0,
+      "date_changed": "2020-05-10T20:10:43.229Z",
+      "description": "Cronjob to be run on a weekly basis to check if new Listings have been submitted (and approved) in the PAST WEEK."
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictask",
+    "pk": 3,
+    "fields": {
+      "name": "BIWEEKLY - 07:30h",
+      "task": "searchprofiles.tasks.get_new_listings",
+      "interval": null,
+      "crontab": 3,
+      "solar": null,
+      "clocked": null,
+      "args": "[\"biweekly\"]",
+      "kwargs": "{}",
+      "queue": null,
+      "exchange": null,
+      "routing_key": null,
+      "headers": "{}",
+      "priority": null,
+      "expires": null,
+      "expire_seconds": null,
+      "one_off": false,
+      "start_time": null,
+      "enabled": true,
+      "last_run_at": null,
+      "total_run_count": 0,
+      "date_changed": "2020-05-10T20:10:22.087Z",
+      "description": "Cronjob to be run on a bi-weekly basis to check if new Listings have been submitted (and approved) in the PAST 2 WEEKS"
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictask",
+    "pk": 4,
+    "fields": {
+      "name": "MONTHLY - 08:00h",
+      "task": "searchprofiles.tasks.get_new_listings",
+      "interval": null,
+      "crontab": 4,
+      "solar": null,
+      "clocked": null,
+      "args": "[\"monthly\"]",
+      "kwargs": "{}",
+      "queue": null,
+      "exchange": null,
+      "routing_key": null,
+      "headers": "{}",
+      "priority": null,
+      "expires": null,
+      "expire_seconds": null,
+      "one_off": false,
+      "start_time": null,
+      "enabled": true,
+      "last_run_at": null,
+      "total_run_count": 0,
+      "date_changed": "2020-05-10T20:11:37.903Z",
+      "description": "Cronjob to be run on a monthly basis to check if new Listings have been submitted (and approved) in the PAST MONTH.\r\nThe job is run on the 2-nd of the new month."
+    }
+  }
+]

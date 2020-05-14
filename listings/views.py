@@ -24,6 +24,7 @@ class ListingIndexView(FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'All Listings'
+        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved()
         return context
 
 class ListingSearchView(FilterView):
@@ -109,6 +110,7 @@ class ListingDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listing details'
+        context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
 

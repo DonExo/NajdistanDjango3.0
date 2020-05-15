@@ -24,7 +24,8 @@
             Some content?
             {% with request.user as user %} <br/>
                 {{ user.get_full_name }} <br/>
-                {{ user.last_login }}
+                {{ user.last_login }} <br/>
+                {{ user.telephone }}
 
             {% endwith %}
 		</div>

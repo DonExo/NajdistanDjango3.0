@@ -30,8 +30,8 @@
     </ul>
     <ul class="my-account-nav">
         <li class="sub-nav-title">Search Profiles</li>
-        <li><a href="#"><i class="sl sl-icon-power"></i> Manage Search Profiles</a></li>
-        <li><a href="#"><i class="sl sl-icon-power"></i>Add New Search Profile</a></li>
+        <li><a href="{% url 'searchprofiles:create' %}"><i class="sl sl-icon-power"></i>Add new</a></li>
+        <li><a href="{% url 'searchprofiles:manage' %}"><i class="sl sl-icon-power"></i>Manage existing</a></li>
     </ul>
     <ul class="my-account-nav">
         <li class="sub-nav-title">Manage Account</li>

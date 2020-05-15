@@ -12,6 +12,15 @@ from .models import SearchProfiles
 
 
 @login_required()
+def search_profile_manage(request):
+    context = {'title': "Manage Search Profiles"}
+    search_profiles = request.user.get_search_profiles()
+    context.update({'reached_max_sp': request.user.has_search_profile(),
+                    'search_profiles': search_profiles})
+    return render(request, 'searchprofile/manage.html', context)
+
+
+@login_required()
 def search_profile_create(request):
     context = {'title': "Search Profile"}
 

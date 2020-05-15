@@ -30,19 +30,18 @@ def properties(request):
 
 @login_required
 def update(request):
+    context = {'title': 'Profile update'}
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
+        context.update({'form': form})
         if form.changed_data and form.is_valid():
             form.save()
             messages.info(request, "Account updated successfully!")
+        else:
+            return render(request, 'users/update.html', context)
         return redirect(reverse('accounts:profile'))
-
     form = UserUpdateForm(instance=request.user)
-
-    context = {
-        'title': 'Profile update',
-        'form': form
-    }
+    context.update({'form': form})
     return render(request, 'users/update.html', context)
 
 

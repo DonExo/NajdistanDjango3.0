@@ -2,6 +2,7 @@ import hashlib
 import uuid
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator, MinLengthValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -9,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 from .utils import profile_image_directory_path
 
+from configdata import REGEX_TELEPHONE_VALIDATOR
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,10 +24,12 @@ class User(AbstractUser, BaseModel):
     """
     A base class that represents an instance of a logged-in User
     """
-    first_name = models.CharField(max_length=255, blank=False)
-    last_name = models.CharField(max_length=255, blank=False)
+    first_name = models.CharField(max_length=255, blank=False, validators=[MinLengthValidator(2)])
+    last_name = models.CharField(max_length=255, blank=False, validators=[MinLengthValidator(2)])
     email = models.EmailField(unique=True, blank=False)
-    telephone = models.CharField(_('Phone number'), max_length=255)
+    telephone = models.CharField(_('Phone number'), max_length=255,
+                                 validators=[RegexValidator(REGEX_TELEPHONE_VALIDATOR,
+                                 message="Phone number should be a combination of numbers and '+' sign (i.e. +31612341234 or 0612341234)")])
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

@@ -18,22 +18,32 @@
         </div>
         
         <div class="col-md-8">
-            <form method="post" enctype="multipart/form-data" autocomplete="off">
+                <form method="post" enctype="multipart/form-data" autocomplete="off">
+                {{ form.non_field_errors }}
                 {% csrf_token %}
                 <div class="col-md-8 my-profile">
                     <h4 class="margin-top-0 margin-bottom-30">My Account</h4>
-    
+
                     <label for="id_first_name">First Name</label>
+                    {{ form.first_name.errors }}
                     {{ form.first_name }}
-    
+
                     <label for="id_last_name">Last Name</label>
+                    {{ form.last_name.errors }}
                     {{ form.last_name }}
-    
+
                     <label for="id_telephone">Phone</label>
+                    {{ form.telephone.errors }}
                     {{ form.telephone }}
-    
+
                     <label for="id_email">Email</label>
+                    {{ form.email.errors }}
                     {{ form.email }}
+
+                    <label for="id_password">Current Password</label>
+                    {{ form.password.errors }}
+                    {{ form.password }}
+                    {{ form.password.help_text }}
 
                     <!-- <h4 class="margin-top-50 margin-bottom-0">Social</h4>
 
@@ -48,10 +58,10 @@
 
                     <label><i class="fa fa-linkedin"></i> Linkedin</label>
                     <input value="https://www.linkedin.com/" type="text"> -->
-    
+
                     <button type="submit" class="button margin-top-20 margin-bottom-20">Save Changes</button>
                 </div>
-    
+
                 <div class="col-md-4">
                     <!-- Avatar -->
                     <div class="edit-profile-photo">
@@ -63,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                 </div>
             </form>
         </div>

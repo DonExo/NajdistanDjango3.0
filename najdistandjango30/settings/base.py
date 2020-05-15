@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'captcha',
+    # Celery libraries
+    'django_celery_results',
+    'django_celery_beat',
 
     # Local apps
     'authy',
@@ -71,7 +74,18 @@ INSTALLED_APPS = [
     'searchprofiles',
     'reports',
     'api',
+
+
 ]
+
+# https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
+CELERY_RESULT_BACKEND = 'django-db'
+
+# CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_SERIALIZER = 'json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 

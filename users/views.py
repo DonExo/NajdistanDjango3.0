@@ -20,6 +20,15 @@ def profile(request):
 
 
 @login_required
+def properties(request):
+    context = {
+        'title': 'My Properties',
+        'listings': request.user.get_listings(),
+    }
+    return render(request, 'users/properties.html', context)
+
+
+@login_required
 def update(request):
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)

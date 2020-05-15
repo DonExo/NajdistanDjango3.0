@@ -2,15 +2,15 @@
     <ul class="my-account-nav">
         <li class="sub-nav-title">Manage Profile</li>
         <li>
-            <a href="{% url 'accounts:update_user' %}"
-                {% url 'accounts:update_user' as current_url%}
+            <a href="{% url 'accounts:profile' %}"
+                {% url 'accounts:profile' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
                 <i class="sl sl-icon-user"></i> My Profile
             </a>
         </li>
         <li>
-            <a href="{% url 'accounts:profile' %}"
-                {% url 'accounts:profile' as current_url%}
+            <a href="{% url 'accounts:properties' %}"
+                {% url 'accounts:properties' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
                 <i class="sl sl-icon-docs"></i> My Properties
             </a>
@@ -35,7 +35,13 @@
     </ul>
     <ul class="my-account-nav">
         <li class="sub-nav-title">Manage Account</li>
-        <li><a href="#"><i class="sl sl-icon-power"></i> Update Profile</a></li>
+        <li>
+            <a href="{% url 'accounts:profile_update' %}"
+                {% url 'accounts:profile_update' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-user"></i> Update profile
+            </a>
+        </li>
         <li>
             <a href="{% url 'authy:password_change' %}"
                 {% url 'authy:password_change' as current_url%}

@@ -6,6 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django_filters.views import FilterView
 
@@ -121,7 +122,8 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     permission_denied_message = FORBIDDEN_MESAGE
 
     def get_success_url(self):
-        return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
+        messages.success(self.request, _("You've successfully updated the property!"))
+        return reverse_lazy('accounts:properties')
 
     def form_valid(self, form):
         return super().form_valid(form)

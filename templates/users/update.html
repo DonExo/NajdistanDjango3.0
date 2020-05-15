@@ -62,13 +62,13 @@
                     <!-- Avatar -->
                     <div class="edit-profile-photo">
                         {{ form.profile_image }}
-                        <!-- <img src="images/agent-02.jpg" alt="">
+                        <img src="{{ request.user.get_profile_image }}" alt="alt">
                         <div class="change-photo-btn">
                             <div class="photoUpload">
                                 <span><i class="fa fa-upload"></i> Upload Photo</span>
                                 <input type="file" name="profile_image" accept="image/*" id="id_profile_image" class="upload" />
                             </div>
-                        </div> -->
+                        </div>
                     </div>
     
                 </div>

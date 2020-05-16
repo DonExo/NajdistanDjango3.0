@@ -1,20 +1,55 @@
 <div class="my-account-nav-container">
-					
+    <ul class="my-account-nav">
+        <li class="sub-nav-title">Manage Profile</li>
+        <li>
+            <a href="{% url 'accounts:profile' %}"
+                {% url 'accounts:profile' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-user"></i> My Profile
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'accounts:properties' %}"
+                {% url 'accounts:properties' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-docs"></i> My Properties
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'listings:create' %}"
+                {% url 'listings:create' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-action-redo"></i> Submit New Property
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="sl sl-icon-star"></i> Bookmarked Listings
+            </a>
+        </li>
+    </ul>
+    <ul class="my-account-nav">
+        <li class="sub-nav-title">Search Profiles</li>
+        <li><a href="{% url 'searchprofiles:create' %}"><i class="sl sl-icon-power"></i>Add new</a></li>
+        <li><a href="{% url 'searchprofiles:manage' %}"><i class="sl sl-icon-power"></i>Manage existing</a></li>
+    </ul>
     <ul class="my-account-nav">
         <li class="sub-nav-title">Manage Account</li>
-        <li><a href="{% url 'accounts:update_user' %}"><i class="sl sl-icon-user"></i> My Profile</a></li>
-        <!-- <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarked Listings</a></li> -->
-    </ul>
-    
-    <ul class="my-account-nav">
-        <li class="sub-nav-title">Manage Listings</li>
-        <li><a href="{% url 'accounts:profile' %}" class="current"><i class="sl sl-icon-docs"></i> My Properties</a></li>
-        <li><a href="{% url 'listings:create' %}"><i class="sl sl-icon-action-redo"></i> Submit New Property</a></li>
-    </ul>
-
-    <ul class="my-account-nav">
-        <li><a href="{% url 'authy:password_change' %}"><i class="sl sl-icon-lock"></i> Change Password</a></li>
+        <li>
+            <a href="{% url 'accounts:profile_update' %}"
+                {% url 'accounts:profile_update' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-user"></i> Update profile
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'authy:password_change' %}"
+                {% url 'authy:password_change' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
+                <i class="sl sl-icon-lock"></i> Change Password
+            </a>
+        </li>
+        <li><a href="#"><i class="sl sl-icon-power"></i> Delete Account</a></li>
         <li><a href="{% url 'authy:logout' %}"><i class="sl sl-icon-power"></i> Log Out</a></li>
     </ul>
-
 </div>

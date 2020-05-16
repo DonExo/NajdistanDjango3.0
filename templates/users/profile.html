@@ -21,57 +21,18 @@
         </div>
         
         <div class="col-md-8">
-            {% if listings %}
-                
-            
-                <table class="manage-table responsive-table">
+            Some content?
+            {% with request.user as user %} <br/>
+                {{ user.get_full_name }} <br/>
+                {{ user.last_login }} <br/>
+                {{ user.telephone }}
 
-                    <tr>
-                        <th><i class="fa fa-file-text"></i> Property</th>
-                        <th class="expire-date"><i class="fa fa-calendar"></i> Creation Date</th>
-                        <th></th>
-                    </tr>
-
-                    {% for object in listings %}
-                        <tr>
-                            <td class="title-container">
-                                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}">
-                                <div class="title">
-                                    <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title }}</a></h4>
-                                    <span>{{ object.zip_code }}, {{ object.city }} </span>
-                                    <span class="table-property-price">{{ object.price }} <i>&euro;</i></span>
-                                </div>
-                            </td>
-                            <td class="expire-date">{{ object.created_at|naturalday }}</td>
-                            <td class="action">
-                                <a href="#"><i class="fa fa-pencil"></i> Edit</a>
-                                <a href="#"><i class="fa  fa-eye-slash"></i> Hide</a>
-                                <a href="#" class="delete"><i class="fa fa-remove"></i> Delete</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                </table>
-                <a href="{% url 'listings:create' %}" class="margin-top-40 button">Submit New Property</a>
-            {% else %}
-                <p>You don't have any listings. Would you like to <a class="margin-top-40 button" href="{% url 'listings:create' %}">create one?</a></p>
-            {% endif %}
+            {% endwith %}
 		</div>
 
         <!--
         <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
-        <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4> -->
-        
-        <h3>Add new <a href="{% url 'searchprofiles:create' %}">Search Profile</a></h3>
-        <h4>Your Search Profiles:</h4>
-        {% if search_profiles %}
-            {% for sp in search_profiles %}
-                {% include 'includes/users/search_profile.html' %}
-            {% endfor %}
-        {% else %}
-            <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
-        {% endif %}
-
+        <h4><a href="{% url 'accounts:profile_update' %}">Update your profile</a> </h4> -->
     </div>
 </div>
 

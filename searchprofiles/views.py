@@ -12,6 +12,15 @@ from .models import SearchProfiles
 
 
 @login_required()
+def search_profile_manage(request):
+    context = {'title': "Manage Search Profiles"}
+    search_profiles = request.user.get_search_profiles()
+    context.update({'reached_max_sp': request.user.has_search_profile(),
+                    'search_profiles': search_profiles})
+    return render(request, 'searchprofile/manage.html', context)
+
+
+@login_required()
 def search_profile_create(request):
     context = {'title': "Search Profile"}
 
@@ -22,8 +31,8 @@ def search_profile_create(request):
             sp = form.save(commit=False)
             sp.user = request.user
             sp.save()
-            messages.info(request, _("Search Profile added!"))
-            return redirect(reverse('accounts:profile'))
+            messages.success(request, _("Search Profile added!"))
+            return redirect(reverse('searchprofiles:manage'))
         else:
             return render(request, 'searchprofile/create.html', context)
 
@@ -39,7 +48,7 @@ def search_profile_delete(request, pk):
         return HttpResponseForbidden(_(FORBIDDEN_MESAGE))
     search_profile.delete()
     messages.info(request, _("Search Profile deleted."))
-    return redirect(reverse('accounts:profile'))
+    return redirect(reverse('searchprofiles:manage'))
 
 
 @login_required()
@@ -56,7 +65,7 @@ def search_profile_update(request, pk):
         if form.is_valid():
             form.save()
             messages.info(request, _("Search Profile updated!"))
-            return redirect(reverse('accounts:profile'))
+            return redirect(reverse('searchprofiles:manage'))
         else:
             return render(request, 'searchprofile/update.html', context)
 
@@ -74,4 +83,4 @@ def search_profile_toggle_status(request, pk):
     search_profile.is_active = not search_profile.is_active
     search_profile.save()
     messages.info(request, _("Search Profile Updated."))
-    return redirect(reverse('accounts:profile'))
+    return redirect(reverse('searchprofiles:manage'))

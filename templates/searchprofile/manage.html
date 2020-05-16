@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% include 'includes/title.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>Manage Search Profiles</h1>
+
+    {% if reached_max_sp %}
+            <p>You've reached the maximum number of Search profiles you can have.<br>
+               Please <a href="#">upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
+    {% endif %}
+
+    <p>Add some cool info of what is the purpose of Search Profile and maybe some example how to use it.</p>
+
+    {% if search_profiles %}
+        {% for sp in search_profiles %}
+            {% include 'includes/users/search_profile.html' %}
+        {% endfor %}
+    {% else %}
+        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
+    {% endif %}
+
+{% endblock %}

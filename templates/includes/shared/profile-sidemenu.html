@@ -23,7 +23,9 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{% url 'accounts:bookmarks' %}"
+                {% url 'accounts:bookmarks' as current_url%}
+                {% if request.path == current_url %} class="current"{% endif %}>
                 <i class="sl sl-icon-star"></i> Bookmarked Listings
             </a>
         </li>

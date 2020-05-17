@@ -49,13 +49,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CELERY related settings
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = 'django-db'  # django-celery-results
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
 # https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
-# CELERY_RESULT_BACKEND = 'django-db'
 
 INSTALLED_APPS = [
     # Django apps

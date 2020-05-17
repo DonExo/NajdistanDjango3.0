@@ -5,14 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Create new Search Profile</h1>
-    {% if reached_max_sp %}
-        <p style="color: red;">You've reached the maximum number of Search profiles you can have.<br>
-            Please <a href="#">upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
-    {% endif %}
-    <form method="post" autocomplete="off">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" {% if reached_max_sp %} disabled {% endif %}/>
-    </form>
+    {% include 'includes/shared/breadcrumbs.html' %}
+
+    <div class="container padding-bottom-70">
+        <div class="row">
+
+             <!-- Sidebar widget -->
+            <div class="col-md-4">
+                <div class="sidebar left">
+                    {% include 'includes/shared/profile-sidemenu.html' %}
+                </div>
+            </div>
+
+            <!-- Manage Page -->
+            <div class="col-md-8 padding-bottom-70">
+                <h1>Create new Search Profile</h1>
+                {% if reached_max_sp %}
+                    <p style="color: red;">You've reached the maximum number of Search profiles you can have.<br>
+                        Please <a href="#">upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
+                {% endif %}
+                <form method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" {% if reached_max_sp %} disabled {% endif %}/>
+                </form>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

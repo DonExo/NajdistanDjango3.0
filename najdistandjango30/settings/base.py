@@ -47,6 +47,16 @@ GENERATE_DUMMY_LISTING = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# CELERY related settings
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = 'django-db'  # django-celery-results
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+# https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
+
 INSTALLED_APPS = [
     # Django apps
     'django.contrib.auth',
@@ -74,18 +84,7 @@ INSTALLED_APPS = [
     'searchprofiles',
     'reports',
     'api',
-
-
 ]
-
-# https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
-CELERY_RESULT_BACKEND = 'django-db'
-
-# CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
-# CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379')
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

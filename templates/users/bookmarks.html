@@ -21,11 +21,12 @@
         </div>
         
         <div class="col-md-8">
+            <i>Currently, the only way to bookmark a listing is via Django Admin. To be fixed soon.</i><br/><br/>
             {% if bookmarks %}
 
                 {% for bookmark in bookmarks %}
-                    Title: {{ bookmark.title }} <br/>
-                    Date bookmarked: {{ bookmark.bookmarked }} <br/>
+                    Property: <a href="{% url 'listings:detail' bookmark.listing.slug %}">{{ bookmark.listing.title }}</a> <br/>
+{#                    Date bookmarked: {{ bookmark.bookmarked }} <br/>#}
 
                 {% endfor %}
             

@@ -32,7 +32,7 @@ def properties(request):
 def bookmarks(request):
     context = {
         'title': 'Bookmarked properties',
-        'bookmarks': request.user.get_bookmarked(),
+        'bookmarks': request.user.get_bookmarks(),
     }
     return render(request, 'users/bookmarks.html', context)
 

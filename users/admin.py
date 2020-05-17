@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User
+from .models import User, Bookmarks
 
 
 @admin.register(User)
@@ -25,6 +25,11 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     readonly_fields = ('identifier', )
+
+
+@admin.register(Bookmarks)
+class BookmarksAdmin(admin.ModelAdmin):
+    list_display = ('user', 'listing',)
 
 
 admin.site.unregister(Group)

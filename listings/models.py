@@ -88,6 +88,9 @@ class Listing(BaseModel):
     def get_absolute_url(self):
         return reverse('listings:detail', kwargs={'slug': self.slug})
 
+    def get_bookmarked_by(self):
+        return self.bookmarked_by.all()
+
     def increment_visited_counter(self):
         # Django suggests using F objects for such operation
         self._meta.model.objects.filter(pk=self.pk).update(times_visited=F('times_visited') + 1)

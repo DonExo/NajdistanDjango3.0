@@ -5,6 +5,7 @@ __pycache__/
 
 .idea/
 *.db
+dump.rdb
 
 # weird file after installing celery
 django

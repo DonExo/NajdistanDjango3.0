@@ -14,6 +14,8 @@ from .forms import ListingCreateForm, ListingUpdateForm
 from .filters import ListingFilter
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
+from searchprofiles.tasks import dummy_task
+
 
 class ListingIndexView(FilterView):
     template_name = 'listings/list.html'
@@ -49,6 +51,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     success_message = "Listing successfully created!"
 
     def get_success_url(self):
+        dummy_task.delay(self.object.slug)
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):

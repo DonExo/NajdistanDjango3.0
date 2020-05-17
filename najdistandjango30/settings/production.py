@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ["172.104.139.96", 'crelayo.shop', 'www.crelayo.shop', 'linode.crelayo.shop']
+ALLOWED_HOSTS = ["172.104.139.96", 'crelayo.shop', 'www.crelayo.shop', 'linode.crelayo.shop', '*']
 
 # AWS Related / Static & Media files
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')

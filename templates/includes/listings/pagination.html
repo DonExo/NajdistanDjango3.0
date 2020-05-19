@@ -5,30 +5,26 @@
     <div class="pagination-container margin-top-20">
         <nav class="pagination">
             <div class="margin-top-10">Page {{ page_obj.number }} of {{ paginator.num_pages }}</div>
-            <!-- <ul>
-                <li></li>
-                <li><a href="#" class="current-page">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li class="blank">...</li>
-                <li><a href="#">22</a></li>
-            </ul> -->
         </nav>
 
         <nav class="pagination-next-prev">
             <ul>
                 {% if page_obj.has_previous %}
-                    <li><a href="?{% param_replace page=1 %}" class="prev">First</a></li>
+                <li class="pagination-btns-left">
+                    <a href="?{% param_replace page=1 %}" class="prev">First</a>
                     {% if page_obj.previous_page_number != 1 %}
-                        <li class="pagination-btn-left"><a href="?{% param_replace page=page_obj.previous_page_number %}" class="prev">Previous</a></li>
+                        <a href="?{% param_replace page=page_obj.previous_page_number %}" class="prev">Previous</a>
                     {% endif %}
+                </li>
                 {% endif %}
                 
                 {% if page_obj.has_next %}
+                <li class="pagination-btns-right">
                     {% if page_obj.next_page_number != paginator.num_pages %}
-                        <li class="pagination-btn-right"><a href="?{% param_replace page=page_obj.next_page_number %}" class="next">Next</a></li>
+                        <a href="?{% param_replace page=page_obj.next_page_number %}" class="next">Next</a>
                     {% endif %}
-                        <li><a href="?{% param_replace page=paginator.num_pages %}" class="next">Last</a></li>
+                        <a href="?{% param_replace page=paginator.num_pages %}" class="next">Last</a>
+                </li>
                 {% endif %}
             </ul>
         </nav>

@@ -1395,7 +1395,7 @@ $(document).ready(function(){
 
 
 
-(function($) {
+//(function($) {
 
   $.fn.footerReveal = function(options) {
 
@@ -1403,7 +1403,8 @@ $(document).ready(function(){
 
     var $this = $(this),
         $prev = $this.prev(),
-        $win = $(window),
+		$win = $(window),
+		$doc = $(document),
 
         defaults = $.extend ({
           shadow : true,
@@ -1416,24 +1417,23 @@ $(document).ready(function(){
 		$this.before('<div class="footer-reveal-offset"></div>');
 
     if ($this.outerHeight() <= $win.outerHeight()) {
-      $this.css({
-        'z-index' : defaults.zIndex,
-        position : 'fixed',
-        bottom : 0
-      });
+		$this.css({
+			'z-index' : defaults.zIndex,
+			position : 'fixed',
+			bottom : 0
+		});
+		
+		$win.on('resize', function() {
+			$prev.css({marginBottom: $this.outerHeight()});
+		});
 
-      $win.on('load resize', function() {
-        $this.css({
-          'width' : $prev.outerWidth()
-        });
-        $prev.css({
-          'margin-bottom' : $this.outerHeight()
-        });
-      });
+		$doc.ready(function() {
+			$prev.css({marginBottom: $this.outerHeight()});
+		});
     }
 
     return this;
 
   };
 
-}) (this.jQuery);
+//}) (this.jQuery);

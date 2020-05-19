@@ -24,8 +24,8 @@
 {# #TODO, make this prettier formatted activation e-mail :) #}
 <div style="width: 400px; height: 400px; background: lightblue; margin: auto; padding: 20px;">
 <p>
-    <a href="http://{{site.domain}}{% url 'registration_activate' activation_key %}">
-        {{site.domain}}{% url 'registration_activate' activation_key %}
+    <a href="http{% if request.is_secure %}s{% endif %}://{{site.domain}}{% url 'registration_activate' activation_key %}">
+        http{% if request.is_secure %}s{% endif %}://{{site.domain}}{% url 'registration_activate' activation_key %}
     </a>
 </p>
 </div>

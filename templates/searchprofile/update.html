@@ -5,12 +5,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Update search profile</h1>
+    {% include 'includes/shared/breadcrumbs.html' %}
 
-    <form method="post" autocomplete="off">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container padding-bottom-70">
+        <div class="row">
 
+             <!-- Sidebar widget -->
+            <div class="col-md-4">
+                <div class="sidebar left">
+                    {% include 'includes/shared/profile-sidemenu.html' %}
+                </div>
+            </div>
+
+            <!-- Manage Page -->
+            <div class="col-md-8 padding-bottom-70">
+                <h1>Update search profile</h1>
+                <form method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -2,15 +2,16 @@ import hashlib
 import uuid
 
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinLengthValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from configdata import REGEX_TELEPHONE_VALIDATOR
 from .managers import CustomUserManager
 from .utils import profile_image_directory_path
 
-from configdata import REGEX_TELEPHONE_VALIDATOR
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,3 +67,22 @@ class User(AbstractUser, BaseModel):
     def has_search_profile(self):
         #@TODO: Change is_staff with PREMIUM user
         return not self.is_staff and self.searchprofiles.all().count() >= 1
+
+    def get_bookmarks(self):
+        return self.bookmarks.all()
+
+
+class Bookmarks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE, related_name='bookmarked_by')
+
+    class Meta:
+        verbose_name_plural = 'Bookmarks'
+
+    def __str__(self):
+        return f"{self.user} - {self.listing}"
+
+    def clean(self):
+        if self.user.pk == self.listing.user.pk:
+            raise ValidationError("You can't bookmark your own listing!")
+

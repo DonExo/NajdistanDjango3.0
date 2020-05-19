@@ -29,6 +29,15 @@ def properties(request):
 
 
 @login_required
+def bookmarks(request):
+    context = {
+        'title': 'Bookmarked properties',
+        'bookmarks': request.user.get_bookmarks(),
+    }
+    return render(request, 'users/bookmarks.html', context)
+
+
+@login_required
 def update(request):
     context = {'title': 'Profile update'}
     if request.method == 'POST':

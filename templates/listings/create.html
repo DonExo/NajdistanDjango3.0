@@ -4,11 +4,23 @@
     {% include 'includes/title.html' %}
 {% endblock %}
 
+
 {% block content %}
-<div class="container">
+
+{% include 'includes/shared/breadcrumbs.html' %}
+
+<div class="container padding-bottom-70">
     <div class="row">
+
+         <!-- Sidebar widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+
         <!-- Submit Page -->
-        <div class="col-md-12 padding-bottom-70">
+        <div class="col-md-8 padding-bottom-70">
             <form method="post" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
                 {% if generate_dummy_listing %}

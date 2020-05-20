@@ -159,13 +159,13 @@
                             <a class="button fullwidth border" href="{% url 'listings:update' object.slug %}">Update</a>
 
                             <div class="submit-section">                                    
-                                <form action="." id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
-                                    <input id="imageHolder" type="file" name="images" multiple required >
+                                <form action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
+{#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
                                         {% csrf_token %}
                                         <div class="fallback">
                                             <input type="file" name="images" multiple required >
                                         </div>
-                                    <button class="button fullwidth margin-top-5" type="submit">Submit</button>
+                                    <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button>
                                 </form>
                             </div>
 

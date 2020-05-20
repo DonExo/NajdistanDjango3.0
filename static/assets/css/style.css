@@ -5234,7 +5234,6 @@ body .bookmarks-table td.action a.delete i { position: relative; left:0; top:0; 
 /* ---------------------------------- */
 /* Submit page
 ------------------------------------- */
-.submit-page,
 #titlebar.submit-page h2 { padding: 0 7%; }
 
 #titlebar.submit-page h2 i { margin-right: 3px; }

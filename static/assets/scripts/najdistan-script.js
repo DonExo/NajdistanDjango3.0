@@ -32,6 +32,26 @@ function generateListingData() {
 }
 
 
+function stickySideMenuInit($footer) {
+  let sideMenu = $(".my-account-nav-container"),
+      top_of_element = $footer.offset().top + 120,
+      bottom_of_element = $footer.offset().top + $footer.outerHeight(),
+      bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
+      top_of_screen = $(window).scrollTop() ;
+
+  if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
+    sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
+  } else {
+    if (!sideMenu.hasClass("side-menu-sticky")) {
+      sideMenu.addClass("side-menu-sticky");
+    }
+  }
+}
+
+$(window).on("scroll", function(){
+  stickySideMenuInit($(".footer-shadow"));
+});
+
 let $window = $(window);
 let toastEle = $(".toast");
 let toastCloseBtn = $(".toast-message-close");

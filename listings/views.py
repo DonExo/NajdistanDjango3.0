@@ -45,9 +45,10 @@ class ListingSearchView(FilterView):
         context['title'] = 'Search Listings'
         return context
 
+
 class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
-    login_url = reverse_lazy('auth_login')
     model = Listing
+    login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
@@ -57,7 +58,17 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        listing = form.save(commit=False)
+        listing.user = self.request.user
+        listing.save()
+        image_objects = []
+        for image in self.request.FILES.getlist('images'):
+            obj = Image(
+                listing=listing,
+                image=image
+            )
+            image_objects.append(obj)
+        Image.objects.bulk_create(image_objects)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -117,7 +128,7 @@ class ListingDetailView(generic.DetailView):
         context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
-
+# Dzirni ja update formata
 class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'

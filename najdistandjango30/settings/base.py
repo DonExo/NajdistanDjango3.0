@@ -8,7 +8,7 @@ load_dotenv(dotenv_path=env_path)
 
 BASE_DIR = os.path.dirname(os.path.dirname((os.path.dirname(os.path.abspath(__file__)))))
 
-ADMINS = [('Admin', os.getenv('EMAIL_HOST_USER'))]
+ADMINS = [('Admin', )]
 MANAGERS = ADMINS
 AUTH_USER_MODEL = 'users.User'
 

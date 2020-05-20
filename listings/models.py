@@ -67,7 +67,6 @@ class Listing(BaseModel):
     rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
     # @TODO: If the house is for selling - some fields should be deleted in the form
     listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE)
-    cover_image = models.ImageField(upload_to=listing_image_directory_path)
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
     slug = models.SlugField(max_length=255, unique=True)
 
@@ -83,7 +82,7 @@ class Listing(BaseModel):
         return self.images.all()
 
     def get_images_count(self):
-        return int(self.images.all().count()  + 1)  # this is the cover_image
+        return int(self.images.all().count())
 
     def get_absolute_url(self):
         return reverse('listings:detail', kwargs={'slug': self.slug})
@@ -107,7 +106,6 @@ class Listing(BaseModel):
 
     # This ensures that all related images are deleted from the system
     def delete(self, using=None, keep_parents=False):
-        self.cover_image.storage.delete(self.cover_image.name)
         for image in self.images.all():
             image.delete()
             image.image.storage.delete(image.image.name)

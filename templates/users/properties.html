@@ -35,8 +35,7 @@
                     {% for object in listings %}
                         <tr>
                             <td class="title-container">
-                                <p>mesto za prva slika</p>
-{#                                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}">#}
+                                <img src="{{ object.get_cover_image.url }}" alt="{{ object.title }}">
                                 <div class="title">
                                     <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title }}</a></h4>
                                     <span>{{ object.zip_code }}, {{ object.city }} </span>

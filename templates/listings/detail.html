@@ -45,7 +45,6 @@
                             
                 <!-- Slider -->
                 <div class="property-slider default">
-                    <a href="{{ object.cover_image.url }}" data-background-image="{{ object.cover_image.url }}" class="item mfp-gallery"></a>
                     {% for image in object.get_images %}
                         <a href="{{ image.image.url }}" data-background-image="{{ image.image.url }}" class="item mfp-gallery"></a>
                     {% endfor %}
@@ -53,7 +52,6 @@
 
                 <!-- Slider Thumbs -->
                 <div class="property-slider-nav">
-                    <div class="item"><img src="{{ object.cover_image.url }}" alt="Cover image" /></div>
                     {% for image in object.get_images %}
                         <div class="item"><img src="{{ image.image.url }}" alt="{{ image.title }}" /></div>
                     {% endfor %}
@@ -161,13 +159,13 @@
                             <a class="button fullwidth border" href="{% url 'listings:update' object.slug %}">Update</a>
 
                             <div class="submit-section">                                    
-                                <form action="." id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
-                                    <input id="imageHolder" type="file" name="images" multiple required >
+                                <form action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
+{#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
                                         {% csrf_token %}
                                         <div class="fallback">
                                             <input type="file" name="images" multiple required >
                                         </div>
-                                    <button class="button fullwidth margin-top-5" type="submit">Submit</button>
+                                    <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button>
                                 </form>
                             </div>
 

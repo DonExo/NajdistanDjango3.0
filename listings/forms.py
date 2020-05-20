@@ -5,10 +5,12 @@ from .models import Listing
 
 
 class ListingCreateForm(forms.ModelForm):
+    images = forms.ImageField(widget = forms.ClearableFileInput(attrs={'multiple': True}))
 
     class Meta:
         model = Listing
-        fields = ('title', 'description', 'listing_type', 'home_type', 'city', 'zip_code', 'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price', 'cover_image')
+        fields = ('title', 'description', 'listing_type', 'home_type', 'city', 'zip_code',
+                  'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price')
         # @TODO: Add all necessary values
 
     def clean_title(self):

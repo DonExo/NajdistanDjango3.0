@@ -82,23 +82,45 @@ $window.on('load', function() {
 
 Dropzone.autoDiscover = false;
 
-propertyImg = new Dropzone("#propertyUploadImages", {
-    headers: {
-        'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
-    },
-    url: ".",
-    paramName: "images", // The name that will be used to transfer the file
-    dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
-    dictResponseError: 'Error uploading file!',
+let propertyImg = new Dropzone("#propertyUploadImages", {
+    url: "/listings/proba/",
+    paramName: "images",
     uploadMultiple: true,
     maxFiles: 5,
-    maxFilesize: 2, // MB
+    maxFilesize: 20, // MB
+    parallelUploads: 5,
     acceptedFiles: 'image/*',
-    addRemoveLinks: true
+    addRemoveLinks: true,
+    autoProcessQueue: false,
+
 });
 
-propertyImg.on("addedfile", function(file) {
-  file.previewElement.addEventListener("click", function() {
-    propertyImg.removeFile(file);
-  });
-});
+
+// propertyImg = new Dropzone("#propertyUploadImages", {
+//     // headers: {
+//     //     'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
+//     // },
+//     url: "/listings/proba/",
+//     paramName: "images", // The name that will be used to transfer the file
+//     dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
+//     dictResponseError: 'Error uploading file!',
+//     uploadMultiple: true,
+//     maxFiles: 5,
+//     maxFilesize: 2, // MB
+//     acceptedFiles: 'image/*',
+//     addRemoveLinks: true
+// });
+
+
+$('#propertyUploadImages>button').on("click", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('donald e zelka');
+                    propertyImg.processQueue();
+                });
+
+// propertyImg.on("addedfile", function(file) {
+//   file.previewElement.addEventListener("click", function() {
+//     propertyImg.removeFile(file);
+//   });
+// });

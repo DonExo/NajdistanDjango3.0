@@ -105,7 +105,6 @@ data-img-height="1600">
                                 </div>
 
                                 <div class="listing-carousel">
-                                    <div><img src="{{ listing.cover_image.url }}" alt=""></div>
                                     {% for image in listing.get_images %}
                                         <div><img src="{{ image.image.url }}" alt=""></div>
                                     {% endfor %}

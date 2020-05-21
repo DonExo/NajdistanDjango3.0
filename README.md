@@ -74,9 +74,9 @@ The codename of this project is "Najdistan v3.0". When it is ready for productio
   7. Optional: Create super user for easy admin access (`./manage.py createsuperuser`)
   8. Run local server (`./manage.py runserver`)
   9. Optioanl: If you want to use the production-ready server:
-    * rename the `.env.example` file to `.env`
-    * add your personal keys in the `.env` file (i.e your Postgre DB credentials, e-mail server credentials, AWS bucket etc)
-    * run the server with `./manage.py runserver --settings=najdistandjango30.settings.production`
+      * rename the `.env.example` file to `.env`
+      * add your personal keys in the `.env` file (i.e your Postgre DB credentials, e-mail server credentials, AWS bucket etc)
+      * run the server with `./manage.py runserver --settings=najdistandjango30.settings.production`
   10. Open 'http://127.0.0.1:8000' in your browser and have fun!
   
 *NOTE:*

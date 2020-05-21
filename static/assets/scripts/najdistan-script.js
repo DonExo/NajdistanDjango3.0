@@ -105,4 +105,10 @@ if(!!$_dropzoneHost.length){
       e.preventDefault();
       propertyImg.processQueue();
   });
+  
+  propertyImg.on("addedfile", function(file) {
+    file.previewElement.addEventListener("click", function() {
+      propertyImg.removeFile(file);
+    });
+  });
 }

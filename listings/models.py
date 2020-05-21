@@ -37,8 +37,8 @@ class Listing(BaseModel):
     """
 
     # Listing dependencies
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
-    city = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True, related_name='listings')
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='listings')
+    city = models.ForeignKey('listings.Place', on_delete=models.SET_NULL, null=True, related_name='listings')
 
     # Listing specification
     title = models.CharField(_('Title'), max_length=255)

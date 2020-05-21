@@ -25,9 +25,14 @@ class ListingFilter(filters.FilterSet):
         field_name='city',
         lookup_expr='exact',
         empty_label='All cities',
-        choices=[(obj.pk, obj) for obj in Place.objects.all()],
     )
 
     class Meta:
         model = Listing
         fields = ['title', 'city', 'price']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters['city'].extra.update({
+            'choices': [(obj.pk, obj) for obj in Place.objects.all()]
+        })

@@ -12,7 +12,7 @@
 <div class="container padding-bottom-70">
     <div class="row">
 
-         <!-- Sidebar widget -->
+        <!-- Sidebar widget -->
 		<div class="col-md-4">
 			<div class="sidebar left">
 				{% include 'includes/shared/profile-sidemenu.html' %}
@@ -83,7 +83,7 @@
                             <div class="col-md-4">
                                 <label for="id_quadrature">Area</label>
                                 <div class="select-input disabled-first-option">
-                                    <input type="hidden" data-unit="Sq Ft">
+                                    <input type="hidden" data-unit="m2">
                                     {{ form.quadrature }}
                                 </div>
                             </div>
@@ -102,9 +102,19 @@
 
                     <!-- Section -->
                     <h3>Gallery</h3>
-                    <div class="submit-section">
+                    <!-- <div class="submit-section">
 {#                        <input type="file" value="images" name="images" multiple>#}
                         {{ form.images }}
+                    </div> -->
+                    <div class="submit-section">                                    
+                        <div action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
+{#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
+                            {% csrf_token %}
+                            <div class="fallback">
+                                <input type="file" name="images" multiple required >
+                            </div>
+                            <!-- <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button> -->
+                        </div>
                     </div>
                     <!-- Section End -->
 
@@ -181,15 +191,8 @@
                             <input id="check-2" type="checkbox" name="check">
                             <label for="check-2">Air Conditioning</label>
 
-                            <input id="check-3" type="checkbox" name="check">
-                            <label for="check-3">Swimming Pool</label>
-
-                            <input id="check-4" type="checkbox" name="check" >
-                            <label for="check-4">Central Heating</label>
-
                             <input id="check-5" type="checkbox" name="check">
                             <label for="check-5">Laundry Room</label>
-
 
                             <input id="check-6" type="checkbox" name="check">
                             <label for="check-6">Gym</label>
@@ -202,37 +205,6 @@
 
                         </div>
                         <!-- Checkboxes / End -->
-
-                    </div>
-                    <!-- Section / End -->
-
-                    <!-- Section -->
-                    <h3>Contact Details</h3>
-                    <div class="submit-section">
-
-                        <!-- Row -->
-                        <div class="row with-forms">
-
-                            <!-- Name -->
-                            <div class="col-md-4">
-                                <label>Name</label>
-                                <input type="text">
-                            </div>
-
-                            <!-- Email -->
-                            <div class="col-md-4">
-                                <label>E-Mail</label>
-                                <input type="email">
-                            </div>
-
-                            <!-- Name -->
-                            <div class="col-md-4">
-                                <label>Phone <span>(optional)</span></label>
-                                <input type="number">
-                            </div>
-
-                        </div>
-                        <!-- Row / End -->
 
                     </div>
                     <!-- Section / End -->

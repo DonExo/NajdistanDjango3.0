@@ -1,19 +1,59 @@
 {% load humanize %}
-<div style="border: 1px solid black; margin: 5px; padding: 5px; width: 80%;">
-    <table>
-        <tr>
-            <td>
-                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}" height="150px" />
-            </td>
-            <td>
-                <b>Title:</b> <a href="{% url 'listings:detail' object.slug %}"> {{ object.title }}</a> <br/>
-                <b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
-                <b>Location:</b> {{ object.city }} - {{ object.zip_code }}<br/>
-                <b>Price:</b> {{ object.price }} EUR<br/>
-                <b>Owner:</b> <a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user }}</a> <br/>
-                <b>Created:</b> {{ object.created_at|naturalday }} <br/>
-                <b>Visited:</b> {{ object.times_visited }} time{{ object.times_visited|pluralize }} <br/>
-            </td>
-        </tr>
-    </table>
+
+<div class="listing-item">
+    <a href="{% url 'listings:detail' object.slug %}" class="listing-img-container">
+
+        <div class="listing-badges">
+            <span class="featured">Featured</span>
+            <span>For Sale</span>
+        </div>
+
+        <div class="listing-img-content">
+            <span class="listing-price">{{ object.price }} <i>&euro;</i></span>
+            <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
+            <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
+        </div>
+
+        {% if object.get_images_count %}
+            <div class="listing-carousel">
+                {% for item in object.get_images %}
+                    <div><img src="{{ item.image.url }}" alt="{{ object.title }}"></div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        
+    </a>
+
+    <div class="listing-content">
+
+        <div class="listing-title">
+            <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title }}</a></h4>
+            <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
+                <i class="fa fa-map-marker"></i>
+                {{ object.zip_code }}, {{ object.city }}
+            </a>
+
+            <a href="{% url 'listings:detail' object.slug %}" class="details button border">Details</a>
+        </div>
+
+        <ul class="listing-details">
+            <li>530 sq ft</li>
+            <li>1 Bedroom</li>
+            <li>3 Rooms</li>
+            <li>1 Bathroom</li>
+        </ul>
+
+        <div class="listing-footer">
+            <a href="{% url 'accounts:user_identifier' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
+            <span><i class="fa fa-calendar-o"></i>{{ object.created_at|naturalday }}</span>
+        </div>
+
+    </div>
+
+<!-- 
+<b>Description:</b> {{ object.description|truncatewords:10 }} <br/>
+<b>Price:</b> {{ object.price }} EUR<br/> -->
+            
+
 </div>

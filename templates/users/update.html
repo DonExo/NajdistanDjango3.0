@@ -5,15 +5,85 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Update profile page</h1>
+{% include 'includes/shared/breadcrumbs.html' %}
 
-    <form method="post" enctype="multipart/form-data" autocomplete="off">
+<div class="container padding-bottom-70">
+	<div class="row">
+
+        <!-- Widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+        
+        <div class="col-md-8">
+                <form method="post" enctype="multipart/form-data" autocomplete="off">
+                {{ form.non_field_errors }}
+                {% csrf_token %}
+                <div class="col-md-8 my-profile">
+                    <h4 class="margin-top-0 margin-bottom-30">My Account</h4>
+
+                    <label for="id_first_name">First Name</label>
+                    {{ form.first_name.errors }}
+                    {{ form.first_name }}
+
+                    <label for="id_last_name">Last Name</label>
+                    {{ form.last_name.errors }}
+                    {{ form.last_name }}
+
+                    <label for="id_telephone">Phone</label>
+                    {{ form.telephone.errors }}
+                    {{ form.telephone }}
+
+                    <label for="id_email">Email</label>
+                    {{ form.email.errors }}
+                    {{ form.email }}
+
+                    <label for="id_password">Current Password</label>
+                    {{ form.password.errors }}
+                    {{ form.password }}
+                    {{ form.password.help_text }}
+
+                    <!-- <h4 class="margin-top-50 margin-bottom-0">Social</h4>
+
+                    <label><i class="fa fa-twitter"></i> Twitter</label>
+                    <input value="https://www.twitter.com/" type="text">
+
+                    <label><i class="fa fa-facebook-square"></i> Facebook</label>
+                    <input value="https://www.facebook.com/" type="text">
+
+                    <label><i class="fa fa-google-plus"></i> Google+</label>
+                    <input value="https://www.google.com/" type="text">
+
+                    <label><i class="fa fa-linkedin"></i> Linkedin</label>
+                    <input value="https://www.linkedin.com/" type="text"> -->
+
+                    <button type="submit" class="button margin-top-20 margin-bottom-20">Save Changes</button>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Avatar -->
+                    <div class="edit-profile-photo">
+                        <img src="{{ request.user.get_profile_image }}" alt="alt">
+                        <div class="change-photo-btn">
+                            <div class="photoUpload">
+                                <span><i class="fa fa-upload"></i> Change Photo</span>
+                                <input type="file" name="profile_image" accept="image/*" id="id_profile_image" class="upload" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- <form method="post" enctype="multipart/form-data" autocomplete="off">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit">
-    </form>
-
-    <br/><br/><br/>
-    <h4><a href="{% url 'authy:password_change' %}">Change your password</a> </h4>
+    </form> -->
 
 {% endblock %}

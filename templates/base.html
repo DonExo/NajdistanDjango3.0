@@ -2,50 +2,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="{% static 'assets/images/logox.png' %}">
     {% block title %}
         <title>Najdistan Django 3.0</title>
     {% endblock %}
     {% block meta %}
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     {% endblock %}
+    <link rel="stylesheet" href="{% static 'assets/css/dropzone.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/color.css' %}">
 
 </head>
 
 <body>
-    <div id="container" style="width: 75%; margin: auto; padding: 10px;">
+    <div id="wrapper">
 
-        <a href="{% url 'index' %}"><h4>HOME</h4></a>
+        <!-- Header Container
+        ================================================== -->
+        {% include 'includes/shared/header.html' %}
+        <!-- Header Container / End -->
+
         {% if messages %}
-            <div class="messages">
+            <div class="toast">
                 {% for message in messages %}
-                    <div class="message" style="width: 80%; height: 15px; background-color: antiquewhite;">
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
+                        <p>{{ message }}</p>
+                        <div class="toast-message-close"><i class="sl sl-icon-close"></i></div>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
 
-        <p style="float: right;">
-        {% if request.user.is_authenticated %}
-            Welcome {{  request.user }}
-            <a href="{% url 'listings:create' %}">New Listing</a> |
-            <a href="{% url 'accounts:profile' %}">Account</a> |
-            {% if request.user.is_superuser %}
-                <a href="{% url 'admin:index' %}">Administration</a> |
-            {% endif %}
-            <a href="{% url 'authy:logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'authy:register' %}">Register</a> |
-            <a href="{% url 'authy:login' %}">Login</a>
-        {% endif %}
-        </p>
-
         {% block content %}
         {% endblock %}
 
-        <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+         <!-- Footer Container
+        ================================================== -->
+        {% include 'includes/shared/footer.html' %}
+        <!-- Footer Container / End -->
+
+        <!-- Back To Top Button -->
+        <div id="backtotop"><a href="#"></a></div>
+
+        <!-- Scripts
+            ================================================== -->        
+        <script type="text/javascript" src="{% static 'assets/scripts/jquery-3.4.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/jquery-migrate-3.1.0.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/chosen.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/magnific-popup.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/owl.carousel.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/rangeSlider.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/sticky-kit.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/slick.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/mmenu.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/tooltips.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/masonry.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/custom.js' %}"></script>
+        <!-- DropZone | Documentation: http://dropzonejs.com -->
+        <script type="text/javascript" src="{% static 'assets/scripts/dropzone.min.js' %}"></script>
+
+        <!-- Custom NajdiStan script -->
+        <script type="text/javascript" src="{% static 'assets/scripts/najdistan-script.js' %}"></script>
 
     </div>
+
 </body>
 </html>

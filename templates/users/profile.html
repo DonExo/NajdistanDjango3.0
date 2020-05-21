@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 
 {% block title %}
@@ -6,31 +7,33 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Profile page</h1>
-    <h3>Hello {{ user.first_name }}</h3><br/>
-    <img src="{{ user.get_profile_image }}" alt="Profile image" width="150" height="150"/>
-    <h6>Last login: {{ user.last_login|naturaltime }}</h6>
-    Fullname: {{ user.get_full_name }} <br/>
-    <h3>Create <a href="{% url 'listings:create' %}">New listing</a> </h3>
-    <h4><a href="{% url 'accounts:update_user' %}">Update your profile</a> </h4>
-    <h4>Your listings:</h4>
-    {% if listings %}
-        {% for object in listings %}
-            {% include 'includes/listings/card.html' %}
-        {% endfor %}
-    {% else %}
-        <p>You don't have any listings. Would you like to <a href="{% url 'listings:create' %}">create one?</a></p>
-    {% endif %}
 
-    <br/>
+{% include 'includes/shared/breadcrumbs.html' %}
 
-    <h3>Add new <a href="{% url 'searchprofiles:create' %}">Search Profile</a></h3>
-    <h4>Your Search Profiles:</h4>
-    {% if search_profiles %}
-        {% for sp in search_profiles %}
-            {% include 'includes/users/search_profile.html' %}
-        {% endfor %}
-    {% else %}
-        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
-    {% endif %}
+<div class="container padding-bottom-70">
+	<div class="row">
+
+        <!-- Widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+        
+        <div class="col-md-8">
+            Some content?
+            {% with request.user as user %} <br/>
+                {{ user.get_full_name }} <br/>
+                {{ user.last_login }} <br/>
+                {{ user.telephone }}
+
+            {% endwith %}
+		</div>
+
+        <!--
+        <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
+        <h4><a href="{% url 'accounts:profile_update' %}">Update your profile</a> </h4> -->
+    </div>
+</div>
+
 {% endblock %}

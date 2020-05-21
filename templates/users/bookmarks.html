@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    {% include 'includes/title.html' %}
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/shared/breadcrumbs.html' %}
+
+<div class="container padding-bottom-70">
+	<div class="row">
+
+        <!-- Widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+        
+        <div class="col-md-8">
+            <i>Currently, the only way to bookmark a listing is via Django Admin. To be fixed soon.</i><br/><br/>
+            {% if bookmarks %}
+
+                {% for bookmark in bookmarks %}
+                    Property: <a href="{% url 'listings:detail' bookmark.listing.slug %}">{{ bookmark.listing.title }}</a> <br/>
+{#                    Date bookmarked: {{ bookmark.bookmarked }} <br/>#}
+
+                {% endfor %}
+            
+{#                <table class="manage-table responsive-table">#}
+{##}
+{#                    <tr>#}
+{#                        <th><i class="fa fa-file-text"></i> Property</th>#}
+{#                        <th class="expire-date"><i class="fa fa-calendar"></i> Creation Date</th>#}
+{#                        <th><i class="fa fa-file-text"></i> Actions</th>#}
+{#                    </tr>#}
+{##}
+{#                    {% for object in listings %}#}
+{#                        <tr>#}
+{#                            <td class="title-container">#}
+{#                                <img src="{{ object.cover_image.url }}" alt="{{ object.title }}">#}
+{#                                <div class="title">#}
+{#                                    <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title }}</a></h4>#}
+{#                                    <span>{{ object.zip_code }}, {{ object.city }} </span>#}
+{#                                    <span class="table-property-price">{{ object.price }} <i>&euro;</i></span>#}
+{#                                </div>#}
+{#                            </td>#}
+{#                            <td class="expire-date">{{ object.created_at|naturalday }}</td>#}
+{#                            <td class="action">#}
+{#                                <a href="{% url 'listings:update' object.slug %}"><i class="fa fa-pencil"></i> Edit</a>#}
+{#                                <a href="#"><i class="fa  fa-eye-slash"></i> Hide</a>#}
+{#                                <a href="{% url 'listings:delete' object.slug %}" class="delete"><i class="fa fa-remove"></i> Delete</a>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                    {% endfor %}#}
+{##}
+{#                </table>#}
+            {% else %}
+                <p>You don't have any bookmarked properties.</p>
+            {% endif %}
+		</div>
+
+        <!--
+        <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
+        <h4><a href="{% url 'accounts:profile_update' %}">Update your profile</a> </h4> -->
+    </div>
+</div>
+
+{% endblock %}

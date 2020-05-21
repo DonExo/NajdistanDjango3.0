@@ -4,18 +4,222 @@
     {% include 'includes/title.html' %}
 {% endblock %}
 
+
 {% block content %}
 
-    <h2>Create Listing!</h2>
+{% include 'includes/shared/breadcrumbs.html' %}
 
-    <form method="post" enctype="multipart/form-data" autocomplete="off">
-        {% csrf_token %}
-            {% if generate_dummy_listing %}
-                <input type="button" value="Generate dummy data" onclick="generateListingData()" />
-                <input type="submit" value="Submit" />
-            {% endif %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
-    </form>
+<div class="container padding-bottom-70">
+    <div class="row">
 
+        <!-- Sidebar widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+
+        <!-- Submit Page -->
+        <div class="col-md-8 padding-bottom-70">
+            {{ form.non_field_errors }}
+
+            <form method="post" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
+                {% if generate_dummy_listing %}
+                    <input type="button" value="Generate dummy data" onclick="generateListingData()" />
+                    <input type="submit" value="Submit" />
+                {% endif %}
+
+                <div class="submit-page">
+
+                    <!-- Section -->
+                    <h3>Basic Information</h3>
+                    <div class="submit-section">
+
+                        <!-- Title -->
+                        <div class="form">
+                            <label for="id_title">Property Title <i class="tip" data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i></label>
+                            {{ form.title }}
+
+                        </div>
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <label for="id_listing_type">Status</label>
+                                {{ form.listing_type }}
+                                <!-- <select class="chosen-select-no-single" >
+                                    <option label="blank"></option>
+                                    <option>For Sale</option>
+                                    <option>For Rent</option>
+                                </select> -->
+                            </div>
+
+                            <!-- Type -->
+                            <div class="col-md-6">
+                                <label for="id_home_type">Type</label>
+                                {{ form.home_type }}
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Price -->
+                            <div class="col-md-4">
+                                <label>Price <i class="tip" data-tip-content="Type overall or monthly price if property is for rent"></i></label>
+                                <div class="select-input disabled-first-option">
+                                    <input type="hidden" data-unit="&euro;">
+                                    {{ form.price }}
+                                </div>
+                            </div>
+
+                            <!-- Area -->
+                            <div class="col-md-4">
+                                <label for="id_quadrature">Area</label>
+                                <div class="select-input disabled-first-option">
+                                    <input type="hidden" data-unit="m2">
+                                    {{ form.quadrature }}
+                                </div>
+                            </div>
+
+                            <!-- Rooms -->
+                            <div class="col-md-4">
+                                <label for="id_rooms">Rooms</label>
+                                {{ form.rooms }}
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+                    </div>
+                    <!-- Section End -->
+
+                    <!-- Section -->
+                    <h3>Gallery</h3>
+                    <!-- <div class="submit-section">
+{#                        <input type="file" value="images" name="images" multiple>#}
+                        {{ form.images }}
+                    </div> -->
+                    <div class="submit-section">                                    
+                        <div action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">
+{#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
+                            {% csrf_token %}
+                            <div class="fallback">
+                                <input type="file" name="images" multiple required >
+                            </div>
+                            <!-- <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button> -->
+                        </div>
+                    </div>
+                    <!-- Section End -->
+
+                    <!-- Section -->
+                    <h3>Location</h3>
+                    <div class="submit-section">
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Address -->
+                            <div class="col-md-12">
+                                <label>Address</label>
+                                <input type="text">
+                            </div>
+
+                            <!-- City -->
+                            <div class="col-md-6">
+                                <label for="id_city">City</label>
+                                {{ form.city }}
+                            </div>
+
+                            <!-- Zip-Code -->
+                            <div class="col-md-6">
+                                <label for="id_zip_code">Zip-Code</label>
+                                {{ form.zip_code }}
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+                    </div>
+                    <!-- Section End -->
+
+                    <!-- Section -->
+                    <h3>Detailed Information</h3>
+                    <div class="submit-section">
+
+                        <!-- Description -->
+                        <div class="form">
+                            <label for="id_description">Description</label>
+                            {{ form.description }}
+                            <!-- <textarea class="WYSIWYG" name="summary" cols="40" rows="3" id="summary" spellcheck="true"></textarea> -->
+                        </div>
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+                            <!-- Beds -->
+                            <div class="col-md-4">
+                                <label for="id_bedrooms">Bedrooms <span>(optional)</span></label>
+                                {{ form.bedrooms }}
+                            </div>
+
+                            <!-- Heating -->
+                            <div class="col-md-4">
+                                <label for="id_bedrooms">Heating <span>(optional)</span></label>
+                                {{ form.heating }}
+                            </div>
+
+                            <!-- Baths -->
+                            <div class="col-md-4">
+                                <label for="id_floor">Floor <span>(optional)</span></label>
+                                {{ form.floor }}
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+
+                        <!-- Checkboxes -->
+                        <h5 class="margin-top-30">Other Features <span>(optional)</span></h5>
+                        <div class="checkboxes in-row margin-bottom-20">
+
+                            <input id="check-2" type="checkbox" name="check">
+                            <label for="check-2">Air Conditioning</label>
+
+                            <input id="check-5" type="checkbox" name="check">
+                            <label for="check-5">Laundry Room</label>
+
+                            <input id="check-6" type="checkbox" name="check">
+                            <label for="check-6">Gym</label>
+
+                            <input id="check-7" type="checkbox" name="check">
+                            <label for="check-7">Alarm</label>
+
+                            <input id="check-8" type="checkbox" name="check">
+                            <label for="check-8">Window Covering</label>
+
+                        </div>
+                        <!-- Checkboxes / End -->
+
+                    </div>
+                    <!-- Section / End -->
+
+                </div>
+                <button type="submit" class="button">Submit</button>
+            </form>
+
+            <!-- <form method="post" autocomplete="off">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+            </form> -->
+        </div>
+
+    </div>
+</div>
 {% endblock %}

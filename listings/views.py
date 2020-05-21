@@ -4,8 +4,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django_filters.views import FilterView
 
@@ -25,7 +27,8 @@ class ListingIndexView(FilterView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'All Listings'
+        context['title'] = 'Home'
+        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved()
         return context
 
 class ListingSearchView(FilterView):
@@ -43,9 +46,10 @@ class ListingSearchView(FilterView):
         context['title'] = 'Search Listings'
         return context
 
+
 class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
-    login_url = reverse_lazy('auth_login')
     model = Listing
+    login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
@@ -55,7 +59,17 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        listing = form.save(commit=False)
+        listing.user = self.request.user
+        listing.save()
+        image_objects = []
+        for image in self.request.FILES.getlist('images'):
+            obj = Image(
+                listing=listing,
+                image=image
+            )
+            image_objects.append(obj)
+        Image.objects.bulk_create(image_objects)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -72,7 +86,7 @@ class ListingDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         object = super().get_object()
-        object.increment_visited_counter()
+        object.increment_visited_counter()  # TODO: Make this async
         return object
 
     def post(self, request, *args, **kwargs):
@@ -112,9 +126,10 @@ class ListingDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listing details'
+        context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
-
+# Dzirni ja update formata
 class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'
@@ -122,7 +137,8 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     permission_denied_message = FORBIDDEN_MESAGE
 
     def get_success_url(self):
-        return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
+        messages.success(self.request, _("You've successfully updated the property!"))
+        return reverse_lazy('accounts:properties')
 
     def form_valid(self, form):
         return super().form_valid(form)
@@ -147,3 +163,24 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         listing.delete()
         messages.info(self.request, "Deleted listing!")
         return reverse('accounts:profile')
+
+
+def proba(request):
+    if request.method == 'POST':
+        print(request.FILES)
+        print("-------")
+        # files = [request.FILES.get('dzfile[%d]' % i)
+        #          for i in range(0, len(request.FILES))]
+        # print(files)
+        # print('-----')
+        # print(request.FILES)
+        # print("=-=-=-=-")
+        print(request.FILES.getlist('images'))
+        #
+        # print("============")
+        # print(request.FILES.getlist('images'))
+    else:
+        print("NIsto!")
+        print(request.FILES)
+
+    return HttpResponse('OK')

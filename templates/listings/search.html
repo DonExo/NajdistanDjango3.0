@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -6,17 +7,100 @@
 
 {% block content %}
 
-    <h2>Search Listings</h2>
+    <!-- Titlebar
+    ================================================== -->
+    <div class="parallax titlebar"
+    data-background="{% static 'assets/images/listings-parallax.jpg' %}"
+    data-color="#333333"
+    data-color-opacity="0.7"
+    data-img-width="800"
+    data-img-height="505">
 
-    <form action="{% url 'listings:search' %}" method="get" autocomplete="off">
-        {{ filter.form.as_p }}
-        <input type="submit" value="Search">
-    </form>
+        <div id="titlebar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
 
-    {% for object in object_list %}
-        {% include 'includes/listings/card.html' %}
-    {% endfor %}
+                        <h2>Listings</h2>
+                        <span>Find your perfect place</span>
+                        
+                        <!-- Breadcrumbs -->
+                        <nav id="breadcrumbs">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li>Listings</li>
+                            </ul>
+                        </nav>
 
-    {% include 'includes/listings/pagination.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row sticky-wrapper">
+    
+            <div class="col-md-8 padding-bottom-70">
+                <!-- Sorting / Layout Switcher -->
+                <div class="row margin-bottom-15">
+
+                    <div class="col-md-6">
+                        <!-- Sort by -->
+                        <div class="sort-by">
+                            <label>Sort by:</label>
+
+                            <div class="sort-by-select">
+                                <select data-placeholder="Default order" class="chosen-select-no-single" >
+                                    <option>Default Order</option>	
+                                    <option>Price Low to High</option>
+                                    <option>Price High to Low</option>
+                                    <option>Newest Properties</option>
+                                    <option>Oldest Properties</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Layout Switcher -->
+                        <div class="layout-switcher">
+                            <a href="#" class="list"><i class="fa fa-th-list"></i></a>
+                            <a href="#" class="grid"><i class="fa fa-th-large"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listings -->
+                <div class="listings-container list-layout">
+                    {% for object in object_list %}
+                        {% include 'includes/listings/card.html' %}
+                    {% endfor %}
+                </div>
+                {% include 'includes/listings/pagination.html' %}
+
+            </div>
+
+            <!-- Sidebar
+            ================================================== -->
+            <div class="col-md-4">
+                <div class="sidebar sticky right">
+                    <!-- Widget -->
+                    <div class="widget margin-bottom-40">
+                        <h3 class="margin-top-0 margin-bottom-35">Find New Home</h3>
+
+                        <form action="{% url 'listings:search' %}" method="get" autocomplete="off">
+                            {{ filter.form.as_p }}
+                            <button class="button fullwidth margin-top-30" type="submit">Search</button>
+                        </form>
+
+                    </div>
+                    <!-- Widget / End -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 
 {% endblock %}

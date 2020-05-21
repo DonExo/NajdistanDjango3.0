@@ -6,13 +6,71 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" autocomplete="off">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% trans 'Log in' %}" />
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
 
-<p>{% trans "Forgot your password?" %} <a href="{% url 'authy:password_reset' %}">{% trans "Reset it" %}</a>.</p>
-<p>{% trans "Not a member?" %} <a href="{% url 'authy:register' %}">{% trans "Register" %}</a>.</p>
+{% include 'includes/shared/breadcrumbs.html' %}
+
+<div class="container">
+
+	<div class="row">
+        <div class="col-md-4 col-md-offset-4">
+
+            <!--Tab -->
+            <div class="my-account style-1 margin-top-5 margin-bottom-40">
+
+                <div class="tabs-container alt">
+
+                    <!-- Login -->
+                    <div class="tab-content">
+                        <form method="post" autocomplete="off" class="login">
+                            {% csrf_token %}
+                            <!-- {{ form.as_p }} -->
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_username">Username:
+                                    <i class="im im-icon-Male"></i>
+                                    {{ form.username }}
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="id_password">Password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    {{ form.password }}
+                                </label>
+                            </p>
+
+                            <p class="form-row">
+                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
+                                <input type="hidden" name="next" value="{{ next }}" />
+                            </p>
+                            
+                            <p class="form-row">        
+                                <label for="id_remember_me" class="rememberme">
+                                    {{ form.remember_me }}
+                                    Remember Me
+                                </label>
+                            </p>
+
+                            <p class="margin-top-10 lost_password">
+                                <a href="{% url 'authy:password_reset' %}">{% trans "Forgot your password?" %}</a>
+                            </p>
+
+                            <p class="margin-top-10 lost_password">
+                                <a href="{% url 'authy:register' %}">{% trans "Not a member?" %} {% trans "Register" %}</a>
+                            </p>
+
+                            {{ form.captcha }}
+                            
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+	</div>
+
+</div>
+<!-- Container / End -->
+
 {% endblock %}

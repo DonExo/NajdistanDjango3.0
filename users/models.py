@@ -2,10 +2,13 @@ import hashlib
 import uuid
 
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator, MinLengthValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from configdata import REGEX_TELEPHONE_VALIDATOR
 from .managers import CustomUserManager
 from .utils import profile_image_directory_path
 
@@ -22,10 +25,12 @@ class User(AbstractUser, BaseModel):
     """
     A base class that represents an instance of a logged-in User
     """
-    first_name = models.CharField(max_length=255, blank=False)
-    last_name = models.CharField(max_length=255, blank=False)
+    first_name = models.CharField(max_length=255, blank=False, validators=[MinLengthValidator(2)])
+    last_name = models.CharField(max_length=255, blank=False, validators=[MinLengthValidator(2)])
     email = models.EmailField(unique=True, blank=False)
-    telephone = models.CharField(_('Phone number'), max_length=255)
+    telephone = models.CharField(_('Phone number'), max_length=255,
+                                 validators=[RegexValidator(REGEX_TELEPHONE_VALIDATOR,
+                                 message="Phone number should be a combination of numbers and '+' sign (i.e. +31612341234 or 0612341234)")])
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -62,3 +67,22 @@ class User(AbstractUser, BaseModel):
     def has_search_profile(self):
         #@TODO: Change is_staff with PREMIUM user
         return not self.is_staff and self.searchprofiles.all().count() >= 1
+
+    def get_bookmarks(self):
+        return self.bookmarks.all()
+
+
+class Bookmarks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+    listing = models.ForeignKey('listings.Listing', on_delete=models.CASCADE, related_name='bookmarked_by')
+
+    class Meta:
+        verbose_name_plural = 'Bookmarks'
+
+    def __str__(self):
+        return f"{self.user} - {self.listing}"
+
+    def clean(self):
+        if self.user.pk == self.listing.user.pk:
+            raise ValidationError("You can't bookmark your own listing!")
+

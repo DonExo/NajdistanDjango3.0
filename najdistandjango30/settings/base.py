@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'captcha',
+    'widget_tweaks',
     # Celery libraries
     'django_celery_results',
     'django_celery_beat',

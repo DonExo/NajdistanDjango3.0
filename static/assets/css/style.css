@@ -467,13 +467,25 @@ header.fullwidth .container {
 	transition: background-color 0.35s;
 }
 
+#header-container.header-style-3 .user-menu::before {
+	content: '';
+    position: absolute;
+    height: 2px;
+    width: 0;
+    left: 0;
+    top: 40px;
+    background-color: #fff;
+    transition: all 0.35s;
+}
+
 #header-container.header-style-3 .user-menu .user-name {
 	padding: 16px 0;
     color: #fff;
 }
 
-#header-container.header-style-3 .user-menu:hover {
-    background-color: rgba(255,255,255,0.12);
+#header-container.header-style-3 .user-menu:hover::before {
+	width: 120px;
+	left: 22px;
 }
 
 #navigation.style-3 ul li {
@@ -1196,14 +1208,13 @@ button.widget-button {
 }
 
 .user-name span {
-	display: inline-block;
 	width: 38px;
 	height: 38px;
-	margin-right: 10px;
 	border-radius: 50%;
 	position: absolute;
 	left: -22px;
-	top: -5px;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .user-menu ul {

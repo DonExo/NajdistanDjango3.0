@@ -8818,6 +8818,10 @@ a.button {
 	border-radius: 3px;
 }
 
+.button i{
+	vertical-align: middle;
+}
+
 button.button:before,
 a.button:before {
 	width: 100%;

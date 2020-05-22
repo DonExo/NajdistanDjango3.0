@@ -45,7 +45,7 @@ class Listing(BaseModel):
     description = models.TextField(_('Description'))
     address = models.CharField(_('Address'), max_length=80, blank=True)
     zip_code = models.CharField(_('Zip-code'), max_length=10, validators=[RegexValidator(regex=REGEX_ZIPCODE_VALIDATOR, message='Zip code must be in format 1234AB', code='invalid_zipcode')])
-    home_type = models.CharField(_('Type of home'), max_length=10, default='house', choices=HOME_TYPE)
+    home_type = models.CharField(_('Type of home'), max_length=10, default='apartment', choices=HOME_TYPE)
     quadrature = models.PositiveSmallIntegerField(_('Quadrature'))
     rooms = models.PositiveSmallIntegerField(_('Rooms'))
     bedrooms = models.PositiveSmallIntegerField(_('Bedrooms'))

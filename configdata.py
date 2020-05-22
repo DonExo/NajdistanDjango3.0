@@ -42,7 +42,7 @@ UPDATE_FREQUENCIES = (
     ('instant', "Instantly") # Paid version !
 )
 
-# @TODO: To be filled with all relevant data
+# @TODO: To be filled with all relevant data or, some data migration for this? Yet to be decided on the business logic of adding cities
 REGIONS_AND_CITIES = {
     'Drenthe' : ['Assen', 'Coevorden', 'Emmen', 'Hoogeveen', 'Meppel'],
     'Flevoland': ['Almere', 'Biddinghuizen', 'Emmeloord', 'Lelystad'],

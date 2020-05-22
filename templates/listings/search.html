@@ -73,9 +73,13 @@
 
                 <!-- Listings -->
                 <div class="listings-container list-layout">
-                    {% for object in object_list %}
-                        {% include 'includes/listings/card.html' %}
-                    {% endfor %}
+                    {% if object_list %}
+                        {% for object in object_list %}
+                            {% include 'includes/listings/card.html' %}
+                        {% endfor %}
+                    {% else %}
+                        <p>The given search criteria did not yield any results.</p>
+                    {% endif %}
                 </div>
                 {% include 'includes/listings/pagination.html' %}
 

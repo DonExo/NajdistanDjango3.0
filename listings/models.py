@@ -82,7 +82,8 @@ class Listing(BaseModel):
         return self.images.all()
 
     def get_cover_image(self):
-        return self.images.first().image
+        if self.get_images():
+            return self.images.first().image
 
     def get_images_count(self):
         return int(self.images.all().count())

@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+# from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django_filters.views import FilterView
@@ -16,7 +17,8 @@ from .forms import ListingCreateForm, ListingUpdateForm
 from .filters import ListingFilter
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
-from searchprofiles.tasks import dummy_task
+# from searchprofiles.tasks import dummy_task
+from django.views.decorators.csrf import csrf_exempt
 
 
 class ListingIndexView(FilterView):
@@ -54,11 +56,20 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
 
+    # @method_decorator(csrf_exempt)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
-        dummy_task.delay(self.object.slug)
+        # dummy_task.delay(self.object.slug)
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
+    # def post(self, request, *args, **kwargs):
+    #     print(request.FILES)
+    #     return super().post(request, *args, **kwargs)
+
     def form_valid(self, form):
+        # print(self.request.FILES.getlist('images'))
         listing = form.save(commit=False)
         listing.user = self.request.user
         listing.save()
@@ -165,22 +176,19 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         return reverse('accounts:profile')
 
 
-def proba(request):
-    if request.method == 'POST':
-        print(request.FILES)
-        print("-------")
-        # files = [request.FILES.get('dzfile[%d]' % i)
-        #          for i in range(0, len(request.FILES))]
-        # print(files)
-        # print('-----')
-        # print(request.FILES)
-        # print("=-=-=-=-")
-        print(request.FILES.getlist('images'))
-        #
-        # print("============")
-        # print(request.FILES.getlist('images'))
-    else:
-        print("NIsto!")
-        print(request.FILES)
-
-    return HttpResponse('OK')
+# @csrf_exempt
+# def proba(request):
+#     print("------")
+#     print(request.FILES)
+#     if request.method == 'POST':
+#         files = [request.FILES.get('images[%d]' % i) for i in range(0, len(request.FILES))]
+#         for file in files:
+#             obj = Image(
+#                 image=file,
+#                 listing=Listing.objects.first()
+#             )
+#             print(obj)
+#     else:
+#         print("NIsto!")
+#
+#     return HttpResponse('OK')

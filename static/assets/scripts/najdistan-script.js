@@ -6,7 +6,7 @@ function generateListingData() {
     description.value = "Description #" + Math.floor(1000 + Math.random() * 9000);
 
     var city = document.getElementById('id_city');
-    city.value = Math.floor(2 + Math.random() * 7);
+    city.value = Math.floor(1 + Math.random() * 7);
 
     var zip_code = document.getElementById('id_zip_code');
     random1000 = Math.floor(1000 + Math.random() * 9000);
@@ -80,35 +80,39 @@ $window.on('load', function() {
   }
 });
 
-Dropzone.autoDiscover = false;
 
-let $_dropzoneHost = $("#propertyUploadImages");
 
-if(!!$_dropzoneHost.length){
-  let propertyImg = new Dropzone("#propertyUploadImages", {
-      // headers: {
-      //     'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
-      // },
-      url: "/listings/proba/",
-      paramName: "images",
-      uploadMultiple: true,
-      maxFiles: 5,
-      maxFilesize: 20, // MB
-      parallelUploads: 5,
-      acceptedFiles: 'image/*',
-      addRemoveLinks: true,
-      autoProcessQueue: false,
-  });
-  
-  $('#propertyUploadImages>button').on("click", function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      propertyImg.processQueue();
-  });
-  
-  propertyImg.on("addedfile", function(file) {
-    file.previewElement.addEventListener("click", function() {
-      propertyImg.removeFile(file);
-    });
-  });
-}
+
+// DROPZONE
+// Dropzone.autoDiscover = false;
+//
+// let $_dropzoneHost = $("#propertyUploadImages2");
+//
+// if(!!$_dropzoneHost.length){
+//   let propertyImg = new Dropzone("#propertyUploadImages2", {
+//       // headers: {
+//       //     'x-csrf-token': $('input[name="csrfmiddlewaretoken"]').attr('value')
+//       // },
+//       url: "/listings/create/",
+//       paramName: "images",
+//       uploadMultiple: true,
+//       maxFiles: 15,
+//       maxFilesize: 3, // MB
+//       parallelUploads: 15,
+//       acceptedFiles: 'image/*',
+//       addRemoveLinks: true,
+//       autoProcessQueue: false,
+//   });
+//
+//   $('#sabmit').on("click", function(e) {
+//       // e.stopPropagation();
+//       // e.preventDefault();
+//       propertyImg.processQueue();
+//   });
+//
+//   propertyImg.on("addedfile", function(file) {
+//     file.previewElement.addEventListener("click", function() {
+//       propertyImg.removeFile(file);
+//     });
+//   });
+// }

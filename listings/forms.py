@@ -9,15 +9,23 @@ class ListingCreateForm(forms.ModelForm):
 
     class Meta:
         model = Listing
-        fields = ('title', 'description', 'listing_type', 'home_type', 'city', 'zip_code',
+        fields = ('title', 'description', 'images', 'listing_type', 'home_type', 'city', 'zip_code',
                   'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price')
-        # @TODO: Add all necessary values
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 2, "cols": 15})
+        }
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if title.startswith('a'):
-            raise forms.ValidationError("Ne mojt so A da pocvit ;) ")
+        if len(title) < 10:
+            raise forms.ValidationError("Add brief summary with at least 10 characters!")
         return title
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+        if len(description) < 15:
+            raise forms.ValidationError("Add description for the property with at least 15 characters!")
+        return description
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

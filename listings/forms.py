@@ -34,3 +34,4 @@ class ListingCreateForm(forms.ModelForm):
 
 class ListingUpdateForm(ListingCreateForm):
     title = forms.CharField(disabled=True)
+    images = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))

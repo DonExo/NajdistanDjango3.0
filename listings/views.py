@@ -1,24 +1,18 @@
-import imghdr # internal python library for checking image type
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-# from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django_filters.views import FilterView
 
-from .models import Listing, Image
-from .forms import ListingCreateForm, ListingUpdateForm
 from .filters import ListingFilter
+from .forms import ListingCreateForm, ListingUpdateForm
+from .models import Listing, Image
+from .utils import _check_image_validness
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
-
-# from searchprofiles.tasks import dummy_task
-from django.views.decorators.csrf import csrf_exempt
 
 
 class ListingIndexView(FilterView):
@@ -26,12 +20,12 @@ class ListingIndexView(FilterView):
     filterset_class = ListingFilter
 
     # TODO: Check why it has slow database connection on this view
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
         context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved()
         return context
+
 
 class ListingSearchView(FilterView):
     queryset = Listing.objects.all()  # .approved()
@@ -56,31 +50,29 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     form_class = ListingCreateForm
     success_message = "Listing successfully created!"
 
-    # @method_decorator(csrf_exempt)
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
-
     def get_success_url(self):
         # dummy_task.delay(self.object.slug)
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
-    # def post(self, request, *args, **kwargs):
-    #     print(request.FILES)
-    #     return super().post(request, *args, **kwargs)
-
     def form_valid(self, form):
-        # print(self.request.FILES.getlist('images'))
+        # Assign the request user to the Listing object
         listing = form.save(commit=False)
         listing.user = self.request.user
         listing.save()
-        image_objects = []
-        for image in self.request.FILES.getlist('images'):
-            obj = Image(
-                listing=listing,
-                image=image
-            )
-            image_objects.append(obj)
-        Image.objects.bulk_create(image_objects)
+
+        # Check the uploaded files
+        files = self.request.FILES.getlist('images')
+        if files:
+            valid_images, invalid_files = _check_image_validness(files)
+            if valid_images:
+                image_objects = []
+                for image in valid_images:
+                    obj = Image(listing=listing, image=image)
+                    image_objects.append(obj)
+                Image.objects.bulk_create(image_objects)
+            if invalid_files:
+                messages.error(self.request,
+                               _(f"You have submitted {len(invalid_files)} invalid files that have been rejected."))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -100,47 +92,13 @@ class ListingDetailView(generic.DetailView):
         object.increment_visited_counter()  # TODO: Make this async
         return object
 
-    def post(self, request, *args, **kwargs):
-        """
-        Custom logic for validating and processing images.
-        If the user has uploaded at least one valid file (image) - it is processed and attached it to the listing.
-        If there are no valid images in the uploaded files - they are all rejected.
-        If all of them are valid - all are attached to the listing.
-        The user is informed in any case of the current situation.
-        """
-        invalid_files = []
-        valid_files = []
-        image_objects = []
-        for file in request.FILES.getlist('images'):
-            if imghdr.what(file) == None: # if file is not an image
-                invalid_files.append(file)
-            else:
-                valid_files.append(file)
-
-        if len(valid_files) == 0:
-            messages.error(request, "There were no valid file images to be uploaded")
-            return redirect(request.get_raw_uri())
-        elif len(valid_files) > 0 and len(invalid_files) > 0:
-            messages.error(request, f"Some of the files have been in invalid format or damaged. We've managed to upload only {len(valid_files)} files.")
-        else:
-            messages.error(request, f"Successfully uploaded {len(valid_files)} images!")
-
-        for image in valid_files:
-            object = Image(
-                listing=self.get_object(),
-                image=image
-            )
-            image_objects.append(object)
-        Image.objects.bulk_create(image_objects)
-        return redirect(request.get_raw_uri())
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listing details'
         context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
-# Dzirni ja update formata
+
 class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'
@@ -148,10 +106,25 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     permission_denied_message = FORBIDDEN_MESAGE
 
     def get_success_url(self):
-        messages.success(self.request, _("You've successfully updated the property!"))
         return reverse_lazy('accounts:properties')
 
     def form_valid(self, form):
+        files = self.request.FILES.getlist('images')
+        # Check the uploaded files
+        if files:
+            valid_images, invalid_files = _check_image_validness(files)
+            if valid_images:
+                image_objects = []
+                for image in valid_images:
+                    obj = Image(listing=self.get_object(), image=image)
+                    image_objects.append(obj)
+                Image.objects.bulk_create(image_objects)
+                messages.success(self.request, _(f"You have added {len(image_objects)} new image(s) to your property!"))
+            if invalid_files:
+                messages.error(self.request,
+                               _(f"You have submitted {len(invalid_files)} invalid files that have been rejected."))
+        if form.has_changed():
+            messages.success(self.request, _("You've successfully updated the property!"))
         return super().form_valid(form)
 
     # Checks if the listing owner is different than the request user
@@ -161,6 +134,7 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Update Listing'
+        context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
 
@@ -174,21 +148,3 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         listing.delete()
         messages.info(self.request, "Deleted listing!")
         return reverse('accounts:properties')
-
-
-# @csrf_exempt
-# def proba(request):
-#     print("------")
-#     print(request.FILES)
-#     if request.method == 'POST':
-#         files = [request.FILES.get('images[%d]' % i) for i in range(0, len(request.FILES))]
-#         for file in files:
-#             obj = Image(
-#                 image=file,
-#                 listing=Listing.objects.first()
-#             )
-#             print(obj)
-#     else:
-#         print("NIsto!")
-#
-#     return HttpResponse('OK')

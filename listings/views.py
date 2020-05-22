@@ -173,7 +173,7 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
             # return HttpResponseForbidden(FORBIDDEN_MESAGE)  # This raises error otherwise
         listing.delete()
         messages.info(self.request, "Deleted listing!")
-        return reverse('accounts:profile')
+        return reverse('accounts:properties')
 
 
 # @csrf_exempt

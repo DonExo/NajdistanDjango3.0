@@ -11,19 +11,19 @@
             <ul>
                 {% if page_obj.has_previous %}
                 <li class="pagination-btns-left">
-                    <a href="?{% param_replace page=1 %}" class="prev">First</a>
+                    <a href="?{% param_replace page=1 %}" class="prev"><i class="fa fa-angle-double-left"></i> First</a>
                     {% if page_obj.previous_page_number != 1 %}
-                        <a href="?{% param_replace page=page_obj.previous_page_number %}" class="prev">Previous</a>
+                        <a href="?{% param_replace page=page_obj.previous_page_number %}" class="prev"><i class="fa fa-angle-left"></i> Previous</a>
                     {% endif %}
                 </li>
                 {% endif %}
-                
+
                 {% if page_obj.has_next %}
                 <li class="pagination-btns-right">
                     {% if page_obj.next_page_number != paginator.num_pages %}
-                        <a href="?{% param_replace page=page_obj.next_page_number %}" class="next">Next</a>
+                        <a href="?{% param_replace page=page_obj.next_page_number %}" class="next">Next <i class="fa fa-angle-right"></i></a>
                     {% endif %}
-                        <a href="?{% param_replace page=paginator.num_pages %}" class="next">Last</a>
+                        <a href="?{% param_replace page=paginator.num_pages %}" class="next">Last <i class="fa fa-angle-double-right"></i></a>
                 </li>
                 {% endif %}
             </ul>

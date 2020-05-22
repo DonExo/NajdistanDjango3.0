@@ -99,7 +99,7 @@ data-img-height="1600">
                                 </div>
 
                                 <div class="listing-img-content">
-                                    <span class="listing-price">${{ listing.price }} <i>$520 / sq ft</i></span>
+                                    <span class="listing-price">${{ listing.price }} <i>$520 / m2</i></span>
                                     <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
                                     <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
                                 </div>
@@ -115,7 +115,7 @@ data-img-height="1600">
                             <div class="listing-content">
 
                                 <div class="listing-title">
-                                    <h4><a href="{% url 'listings:detail' listing.slug %}">{{ listing.title }}</a></h4>
+                                    <h4><a href="{% url 'listings:detail' listing.slug %}">{{ listing.title|truncatewords:8 }}</a></h4>
                                     <a href="https://maps.google.com/maps?q={{ listing.zip_code }}+{{ listing.address }},+{{ listing.city.city }}&hl=en"
                                        class="listing-address popup-gmaps">
                                         <i class="fa fa-map-marker"></i>
@@ -125,7 +125,7 @@ data-img-height="1600">
                                 </div>
 
                                 <ul class="listing-features">
-                                    <li>Area <span>{{ listing.quadrature }} sq ft</span></li>
+                                    <li>Area <span>{{ listing.quadrature }} m2</span></li>
                                     <li>Bedrooms <span>{{ listing.bedrooms }}</span></li>
                                     <li>Rooms <span>{{ listing.rooms }}</span></li>
                                 </ul>

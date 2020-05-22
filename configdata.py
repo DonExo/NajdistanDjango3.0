@@ -49,10 +49,7 @@ REGIONS_AND_CITIES = {
     'Friesland': ['Bolsward', 'Dokkum', 'Franeker', 'Harlingen', 'Hindeloopen', 'IJlst','Leeuwarden', 'Sloten', 'Sneek', 'Stavoren', 'Workum']
 }
 
-REGEX_ZIPCODE_VALIDATOR = "^[0-9]{4}[a-zA-Z]{2}$"
-REGEX_TELEPHONE_VALIDATOR = '^(\+\d{1,3})?,?\s?\d{8,13}'
-
-
+REGEX_ZIPCODE_VALIDATOR = ".*?"  # Change this to apply restrictions to zip-code
+REGEX_TELEPHONE_VALIDATOR = '^[0-9]*$'  # Change this to apply phone number restrictions, i.e: '^(\+\d{1,3})?,?\s?\d{8,13}'
 FORBIDDEN_MESAGE = "You don't have sufficient access to do this action"
-
 PAGINATOR_ITEMS_PER_PAGE = 5

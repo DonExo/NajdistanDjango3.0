@@ -22,7 +22,14 @@
                         <span>
                             <a href="#location" class="listing-address">
                                 <i class="fa fa-map-marker"></i>
-                                {{ object.zip_code }} {{object.address}}, {{ object.city }}
+                                {{ object.zip_code }}, {{ object.city.city }}, {{ object.city.region }}
+                            </a>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>
+                            <a href="#" class="listing-address">
+                                <i class="fa fa-eye"></i>
+                                Previewed: {{ object.times_visited }} time{{ object.times_visited|pluralize }}
                             </a>
                         </span>
                     </div>
@@ -73,8 +80,8 @@
                         <li>Area <span>{{object.quadrature}} m<sup>2</sup></span></li>
                         <li>Rooms <span>{{object.rooms}}</span></li>
                         <li>Bedrooms <span>{{object.bedrooms}}</span></li>
-                        <li>Opened <span>{{ object.times_visited }} time{{ object.times_visited|pluralize }}</span></li>
-                        <li>Listed?? <span>{{ object.created_at|naturalday }}</span></li>
+                        <li>Published <span>{{ object.created_at|naturalday }}</span></li>
+                        <li>Built <span>2002</span></li>
                     </ul>
 
                     <!-- Description -->

@@ -1,0 +1,54 @@
+{% load humanize %}
+<div class="carousel-item">
+    <div class="listing-item">
+
+        <a href="{% url 'listings:detail' listing.slug %}" class="listing-img-container">
+
+            <div class="listing-badges">
+                <span class="featured">Featured</span>
+                <span>For Sale</span>
+            </div>
+
+            <div class="listing-img-content">
+                <span class="listing-price">${{ listing.price }} <i>$520 / m2</i></span>
+                <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
+                <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
+            </div>
+
+            <div class="listing-carousel">
+                {% for image in listing.get_images %}
+                    <div><img src="{{ image.image.url }}" alt=""></div>
+                {% endfor %}
+            </div>
+
+        </a>
+
+        <div class="listing-content">
+
+            <div class="listing-title">
+                <h4><a href="{% url 'listings:detail' listing.slug %}">{{ listing.title|truncatewords:8 }}</a></h4>
+                <a href="https://maps.google.com/maps?q={{ listing.zip_code }}+{{ listing.city.city }},+{{ listing.city.region }}&hl=en"
+                   class="listing-address popup-gmaps">
+                    <i class="fa fa-map-marker"></i>
+{#                                        9364 School St. Lynchburg, NY#}
+                    {{ listing.zip_code }}, {{ listing.city.city }}, {{ listing.city.region }}
+                </a>
+            </div>
+
+            <ul class="listing-features">
+                <li>Area <span>{{ listing.quadrature }} m2</span></li>
+                <li>Bedrooms <span>{{ listing.bedrooms }}</span></li>
+                <li>Rooms <span>{{ listing.rooms }}</span></li>
+            </ul>
+
+            <div class="listing-footer">
+                <a href="{% url 'accounts:user_identifier' listing.user.identifier %}">
+                    <i class="fa fa-user"></i>{{ listing.user }}
+                </a>
+                <span><i class="fa fa-calendar-o"></i>{{ listing.created_at|naturalday }}</span>
+            </div>
+
+        </div>
+
+    </div>
+</div>

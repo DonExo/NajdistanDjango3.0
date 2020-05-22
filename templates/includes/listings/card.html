@@ -29,9 +29,9 @@
 
         <div class="listing-title">
             <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title|truncatewords:8 }}</a></h4>
-            <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
+            <a href="https://maps.google.com/maps?q={{ object.zip_code }}+{{ object.city.city }},+{{ object.city.region }}&hl=en" class="listing-address popup-gmaps">
                 <i class="fa fa-map-marker"></i>
-                {{ object.zip_code }}, {{ object.city }}
+                {{ object.zip_code }}, {{ object.city.city }}, {{ object.city.region }}
             </a>
 
             <a href="{% url 'listings:detail' object.slug %}" class="details button border">Details</a>

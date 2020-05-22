@@ -20,7 +20,8 @@
                     <div class="property-title">
                         <h2>{{ object.title }} <span class="property-badge">{{object.listing_type}}</span></h2>
                         <span>
-                            <a href="#location" class="listing-address">
+                            <a href="https://maps.google.com/maps?q={{ listing.zip_code }}+{{ listing.city.city }},+{{ listing.city.region }}&hl=en" class="listing-address popup-gmaps">
+{#                            <a href="#location" class="listing-address">#}
                                 <i class="fa fa-map-marker"></i>
                                 {{ object.zip_code }}, {{ object.city.city }}, {{ object.city.region }}
                             </a>

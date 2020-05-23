@@ -28,3 +28,11 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
 class CustomLoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
     captcha = CustomCaptchaV2Invisible()
+
+    #PLEASE LET THESE STAY AS REFERENCE FOR FUTURE FORM CHANGES
+    #
+    # username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'igorce'}))
+    # def __init__(self, *args, **kwargs):
+    #     super(CustomLoginForm, self).__init__(*args, **kwargs)
+    #     self.fields['password'].widget.attrs.update({'class' : 'password'})
+    #     self.fields['remember_me'].widget.attrs.update({'class' : 'rememberme'})

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load widget_tweaks %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -29,60 +30,175 @@
 
                             {% csrf_token %}
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_email">Email:
-                                    <i class="im im-icon-Mail"></i>
-                                    {{ form.email }}
-                                </label>
-                            </p>
+                            {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field }}
+                            {% endfor %}
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_first_name">First Name:
-                                    <i class="im im-icon-Font-Name"></i>
-                                    {{ form.first_name }}
-                                </label>
-                            </p>
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                                </div>
+                            {% endif %}
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_last_name">Last Name:
-                                    <i class="im im-icon-Font-Name"></i>
-                                    {{ form.last_name }}
-                                </label>
-                            </p>
+                            <!-- Email -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.email.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.email.id_for_label }}">Email:
+                                            <i class="im im-icon-Mail"></i>
+                                            {% render_field form.email class="form-control" %}
+                                        </label>
+                                        {{ form.email.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.email.id_for_label }}">Email:
+                                        <i class="im im-icon-Mail"></i>
+                                        {% render_field form.email class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_telephone">Phone:
-                                    <i class="im im-icon-Phone-2"></i>
-                                    {{ form.telephone }}
-                                </label>
-                            </p>
+                            <!-- First Name -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.first_name.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.first_name.id_for_label }}">First name:
+                                            <i class="im im-icon-Font-Name"></i>
+                                            {% render_field form.first_name class="form-control" %}
+                                        </label>
+                                        {{ form.first_name.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.first_name.id_for_label }}">First name:
+                                        <i class="im im-icon-Font-Name"></i>
+                                        {% render_field form.first_name class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_password1">Password:
-                                    <i class="im im-icon-Lock-2"></i>
-                                    {{ form.password1 }}
-                                </label>
-                            </p>
+                            <!-- Last Name -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.last_name.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.last_name.id_for_label }}">Last name:
+                                            <i class="im im-icon-Font-Name"></i>
+                                            {% render_field form.last_name class="form-control" %}
+                                        </label>
+                                        {{ form.last_name.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.last_name.id_for_label }}">Last name:
+                                        <i class="im im-icon-Font-Name"></i>
+                                        {% render_field form.last_name class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_password2">Repeat password:
-                                    <i class="im im-icon-Lock-2"></i>
-                                    {{ form.password2 }}
-                                </label>
-                            </p>
+                            <!-- Telephone -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.telephone.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.telephone.id_for_label }}">Telephone:
+                                            <i class="im im-icon-Phone-2"></i>
+                                            {% render_field form.telephone class="form-control" %}
+                                        </label>
+                                        {{ form.telephone.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.telephone.id_for_label }}">Telephone:
+                                        <i class="im im-icon-Phone-2"></i>
+                                        {% render_field form.telephone class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
 
-                            <p class="form-row">        
-                                <label for="id_tos" class="rememberme">
-                                    {{ form.tos }}
-                                    I have read and agree to the Terms of Service
-                                </label>
-                            </p>
+                            <!-- Password -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.password1.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.password1.id_for_label }}">Password:
+                                            <i class="im im-icon-Lock-2"></i>
+                                            {% render_field form.password1 class="form-control" %}
+                                        </label>
+                                        {{ form.password1.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.password1.id_for_label }}">Password:
+                                        <i class="im im-icon-Lock-2"></i>
+                                        {% render_field form.password1 class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
+
+                            <!-- Repeat Password -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.password2.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ form.password2.id_for_label }}">Repeat Password:
+                                            <i class="im im-icon-Lock-2"></i>
+                                            {% render_field form.password2 class="form-control" %}
+                                        </label>
+                                        {{ form.password2.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ form.password2.id_for_label }}">Repeat Password:
+                                        <i class="im im-icon-Lock-2"></i>
+                                        {% render_field form.password2 class="form-control" %}
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
+
+                            <!-- Terms of Service -->
+                            <div class="form-group form-row form-row-wide">
+                                {% if form.tos.errors %}
+                                    <div class="has-error">
+                                        <label for="{{ form.tos.id_for_label }}" class="rememberme">
+                                            {{ form.tos }}
+                                            I have read and agree to the Terms of Service
+                                        </label>
+                                        {{ form.tos.errors }}
+                                    </div>
+                                {% else %}
+                                    <label for="{{ form.tos.id_for_label }}" class="rememberme">
+                                        {{ form.tos }}
+                                        I have read and agree to the Terms of Service
+                                    </label>
+                                {% endif %}
+                                    
+                                {% if form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
 
                             <p class="form-row">
                                 <input type="submit" value="{% trans 'Submit' %}" class="button border fw margin-top-10" name="register"  />
-                            </p>
-
-                            <!-- include helptext here -->                            
+                            </p>                         
 
                         </form>
                     </div>

@@ -11,7 +11,7 @@ from django.views.generic import RedirectView
 
 from registration.backends.default.views import RegistrationView
 
-from authy.forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm
+from authy.forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm, CustomPasswordChangeForm
 from configdata import LOGIN_COOKIE_EXPIRY
 
 
@@ -55,6 +55,7 @@ class RegisterView(RegistrationView):
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
+    form_class = CustomPasswordChangeForm
     success_url = reverse_lazy('authy:password_change_done')
     extra_context = {'title': _('Password change')}
 

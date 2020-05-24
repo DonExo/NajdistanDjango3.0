@@ -11,11 +11,6 @@ class CustomLoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
     captcha = CustomCaptchaV2Invisible()
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
 
 class CustomRegisterForm(RegistrationFormTermsOfService):
     first_name = forms.CharField(max_length=100)
@@ -25,14 +20,6 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'telephone')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
-    # def clean(self):
-    #     cleaned_data = super().clean()
 
 
 class CustomPasswordResetForm(PasswordResetForm):
@@ -45,7 +32,5 @@ class CustomPasswordResetForm(PasswordResetForm):
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+    pass
+

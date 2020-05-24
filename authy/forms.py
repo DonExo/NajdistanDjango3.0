@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
+from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm, UsernameField
 
 from registration.forms import RegistrationFormTermsOfService
 from users.models import User
@@ -26,13 +26,14 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
 
 
 class CustomLoginForm(AuthenticationForm):
+    username = UsernameField(widget=forms.EmailInput(attrs={'autofocus': True}))
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
     captcha = CustomCaptchaV2Invisible()
 
-    #PLEASE LET THESE STAY AS REFERENCE FOR FUTURE FORM CHANGES
-    #
-    # username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'igorce'}))
-    # def __init__(self, *args, **kwargs):
-    #     super(CustomLoginForm, self).__init__(*args, **kwargs)
-    #     self.fields['password'].widget.attrs.update({'class' : 'password'})
-    #     self.fields['remember_me'].widget.attrs.update({'class' : 'rememberme'})
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+    def clean(self):
+        cleaned_data = super().clean()

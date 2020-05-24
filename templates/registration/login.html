@@ -20,6 +20,8 @@
 
                 <div class="tabs-container alt">
 
+                    <h2>Log-in</h2>
+
                     <!-- Login -->
                     <div class="tab-content">
                         <form method="post" autocomplete="off" class="login">
@@ -37,95 +39,36 @@
                                 </div>
                             {% endif %}
 
-                            <!-- {% for field in form.visible_fields %}
-                                <div class="form-group form-row form-row-wide">
-                                {% if field.name == 'remember_me' %}
-                                    <p class="form-row">
-                                        <label for="{{ form.remember_me.id_for_label }}" class="rememberme">
-                                            {{ form.remember_me }}
-                                            Remember Me
-                                        </label>
-                                    </p>
-                                {% elif field.name == 'captcha' %}
-                                    {{ form.captcha }}
-                                {% else %}
-                                    {{ field.label_tag }}
-
-                                    {% if field.errors %}
-                                        <div class="has-error">
-                                            {% render_field field class="form-control is-invalid" %}
-                                            {% for error in field.errors %}
-                                                <p class="errorlist">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {% render_field field class="form-control is-valid" %}
-                                    {% endif %}
-                                {% endif %}
-                                {% if field.help_text %}
-                                    <small class="form-text text-muted">{{ field.help_text }}</small>
-                                {% endif %}
-                                </div>
-                            {% endfor %}
-
-                            <p class="form-row">
-                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
-                                <input type="hidden" name="next" value="{{ next }}" />
-                            </p> -->
-                            
-
                             <div class="form-group form-row form-row-wide">
-                                {% if form.username.errors %}
-                                    <div class="has-error">
-                                        <label class="control-label" for="{{ form.username.id_for_label }}">Email:
-                                            <i class="im im-icon-Mail-Password"></i>
-                                            {% render_field form.username class="form-control" %}
-                                        </label>
-                                        {{ form.username.errors }}
-                                    </div>
-                                {% else %}
-                                    <label class="control-label" for="{{ form.username.id_for_label }}">Email:
-                                        <i class="im im-icon-Mail-Password"></i>
-                                        {% render_field form.username class="form-control" %}
-                                    </label>
-                                {% endif %}
-                                    
-                                {% if form.help_text %}
-                                    <small class="form-text text-muted">{{ form.help_text }}</small>
-                                {% endif %}
+                                <label class="control-label" for="{{ form.username.id_for_label }}">
+                                    {{ form.username.label }}:
+                                    <i class="im im-icon-Mail-Password"></i>
+                                    {{ form.username }}
+                                </label>
+                                {{ form.username.errors }}
+                                <small class="form-text text-muted">{{ form.username.help_text }}</small>
                             </div>
 
                             <div class="form-group form-row form-row-wide">
-                                {% if form.errors %}
-                                    <div class="has-error">
-                                        <label class="control-label" for="{{ form.password.id_for_label }}">Password:
-                                            <i class="im im-icon-Lock-2"></i>
-                                            {% render_field form.password class="form-control" %}
-                                        </label>
-                                        {{ form.password.errors }}
-                                    </div>
-                                {% else %}
-                                    <label class="control-label" for="{{ form.password.id_for_label }}">Password:
-                                        <i class="im im-icon-Lock-2"></i>
-                                        {% render_field form.password class="form-control" %}
-                                    </label>
-                                {% endif %}
-                                    
-                                {% if form.help_text %}
-                                    <small class="form-text text-muted">{{ form.help_text }}</small>
-                                {% endif %}
+                                <label class="control-label" for="{{ form.password.id_for_label }}">
+                                    {{ form.password.label }}:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    {% render_field form.password class="form-control" %}
+                                </label>
+                                {{ form.password.errors }}
+                                <small class="form-text text-muted">{{ form.password.help_text }}</small>
                             </div>
 
                             <p class="form-row">
-                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
-                                <input type="hidden" name="next" value="{{ next }}" />
-                            </p>
-                            
-                            <p class="form-row">        
                                 <label for="{{ form.remember_me.id_for_label }}" class="rememberme">
                                     {{ form.remember_me }}
-                                    Remember Me
+                                    {{ form.remember_me.label }}
                                 </label>
+                            </p>
+
+                            <p class="form-row">
+                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
+                                <input type="hidden" name="next" value="{{ next }}" />
                             </p>
 
                             <p class="margin-top-10 lost_password">

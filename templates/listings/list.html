@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load widget_tweaks %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -42,19 +43,20 @@ data-img-height="1600">
                                 {{ filter.form.non_field_errors }}
                                 <div class="main-search-input larger-input">
                                     {{ filter.form.subject.errors }}
-                                    <label for="{{ filter.form.title.id_for_label }}">Email title:</label>
+                                    <label for="{{ filter.form.title.id_for_label }}">Search by address:</label>
                                     {{ filter.form.title }}
                                     <button class="button" type="submit">Search</button>
                                 </div>
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         {{ filter.form.city.errors }}
-                                        <label for="{{ filter.form.city.id_for_label }}">Your city:</label>
-                                        {{ filter.form.city }}
+										<label for="{{ filter.form.city.id_for_label }}">Search by city:</label>
+										{% render_field filter.form.city class="chosen-select-no-single" %}
+                                        <!-- {{ filter.form.city }} -->
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 search-by-price">
                                         {{ filter.form.price.errors }}
-                                        <label for="{{ filter.form.price.id_for_label }}">Your email address:</label>
+                                        <label for="">Search by price range:</label>
                                         {{ filter.form.price }}
                                     </div>
                                 </div>

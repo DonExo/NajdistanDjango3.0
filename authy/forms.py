@@ -1,18 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
+from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm, UsernameField, PasswordChangeForm
 
 from registration.forms import RegistrationFormTermsOfService
 from users.models import User
 from .captchas import CustomCaptchaV2Invisible
 
 
-class CustomPasswordResetForm(PasswordResetForm):
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        exists = User.objects.filter(email=email).exists()
-        if not exists:
-            raise forms.ValidationError("User does not exists!")
-        return email
+class CustomLoginForm(AuthenticationForm):
+    username = UsernameField(widget=forms.EmailInput(attrs={'autofocus': True}))
+    remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+    captcha = CustomCaptchaV2Invisible()
 
 
 class CustomRegisterForm(RegistrationFormTermsOfService):
@@ -25,6 +22,15 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
         fields = ('email', 'first_name', 'last_name', 'telephone')
 
 
-class CustomLoginForm(AuthenticationForm):
-    remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
-    captcha = CustomCaptchaV2Invisible()
+class CustomPasswordResetForm(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        exists = User.objects.filter(email=email).exists()
+        if not exists:
+            raise forms.ValidationError("User does not exists!")
+        return email
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    pass
+

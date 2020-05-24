@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -94,7 +95,65 @@
                         <h3 class="margin-top-0 margin-bottom-35">Find New Home</h3>
 
                         <form action="{% url 'listings:search' %}" method="get" autocomplete="off">
-                            {{ filter.form.as_p }}
+                            {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field }}
+                            {% endfor %}
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="form-group form-row form-row-wide">
+                                {% if filter.form.title.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ filter.form.title.id_for_label }}">Title contains:</label>
+                                        {% render_field filter.form.title class="form-control" %}
+                                        {{ filter.form.title.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ filter.form.title.id_for_label }}">Title contains:</label>
+                                    {% render_field filter.form.title class="form-control" %}
+                                {% endif %}
+                                    
+                                {% if filter.form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group form-row form-row-wide">
+                                {% if filter.form.city.errors %}
+                                    <div class="has-error">
+                                        <label class="control-label" for="{{ filter.form.city.id_for_label }}">City:</label>
+                                        {% render_field filter.form.city class="chosen-select-no-single" %}
+                                        {{ filter.form.city.errors }}
+                                    </div>
+                                {% else %}
+                                    <label class="control-label" for="{{ filter.form.city.id_for_label }}">City:</label>
+                                    {% render_field filter.form.city class="chosen-select-no-single" %}
+                                {% endif %}
+                                    
+                                {% if filter.form.help_text %}
+                                    <small class="form-text text-muted">{{ form.help_text }}</small>
+                                {% endif %}
+                            </div>
+
+                            <!-- <div class="form-group form-row form-row-wide">
+                                <label for="">Price Range:</label>
+                                {{ filter.form.price }}
+                                {{ filter.form.price.errors }}
+                            </div> -->
+
+                            <!-- Price Range -->
+                            <div class="range-slider">
+                                <label>Price Range</label>
+                                <div id="price-range" data-min="0" data-max="400000" data-unit="&euro;"></div>
+                                <div class="clearfix"></div>
+                            </div>
+
                             <button class="button fullwidth margin-top-30" type="submit">Search</button>
                         </form>
 

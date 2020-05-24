@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load widget_tweaks %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -8,9 +7,7 @@
 
 {% block content %}
 
-{% include 'includes/shared/breadcrumbs.html' %}
-
-<div class="container">
+<div class="container padding-top-100 padding-bottom-50">
 
 	<div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -53,7 +50,7 @@
                                 <label class="control-label" for="{{ form.password.id_for_label }}">
                                     {{ form.password.label }}:
                                     <i class="im im-icon-Lock-2"></i>
-                                    {% render_field form.password class="form-control" %}
+                                    {{ form.password }}
                                 </label>
                                 {{ form.password.errors }}
                                 <small class="form-text text-muted">{{ form.password.help_text }}</small>

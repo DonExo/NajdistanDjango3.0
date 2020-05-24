@@ -34,6 +34,3 @@ class CustomLoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-
-    def clean(self):
-        cleaned_data = super().clean()

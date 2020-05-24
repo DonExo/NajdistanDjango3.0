@@ -7,13 +7,12 @@
 
 {% block content %}
 
-{% include 'includes/shared/breadcrumbs.html' %}
 
 <!-- Contact
 ================================================== -->
 
 <!-- Container -->
-<div class="container">
+<div class="container padding-top-100 padding-bottom-50">
 
 	<div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -22,6 +21,8 @@
             <div class="my-account style-1 margin-top-5 margin-bottom-40">
                 <div class="tabs-container alt">
 
+                    <h2>Register an account</h2>
+
                     <!-- Register -->
                     <div class="tab-content">
 
@@ -29,60 +30,99 @@
 
                             {% csrf_token %}
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_email">Email:
+                            {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field }}
+                            {% endfor %}
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Email -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.email.id_for_label }}">
+                                    {{ form.email.label }}:
                                     <i class="im im-icon-Mail"></i>
                                     {{ form.email }}
                                 </label>
-                            </p>
+                                {{ form.email.errors }}
+                                <small class="form-text text-muted">{{ form.email.help_text }}</small>
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_first_name">First Name:
+                            <!-- First Name -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.first_name.id_for_label }}">
+                                    {{ form.first_name.label }}:
                                     <i class="im im-icon-Font-Name"></i>
                                     {{ form.first_name }}
                                 </label>
-                            </p>
+                                {{ form.first_name.errors }}
+                                <small class="form-text text-muted">{{ form.first_name.help_text }}</small>
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_last_name">Last Name:
+                            <!-- Last Name -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.last_name.id_for_label }}">
+                                    {{ form.last_name.label }}:
                                     <i class="im im-icon-Font-Name"></i>
                                     {{ form.last_name }}
                                 </label>
-                            </p>
+                                {{ form.last_name.errors }}
+                                <small class="form-text text-muted">{{ form.last_name.help_text }}</small>
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_telephone">Phone:
+                            <!-- Telephone -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.telephone.id_for_label }}">
+                                    {{ form.telephone.label }}:
                                     <i class="im im-icon-Phone-2"></i>
                                     {{ form.telephone }}
                                 </label>
-                            </p>
+                                {{ form.telephone.errors }}
+                                <small class="form-text text-muted">{{ form.telephone.help_text }}</small>
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_password1">Password:
+                            <!-- Password -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.password1.id_for_label }}">
+                                    {{ form.password1.label }}:
                                     <i class="im im-icon-Lock-2"></i>
                                     {{ form.password1 }}
                                 </label>
-                            </p>
+                                {{ form.password1.errors }}
+{#                                <small class="form-text text-muted">{{ form.password1.help_text }}</small>#}
+                            </div>
 
-                            <p class="form-row form-row-wide">
-                                <label for="id_password2">Repeat password:
+                            <!-- Repeat Password -->
+                            <div class="form-group form-row form-row-wide">
+                                <label class="control-label" for="{{ form.password2.id_for_label }}">
+                                    {{ form.password2.label }}:
                                     <i class="im im-icon-Lock-2"></i>
                                     {{ form.password2 }}
                                 </label>
-                            </p>
+                                {{ form.password2.errors }}
+{#                                <small class="form-text text-muted">{{ form.password2.help_text }}</small>#}
+                            </div>
 
-                            <p class="form-row">        
-                                <label for="id_tos" class="rememberme">
+                            <br/><br/>
+
+                            <!-- Terms of Service -->
+                            <div class="form-group form-row form-row-wide">
+                                <label for="{{ form.tos.id_for_label }}" class="rememberme">
                                     {{ form.tos }}
-                                    I have read and agree to the Terms of Service
+                                    I have read and agree to the <a href="#">Terms of Service</a>
                                 </label>
-                            </p>
+                                {{ form.tos.errors }}
+                                <small class="form-text text-muted">{{ form.tos.help_text }}</small>
+                            </div>
 
-                            <p class="form-row">
+                            <p class="form-row margin-top-500">
                                 <input type="submit" value="{% trans 'Submit' %}" class="button border fw margin-top-10" name="register"  />
                             </p>
-
-                            <!-- include helptext here -->                            
 
                         </form>
                     </div>
@@ -90,6 +130,12 @@
                 </div>
             </div>
             
+        </div>
+
+        <div class="col-md-4">
+             <div class="notification notice">
+                {{ form.password1.help_text }}
+            </div>
         </div>
 	</div>
 

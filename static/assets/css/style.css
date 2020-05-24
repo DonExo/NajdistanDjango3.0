@@ -73,7 +73,7 @@
 ---------------------------------------------------------------------- */
 @import url("bootstrap.css");					/* Default Reset, Typography, Forms, Responsive Grid etc. */
 @import url("icons.css");						/* Webfont Icons: FontAwesome, Line, Simple Line */
-@import url("http://fonts.googleapis.com/css?family=Varela+Round");
+/* @import url("http://fonts.googleapis.com/css?family=Varela+Round"); */
 
 
 /* ------------------------------------------------------------------- */
@@ -2283,6 +2283,10 @@ body .search-container button:before {
 	display: none;
 }
 
+.main-search-box .search-by-price {
+	display: flex;
+	
+}
 
 /* Search Type Buttons*/
 .search-type {
@@ -5753,6 +5757,35 @@ a.read-more i {
 	margin: 0 0 45px 0;
 }
 
+/* Forms and inputs */
+.errorlist {
+	font-size: 1.3rem;
+	color: #dc3545;
+	list-style: none;
+	margin-top: -10px;
+	padding: 0;
+}
+
+.alert {
+	padding: 10px 60px 10px 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.alert-danger {
+	background-color: #ffe1e1;
+	color: #ff2929;
+	border: 1px solid #ff2929;
+}
+
+.alert-success {
+	background-color: #e5ffe8;
+	color: #21bb33;
+	border: 1px solid #21bb33;
+}
+
+
 /* Search Widget */
 .search-blog-input { position: relative; }
 
@@ -8816,6 +8849,10 @@ a.button {
 	overflow: hidden;
 	border: none;
 	border-radius: 3px;
+}
+
+.button i{
+	vertical-align: middle;
 }
 
 button.button:before,
@@ -11978,11 +12015,13 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 		width: auto;
 	}
 
-	.my-account label {
+	.my-account label,
+	.my-profile label {
 		position: relative;
 	}
 
-	.my-account label input {
+	.my-account label input,
+	.my-profile label input {
 		margin-top: 8px;
 		padding-left: 45px;
 		height: 53px;
@@ -12001,7 +12040,8 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 		box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.07);
 	}
 
-	.my-account label i {
+	.my-account label i,
+	.my-profile label i {
 		font-size: 21px;
 		color: #a0a0a0;
 		position: absolute;

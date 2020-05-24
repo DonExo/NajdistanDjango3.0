@@ -24,6 +24,14 @@ class CustomRegisterForm(RegistrationFormTermsOfService):
         model = User
         fields = ('email', 'first_name', 'last_name', 'telephone')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+
 
 class CustomLoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.EmailInput(attrs={'autofocus': True}))

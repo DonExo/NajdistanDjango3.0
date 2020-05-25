@@ -42,21 +42,20 @@ data-img-height="1600">
 
                                 {{ filter.form.non_field_errors }}
                                 <div class="main-search-input larger-input">
-                                    {{ filter.form.subject.errors }}
-                                    <label for="{{ filter.form.title.id_for_label }}">Search by address:</label>
+                                    {{ filter.form.title.errors }}
+                                    {{ filter.form.title.label_tag }}
                                     {{ filter.form.title }}
                                     <button class="button" type="submit">Search</button>
                                 </div>
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         {{ filter.form.city.errors }}
-										<label for="{{ filter.form.city.id_for_label }}">Search by city:</label>
+										{{ filter.form.city.label_tag }}
 										{% render_field filter.form.city class="chosen-select-no-single" %}
-                                        <!-- {{ filter.form.city }} -->
                                     </div>
                                     <div class="col-md-8 search-by-price">
                                         {{ filter.form.price.errors }}
-                                        <label for="">Search by price range:</label>
+                                        {{ filter.form.price.label_tag }}
                                         {{ filter.form.price }}
                                     </div>
                                 </div>

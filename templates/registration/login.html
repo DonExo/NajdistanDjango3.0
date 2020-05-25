@@ -43,7 +43,7 @@
                                     {{ form.username }}
                                 </label>
                                 {{ form.username.errors }}
-                                <small class="form-text text-muted">{{ form.username.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.username.help_text }}</small>
                             </div>
 
                             <div class="form-group form-row form-row-wide">
@@ -53,7 +53,7 @@
                                     {{ form.password }}
                                 </label>
                                 {{ form.password.errors }}
-                                <small class="form-text text-muted">{{ form.password.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.password.help_text }}</small>
                             </div>
 
                             <p class="form-row">
@@ -64,7 +64,7 @@
                             </p>
 
                             <p class="form-row">
-                                <input type="submit" class="button border margin-top-10" name="login" value="{% trans 'Log in' %}" />
+                                <button type="submit" class="button fullwidth border margin-top-10" name="login">{% trans 'Log in' %}</button>
                                 <input type="hidden" name="next" value="{{ next }}" />
                             </p>
 

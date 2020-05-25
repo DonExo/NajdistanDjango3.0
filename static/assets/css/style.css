@@ -3339,7 +3339,7 @@ body #compare-list li div:last-child .clp-title,
 #titlebar {
 	background-color: #f8f8f8;
 	position: relative;
-	padding: 15px 0;
+	padding: 25px 0;
 	margin-bottom: 65px;
 }
 
@@ -3359,7 +3359,9 @@ body #compare-list li div:last-child .clp-title,
 
 #titlebar h1,
 #titlebar h2 {
-	font-size: 24px;
+	color: #5d5d5d;
+	font-size: 26px;
+	font-weight: 700;
 	line-height: 30px;
 	margin: 1px 0 3px 0;
 }
@@ -12022,6 +12024,11 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 	.icons .fa.fa-fw { margin-right: 3px; font-size: 14px; }
 	.icons .text-muted { display: none; }
+
+	small.help-text {
+		display: block;
+		margin-top: -10px;
+	}
 
 
 	/* ---------------------------------- */

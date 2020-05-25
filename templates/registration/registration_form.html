@@ -50,7 +50,7 @@
                                     {{ form.email }}
                                 </label>
                                 {{ form.email.errors }}
-                                <small class="form-text text-muted">{{ form.email.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.email.help_text }}</small>
                             </div>
 
                             <!-- First Name -->
@@ -61,7 +61,7 @@
                                     {{ form.first_name }}
                                 </label>
                                 {{ form.first_name.errors }}
-                                <small class="form-text text-muted">{{ form.first_name.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.first_name.help_text }}</small>
                             </div>
 
                             <!-- Last Name -->
@@ -72,7 +72,7 @@
                                     {{ form.last_name }}
                                 </label>
                                 {{ form.last_name.errors }}
-                                <small class="form-text text-muted">{{ form.last_name.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.last_name.help_text }}</small>
                             </div>
 
                             <!-- Telephone -->
@@ -83,7 +83,7 @@
                                     {{ form.telephone }}
                                 </label>
                                 {{ form.telephone.errors }}
-                                <small class="form-text text-muted">{{ form.telephone.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.telephone.help_text }}</small>
                             </div>
 
                             <!-- Password -->
@@ -94,7 +94,7 @@
                                     {{ form.password1 }}
                                 </label>
                                 {{ form.password1.errors }}
-{#                              <small class="form-text text-muted">{{ form.password1.help_text }}</small>#}
+{#                              <small class="help-text text-muted">{{ form.password1.help_text }}</small>#}
                             </div>
 
                             <!-- Repeat Password -->
@@ -105,23 +105,21 @@
                                     {{ form.password2 }}
                                 </label>
                                 {{ form.password2.errors }}
-{#                                <small class="form-text text-muted">{{ form.password2.help_text }}</small>#}
+{#                                <small class="help-text text-muted">{{ form.password2.help_text }}</small>#}
                             </div>
 
-                            <br/><br/>
-
                             <!-- Terms of Service -->
-                            <div class="form-group form-row form-row-wide">
+                            <div class="form-group form-row form-row-wide margin-top-30">
                                 <label for="{{ form.tos.id_for_label }}" class="rememberme">
                                     {{ form.tos }}
                                     I have read and agree to the <a href="#">Terms of Service</a>
                                 </label>
                                 {{ form.tos.errors }}
-                                <small class="form-text text-muted">{{ form.tos.help_text }}</small>
+                                <small class="help-text text-muted">{{ form.tos.help_text }}</small>
                             </div>
 
                             <p class="form-row margin-top-500">
-                                <input type="submit" value="{% trans 'Submit' %}" class="button border fw margin-top-10" name="register"  />
+                                <button type="submit" class="button border fullwidth margin-top-40" name="register">{% trans 'Submit' %}</button>
                             </p>
 
                         </form>

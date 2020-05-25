@@ -73,7 +73,7 @@
 ---------------------------------------------------------------------- */
 @import url("bootstrap.css");					/* Default Reset, Typography, Forms, Responsive Grid etc. */
 @import url("icons.css");						/* Webfont Icons: FontAwesome, Line, Simple Line */
-/* @import url("http://fonts.googleapis.com/css?family=Varela+Round"); */
+@import url("http://fonts.googleapis.com/css?family=Varela+Round");
 
 
 /* ------------------------------------------------------------------- */
@@ -2285,7 +2285,7 @@ body .search-container button:before {
 
 .main-search-box .search-by-price {
 	display: flex;
-	
+	line-height: 50px;
 }
 
 /* Search Type Buttons*/
@@ -2301,7 +2301,6 @@ body .search-container button:before {
 	background-color: #fff;
 	color: #333;
 	cursor: pointer;
-	display:inline-block;
 	text-align: center;
 	padding: 9px 18px;
 	margin: 0 15px 0 0;
@@ -2589,6 +2588,10 @@ h4.search-title {
 	margin-bottom: 25px;
 }
 
+.range-slider .range-slider-values {
+	display: none;
+}
+
 .range-slider .ui-slider {
 	position: relative;
 	text-align: left;
@@ -2607,6 +2610,23 @@ h4.search-title {
 	top: -8px;
 	margin-left: -8px;
 	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.15);
+}
+
+.range-slider .ui-slider .ui-slider-handle::before {
+	content: "";
+    position: absolute;
+    background-color: #6449E7;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+	transform: translate(-50%, -50%) scale(0, 0);
+	transition: transform, 0.2s;
+}
+
+.range-slider .ui-slider .ui-slider-handle.ui-state-active::before {
+	transform: translate(-50%, -50%) scale(1, 1);
 }
 
 .range-slider .ui-slider .ui-slider-range {
@@ -2750,6 +2770,10 @@ span.like-icon {
 
 
 /* Widget Button */
+.widget-button.under-development {
+	cursor: not-allowed;
+}
+
 .widget-button.with-tip i.icon-compare {
     outline: none;
     border: none;
@@ -2772,6 +2796,10 @@ span.like-icon {
 	left: 2px;
 	opacity: 0.9;
 	font-size: 18px;
+}
+
+.widget-button.with-tip.under-development i {
+	color: #c5c5c5;
 }
 
 .widget-button.with-tip i.fa.fa-star-o {
@@ -3311,7 +3339,7 @@ body #compare-list li div:last-child .clp-title,
 #titlebar {
 	background-color: #f8f8f8;
 	position: relative;
-	padding: 15px 0;
+	padding: 25px 0;
 	margin-bottom: 65px;
 }
 
@@ -3331,7 +3359,9 @@ body #compare-list li div:last-child .clp-title,
 
 #titlebar h1,
 #titlebar h2 {
-	font-size: 24px;
+	color: #5d5d5d;
+	font-size: 26px;
+	font-weight: 700;
 	line-height: 30px;
 	margin: 1px 0 3px 0;
 }
@@ -4783,7 +4813,8 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 
 .agent-title .agent-photo img {
 	border-radius: 50%;
-	max-width: 72px;
+	width: 72px;
+    height: 72px;
 }
 
 .agent-title .agent-photo {
@@ -8292,6 +8323,7 @@ img.mfp-img {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
+	margin: 0 0 16px 0;
 	font-size: 15px;
 	zoom: 1;
 	*display: inline;
@@ -11604,7 +11636,6 @@ body .daterangepicker .drp-buttons button.cancelBtn {
     position: relative;
     width: auto;
     height: auto;
-    display: inline-block;
     color: #66676b;
     float: right;
     font-weight: normal;
@@ -11614,7 +11645,7 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 #booking-date-range i {
 	color: #999;
-	background-color: 
+	background-color: transparent;
 }
 
 /* Booking Requests Filter / End */
@@ -11993,6 +12024,11 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 	.icons .fa.fa-fw { margin-right: 3px; font-size: 14px; }
 	.icons .text-muted { display: none; }
+
+	small.help-text {
+		display: block;
+		margin-top: -10px;
+	}
 
 
 	/* ---------------------------------- */
@@ -12708,5 +12744,3 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 	.property-slider .item,
 	.property-slider.default .item  { height: 200px; }
 }
-
-

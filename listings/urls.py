@@ -7,6 +7,7 @@ from . import views
 
 urlpatterns = [
     # path('proba/', views.proba, name='proba'),
+    path('compare/', views.ListingCompareView.as_view(), name='compare'),
 
     path('search/', views.ListingSearchView.as_view(), name='search'),
     path('create/', views.ListingCreateView.as_view(), name='create'),

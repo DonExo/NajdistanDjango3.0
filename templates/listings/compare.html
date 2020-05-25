@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% include 'includes/title.html' %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Banner
+================================================== -->
+<div class="parallax" 
+data-background="{% static 'assets/images/home-parallax.jpg' %}" 
+data-color="#36383e" 
+data-color-opacity="0.45" 
+data-img-width="2500" 
+data-img-height="1600">
+	<div class="parallax-content">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<!-- Main Search Container -->
+					<div class="main-search-container">
+						<h2>Compare listings</h2>
+
+
+						
+						<!-- Main Search -->
+{#						<form class="main-search-form" action="{% url 'listings:search' %}" method="get" autocomplete="off">#}
+{#                            <!-- Type -->#}
+{#							<div class="search-type">#}
+{#								<label class="active"><input class="first-tab" name="tab" checked="checked" type="radio">Any Status</label>#}
+{#								<label><input name="tab" type="radio">For Sale</label>#}
+{#								<label><input name="tab" type="radio">For Rent</label>#}
+{#								<div class="search-type-arrow"></div>#}
+{#                            </div>#}
+{#                            #}
+{#                            <!-- Box -->#}
+{#							<div class="main-search-box">#}
+{##}
+{#                                {{ filter.form.non_field_errors }}#}
+{#                                <div class="main-search-input larger-input">#}
+{#                                    {{ filter.form.subject.errors }}#}
+{#                                    <label for="{{ filter.form.title.id_for_label }}">Search by address:</label>#}
+{#                                    {{ filter.form.title }}#}
+{#                                    <button class="button" type="submit">Search</button>#}
+{#                                </div>#}
+{#                                <div class="row with-forms">#}
+{#                                    <div class="col-md-4">#}
+{#                                        {{ filter.form.city.errors }}#}
+{#										<label for="{{ filter.form.city.id_for_label }}">Search by city:</label>#}
+{#										{% render_field filter.form.city class="chosen-select-no-single" %}#}
+{#                                        <!-- {{ filter.form.city }} -->#}
+{#                                    </div>#}
+{#                                    <div class="col-md-8 search-by-price">#}
+{#                                        {{ filter.form.price.errors }}#}
+{#                                        <label for="">Search by price range:</label>#}
+{#                                        {{ filter.form.price }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                #}
+{#                            </div>#}
+{#                        </form>						#}
+
+					</div>
+					<!-- Main Search Container / End -->
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+                {% if object_list %}
+                        {% for listing in object_list %}
+                            <a href="{% url 'listings:detail' listing.slug %}"> {{ listing.title }}</a> <br/>
+                        {% endfor %}
+                {% else %}
+                    <p>You don't have any Properties added for comparing.</p>
+                {% endif %}
+
+
+<!-- Flip banner -->
+<a href="#"
+class="flip-banner parallax"
+data-color="#6449E7"
+data-color-opacity="0.9">
+	<div class="flip-banner-content">
+		<h2 class="flip-visible">We help people and homes find each other</h2>
+		<h2 class="flip-hidden">Browse Properties <i class="sl sl-icon-arrow-right"></i></h2>
+	</div>
+</a>
+<!-- Flip banner / End -->
+
+{% endblock %}

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
@@ -148,3 +149,14 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         listing.delete()
         messages.info(self.request, "Deleted listing!")
         return reverse('accounts:properties')
+
+
+class ListingCompareView(generic.ListView):
+    template_name = 'listings/compare.html'
+
+    def get_queryset(self):
+        property_slugs = self.request.GET.getlist('c', None)
+        if property_slugs:
+            listings = Listing.objects.filter(slug__in=property_slugs)
+            return listings
+        return None

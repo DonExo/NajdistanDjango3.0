@@ -1028,31 +1028,30 @@ $(document).ready(function(){
 
 		$(this).append( "<input type='text' class='first-slider-value' disabled/><input type='text' class='second-slider-value' disabled/>" );
 
-
 		$(this).slider({
-		  range: true,
-		  min: dataMin,
-		  max: dataMax,
-		  values: [ 
+			range: true,
+			min: parseInt(dataMin, 10),
+			max: parseInt(dataMax, 10),
+			values: [ 
 				!!isPricePreset ? presetPriceMin : dataMin, 
 				!!isPricePreset ? presetPriceMax : dataMax
 			],
+			
+			slide: function( event, ui ) {
+				event = event;
+				$(this).find( "#id_price_0" ).val( ui.values[ 0 ] );
+				$(this).find( "#id_price_1" ).val( ui.values[ 1 ] );
 
-		  slide: function( event, ui ) {
-			 event = event;
-			 $(this).children( ".first-slider-value" ).val( ui.values[ 0 ].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
-			 $(this).children( ".second-slider-value" ).val( ui.values[ 1 ].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
-
-			 $(this).find( "#id_price_0" ).val( parseInt(ui.values[ 0 ], 10) );
-			 $(this).find( "#id_price_1" ).val( parseInt(ui.values[ 1 ], 10) );
-		  }
+				$(this).children( ".first-slider-value" ).val( ui.values[ 0 ].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
+				$(this).children( ".second-slider-value" ).val( ui.values[ 1 ].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
+			}
 		});
+		
+		$(this).find( "#id_price_0" ).val( dataMin );
+		$(this).find( "#id_price_1" ).val( dataMax );
 
 		$(this).children( ".first-slider-value" ).val( $( this ).slider( "values", 0 ).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
 		$(this).children( ".second-slider-value" ).val( $( this ).slider( "values", 1 ).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
-
-		$(this).find( "#id_price_0" ).val( parseInt(dataMin, 10) );
-		$(this).find( "#id_price_1" ).val( parseInt(dataMax, 10) );
 	});
 
 

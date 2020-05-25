@@ -2288,6 +2288,10 @@ body .search-container button:before {
 	line-height: 50px;
 }
 
+.main-search-box .search-by-price > input {
+	min-width: 10%; /* Mozilla FF width fix */
+}
+
 /* Search Type Buttons*/
 .search-type {
 	display: inline-block;

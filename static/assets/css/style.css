@@ -73,7 +73,7 @@
 ---------------------------------------------------------------------- */
 @import url("bootstrap.css");					/* Default Reset, Typography, Forms, Responsive Grid etc. */
 @import url("icons.css");						/* Webfont Icons: FontAwesome, Line, Simple Line */
-/* @import url("http://fonts.googleapis.com/css?family=Varela+Round"); */
+@import url("http://fonts.googleapis.com/css?family=Varela+Round");
 
 
 /* ------------------------------------------------------------------- */
@@ -2589,6 +2589,10 @@ h4.search-title {
 	margin-bottom: 25px;
 }
 
+.range-slider .range-slider-values {
+	display: none;
+}
+
 .range-slider .ui-slider {
 	position: relative;
 	text-align: left;
@@ -2607,6 +2611,23 @@ h4.search-title {
 	top: -8px;
 	margin-left: -8px;
 	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.15);
+}
+
+.range-slider .ui-slider .ui-slider-handle::before {
+	content: "";
+    position: absolute;
+    background-color: #6449E7;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+	transform: translate(-50%, -50%) scale(0, 0);
+	transition: transform, 0.2s;
+}
+
+.range-slider .ui-slider .ui-slider-handle.ui-state-active::before {
+	transform: translate(-50%, -50%) scale(1, 1);
 }
 
 .range-slider .ui-slider .ui-slider-range {
@@ -8292,6 +8313,7 @@ img.mfp-img {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
+	margin: 0 0 16px 0;
 	font-size: 15px;
 	zoom: 1;
 	*display: inline;
@@ -11604,7 +11626,6 @@ body .daterangepicker .drp-buttons button.cancelBtn {
     position: relative;
     width: auto;
     height: auto;
-    display: inline-block;
     color: #66676b;
     float: right;
     font-weight: normal;
@@ -11614,7 +11635,7 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 #booking-date-range i {
 	color: #999;
-	background-color: 
+	background-color: transparent;
 }
 
 /* Booking Requests Filter / End */

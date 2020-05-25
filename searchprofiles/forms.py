@@ -8,16 +8,26 @@ from configdata import UPDATE_FREQUENCIES
 
 
 class UserSearchProfileForm(forms.ModelForm):
-    frequency = forms.ChoiceField(required=True, widget=SelectWidgetWithDisabledOption, choices=UPDATE_FREQUENCIES)
+    title = forms.CharField(label='Name your Search Profile', help_text='A unique title that will mean something to you')
+    frequency = forms.ChoiceField(required=True, widget=SelectWidgetWithDisabledOption, choices=UPDATE_FREQUENCIES,
+                                 help_text='How often to receive notifications about new properties on our site')
 
     class Meta:
         model = SearchProfiles
         exclude = ('user', 'is_active')
 
+        # To comply with the Index page Min-Max slider
+        widgets = {
+            'min_price': forms.NumberInput(attrs={'id': 'id_price_0'}),
+            'max_price': forms.NumberInput(attrs={'id': 'id_price_1'}),
+            'title': forms.TextInput(attrs={'placeholder': 'i.e. New apartment 50k-100k range, 2 bedrooms'})
+        }
+
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         self.is_updating = kwargs.pop('update', None)
         super().__init__(*args, **kwargs)
+        self.fields['city'].empty_label = _("Select a City")
 
         if not self.user.is_staff:  #TODO: Change this to PREMIUM user once the logic is there
             self.fields['frequency'].widget.disabled_choices = ['instant',]

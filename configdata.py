@@ -8,16 +8,19 @@ LISTING_TYPE = (
 )
 
 LISTING_TYPE_2 = (
+    ('', 'Select type'),
     ('rent', 'For rent'),
     ('buy', 'For buy')
 )
 
 HOME_TYPE = (
+    ('', 'Select home type'),
     ('house', 'A house'),
     ('apartment', 'An apartment')
 )
 
 INTERIOR_CHOICES = (
+    ('', 'Select interior'),
     ('unspecified', 'Not specified'),
     ('furnished', 'Fully furnished'),
     ('unfurnished', 'Non furnished'),
@@ -35,6 +38,7 @@ HEATING_CHOICES = (
 )
 
 UPDATE_FREQUENCIES = (
+    ('', "Select frequency"),
     ('daily', "Daily"),
     ('weekly', "Weekly"),
     ('biweekly', "Bi-weekly"),

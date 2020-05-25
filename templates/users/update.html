@@ -18,47 +18,74 @@
         </div>
         
         <div class="col-md-8">
-                <form method="post" enctype="multipart/form-data" autocomplete="off">
-                {{ form.non_field_errors }}
+            <form method="post" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
+
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field }}
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div class="col-md-8 my-profile">
                     <h4 class="margin-top-0 margin-bottom-30">My Account</h4>
+                    
+                    <div class="form-group form-row">
+                        <label class="control-label" for="{{ form.first_name.id_for_label }}">
+                            {{ form.first_name.label }}:
+                            <i class="im im-icon-Font-Name"></i>
+                            {{ form.first_name }}
+                        </label>
+                        {{ form.first_name.errors }}
+                        <small class="help-text text-muted">{{ form.first_name.help_text }}</small>
+                    </div>
 
-                    <label for="id_first_name">First Name</label>
-                    {{ form.first_name.errors }}
-                    {{ form.first_name }}
+                    <div class="form-group form-row">
+                        <label class="control-label" for="{{ form.last_name.id_for_label }}">
+                            {{ form.last_name.label }}:
+                            <i class="im im-icon-Font-Name"></i>
+                            {{ form.last_name }}
+                        </label>
+                        {{ form.last_name.errors }}
+                        <small class="help-text text-muted">{{ form.last_name.help_text }}</small>
+                    </div>
 
-                    <label for="id_last_name">Last Name</label>
-                    {{ form.last_name.errors }}
-                    {{ form.last_name }}
+                    <div class="form-group form-row">
+                        <label class="control-label" for="{{ form.telephone.id_for_label }}">
+                            {{ form.telephone.label }}:
+                            <i class="im im-icon-Phone-2"></i>
+                            {{ form.telephone }}
+                        </label>
+                        {{ form.telephone.errors }}
+                        <small class="help-text text-muted">{{ form.telephone.help_text }}</small>
+                    </div>
 
-                    <label for="id_telephone">Phone</label>
-                    {{ form.telephone.errors }}
-                    {{ form.telephone }}
+                    <div class="form-group form-row">
+                        <label class="control-label" for="{{ form.email.id_for_label }}">
+                            {{ form.email.label }}:
+                            <i class="im im-icon-Mail"></i>
+                            {{ form.email }}
+                        </label>
+                        {{ form.email.errors }}
+                        <small class="help-text text-muted">{{ form.email.help_text }}</small>
+                    </div>
 
-                    <label for="id_email">Email</label>
-                    {{ form.email.errors }}
-                    {{ form.email }}
-
-                    <label for="id_password">Current Password</label>
-                    {{ form.password.errors }}
-                    {{ form.password }}
-                    {{ form.password.help_text }}
-
-                    <!-- <h4 class="margin-top-50 margin-bottom-0">Social</h4>
-
-                    <label><i class="fa fa-twitter"></i> Twitter</label>
-                    <input value="https://www.twitter.com/" type="text">
-
-                    <label><i class="fa fa-facebook-square"></i> Facebook</label>
-                    <input value="https://www.facebook.com/" type="text">
-
-                    <label><i class="fa fa-google-plus"></i> Google+</label>
-                    <input value="https://www.google.com/" type="text">
-
-                    <label><i class="fa fa-linkedin"></i> Linkedin</label>
-                    <input value="https://www.linkedin.com/" type="text"> -->
-
+                    <div class="form-group form-row">
+                        <label class="control-label" for="{{ form.password.id_for_label }}">
+                            {{ form.password.label }}:
+                            <i class="im im-icon-Lock-2"></i>
+                            {{ form.password }}
+                        </label>
+                        {{ form.password.errors }}
+                        <small class="help-text text-muted">{{ form.password.help_text }}</small>
+                    </div>
+                    
                     <button type="submit" class="button margin-top-20 margin-bottom-20">Save Changes</button>
                 </div>
 
@@ -79,11 +106,5 @@
         </div>
     </div>
 </div>
-
-    <!-- <form method="post" enctype="multipart/form-data" autocomplete="off">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form> -->
 
 {% endblock %}

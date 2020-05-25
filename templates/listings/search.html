@@ -108,49 +108,28 @@
                             {% endif %}
 
                             <div class="form-group form-row form-row-wide">
-                                {% if filter.form.title.errors %}
-                                    <div class="has-error">
-                                        <label class="control-label" for="{{ filter.form.title.id_for_label }}">Title contains:</label>
-                                        {% render_field filter.form.title class="form-control" %}
-                                        {{ filter.form.title.errors }}
-                                    </div>
-                                {% else %}
-                                    <label class="control-label" for="{{ filter.form.title.id_for_label }}">Title contains:</label>
-                                    {% render_field filter.form.title class="form-control" %}
-                                {% endif %}
-                                    
-                                {% if filter.form.help_text %}
-                                    <small class="form-text text-muted">{{ form.help_text }}</small>
-                                {% endif %}
+                                <label class="control-label" for="{{ filter.form.title.id_for_label }}">Title contains:</label>
+                                {{ filter.form.title }}
+                                {{ filter.form.title.errors }}
+                                <small class="help-text text-muted">{{ filter.form.title.help_text }}</small>
                             </div>
 
                             <div class="form-group form-row form-row-wide">
-                                {% if filter.form.city.errors %}
-                                    <div class="has-error">
-                                        <label class="control-label" for="{{ filter.form.city.id_for_label }}">City:</label>
-                                        {% render_field filter.form.city class="chosen-select-no-single" %}
-                                        {{ filter.form.city.errors }}
-                                    </div>
-                                {% else %}
-                                    <label class="control-label" for="{{ filter.form.city.id_for_label }}">City:</label>
-                                    {% render_field filter.form.city class="chosen-select-no-single" %}
-                                {% endif %}
-                                    
-                                {% if filter.form.help_text %}
-                                    <small class="form-text text-muted">{{ form.help_text }}</small>
-                                {% endif %}
+                                <label class="control-label" for="{{ filter.form.city.id_for_label }}">City:</label>
+                                {% render_field filter.form.city class="chosen-select-no-single" %}
+                                {{ filter.form.city.errors }}
+                                <small class="help-text text-muted">{{ filter.form.city.help_text }}</small>
                             </div>
-
-                            <!-- <div class="form-group form-row form-row-wide">
-                                <label for="">Price Range:</label>
-                                {{ filter.form.price }}
-                                {{ filter.form.price.errors }}
-                            </div> -->
 
                             <!-- Price Range -->
                             <div class="range-slider">
-                                <label>Price Range</label>
-                                <div id="price-range" data-min="0" data-max="400000" data-unit="&euro;"></div>
+                                <label for="{{ filter.form.price.id_for_label }}">Price Range</label>
+                                <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
+                                    <div class="range-slider-values">
+                                        {{ filter.form.price }}
+                                    </div>
+                                </div>
+                                <small class="help-text text-muted">{{ filter.form.price.help_text }}</small>
                                 <div class="clearfix"></div>
                             </div>
 

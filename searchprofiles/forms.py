@@ -10,7 +10,7 @@ from configdata import UPDATE_FREQUENCIES
 class UserSearchProfileForm(forms.ModelForm):
     title = forms.CharField(label='Name your Search Profile', help_text='A unique title that will mean something to you')
     frequency = forms.ChoiceField(required=True, widget=SelectWidgetWithDisabledOption, choices=UPDATE_FREQUENCIES,
-                                 help_text='How often to receive notifications about new properties on our site')
+                                 help_text='How often to receive notifications about new properties')
 
     class Meta:
         model = SearchProfiles

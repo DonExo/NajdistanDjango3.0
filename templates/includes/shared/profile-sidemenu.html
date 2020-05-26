@@ -1,7 +1,7 @@
 <div class="my-account-nav-container">
 
     <ul class="my-account-nav">
-        <li class="sub-nav-title">Manage Profile</li>
+        <li class="sub-nav-title">Manage Account</li>
         <li>
             <a href="{% url 'accounts:profile' %}"
                 {% url 'accounts:profile' as current_url%}
@@ -27,7 +27,7 @@
             <a href="{% url 'accounts:bookmarks' %}"
                 {% url 'accounts:bookmarks' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-star"></i> Bookmarked Listings
+                <i class="sl sl-icon-star"></i> Bookmarked Properties
             </a>
         </li>
     </ul>
@@ -38,25 +38,25 @@
             <a href="{% url 'searchprofiles:create' %}"
                 {% url 'searchprofiles:create' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-power"></i>Add new
+                <i class="sl sl-icon-plus"></i>Add Search Profile
             </a>
         </li>
         <li>
             <a href="{% url 'searchprofiles:manage' %}"
                 {% url 'searchprofiles:manage' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-power"></i>Manage existing
+                <i class="sl sl-icon-notebook"></i>Manage Existing
             </a>
         </li>
     </ul>
 
     <ul class="my-account-nav">
-        <li class="sub-nav-title">Manage Account</li>
+        <li class="sub-nav-title">Settings</li>
         <li>
             <a href="{% url 'accounts:profile_update' %}"
                 {% url 'accounts:profile_update' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-user"></i> Update profile
+                <i class="sl sl-icon-user-following"></i> Update Profile
             </a>
         </li>
         <li>
@@ -66,8 +66,8 @@
                 <i class="sl sl-icon-lock"></i> Change Password
             </a>
         </li>
-        <li><a href="#"><i class="sl sl-icon-power"></i> Delete Account</a></li>
-        <li><a href="{% url 'authy:logout' %}"><i class="sl sl-icon-power"></i> Log Out</a></li>
+        <li><a href="#"><i class="sl sl-icon-trash"></i> Delete Account</a></li>
+        <li><a href="{% url 'authy:logout' %}"><i class="sl sl-icon-logout"></i> Log Out</a></li>
     </ul>
 
 </div>

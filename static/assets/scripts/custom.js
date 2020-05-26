@@ -550,11 +550,10 @@ $(document).ready(function(){
     /*  Like Icon Trigger
     /*----------------------------------------------------*/
     //$('.like-icon, .widget-button').on('click', function(e){
-    $('.like-icon').on('click', function(e){
-    	e.preventDefault();
-		$(this).toggleClass('liked');
-		$(this).children('.like-icon').toggleClass('liked');
-	});
+    // 	e.preventDefault();
+	// 	$(this).toggleClass('liked');
+	// 	$(this).children('.like-icon').toggleClass('liked');
+	// });
 
 
     /*----------------------------------------------------*/

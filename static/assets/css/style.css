@@ -2774,10 +2774,6 @@ span.like-icon {
 
 
 /* Widget Button */
-.widget-button.under-development {
-	cursor: not-allowed;
-}
-
 .widget-button.with-tip i.icon-compare {
     outline: none;
     border: none;
@@ -9849,6 +9845,10 @@ body .notification strong { border: none; }
 }
 
 /* Common Styles */
+.under-development {
+	cursor: not-allowed !important;
+}
+
 .social-icons li a i {
 	-webkit-transition: all 0.2s ease-in-out;
 	-moz-transition: all 0.2s ease-in-out;

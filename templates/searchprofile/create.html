@@ -75,7 +75,7 @@
 
                         <div class="form row with-forms">
                             <!-- Rooms -->
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 {{ form.rooms.label_tag }}
                                 {{ form.rooms }}
                                 {{ form.rooms.errors }}
@@ -83,30 +83,16 @@
                             </div>
 
                             <!-- Bedrooms -->
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 {{ form.bedrooms.label_tag }}
                                 {{ form.bedrooms }}
                                 {{ form.bedrooms.errors }}
                                 <small class="help-text text-muted">{{ form.bedrooms.help_text }}</small>
                             </div>
-
-                            <!-- Price Min -->
-                            <div class="col-md-3">
-                                {{ form.min_price.label_tag}}
-                                {{ form.min_price }}
-                                {{ form.min_price.errors }}
-                            </div>
-
-                            <!-- Price Max -->
-                            <div class="col-md-3">
-                                {{ form.max_price.label_tag}}
-                                {{ form.max_price }}
-                                {{ form.max_price.errors }}
-                            </div>
                         </div>
 
                         <!-- Price Range -->
-                        <!-- <div class="form">
+                        <div class="form">
                             <div class="range-slider">
                                 <label for="{{ form.price.id_for_label }}">Price Range</label>
                                 <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
@@ -121,7 +107,7 @@
                                 <small class="help-text text-muted">{{ form.price.help_text }}</small>
                                 <div class="clearfix"></div>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form row with-forms">
                             <!-- Interior -->

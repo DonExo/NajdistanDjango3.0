@@ -13,3 +13,6 @@ class CustomSearchProfileQueryset(models.QuerySet):
 
     def monthly(self):
         return self.filter(frequency='monthly', is_active=True)
+
+    def count_active(self):
+        return self.filter(is_active=True).count()

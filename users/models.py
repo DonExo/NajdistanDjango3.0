@@ -61,12 +61,15 @@ class User(AbstractUser, BaseModel):
     def get_absolute_url(self):
         return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
 
+    @property
+    def is_premium_user(self):
+        return self.is_staff  # TODO: To be replaced with real logic about being Premium user
+
     def get_search_profiles(self):
-        return self.searchprofiles.prefetch_related('city').all()
+        return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
 
     def has_search_profile(self):
-        #@TODO: Change is_staff with PREMIUM user
-        return not self.is_staff and self.searchprofiles.all().count() >= 1
+        return not self.is_premium_user and self.searchprofiles.all().count() >= 1
 
     def get_bookmarks(self):
         return self.bookmarks.all()

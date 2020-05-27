@@ -29,6 +29,10 @@ function generateListingData() {
 
     var price = document.getElementById('id_price');
     price.value = random1000;
+
+    var construction = document.getElementById('id_construction_year');
+    random2000 = Math.floor(2000 + Math.random() * 20);
+    construction.value = random2000;
 }
 
 

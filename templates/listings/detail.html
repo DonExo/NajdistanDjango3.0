@@ -73,7 +73,7 @@
         <div class="row">
     
             <!-- Property Description -->
-            <div class="col-lg-8 col-md-7 sp-content">
+            <div class="col-lg-8 col-md-7 sp-content padding-bottom-100">
                 <div class="property-description">
 
                     <!-- Main Features -->
@@ -81,26 +81,33 @@
                         <li>Area <span>{{object.quadrature}} m<sup>2</sup></span></li>
                         <li>Rooms <span>{{object.rooms}}</span></li>
                         <li>Bedrooms <span>{{object.bedrooms}}</span></li>
+                        <li>Floor <span>{{object.floor}}</span></li>
                         <li>Published <span>{{ object.created_at|naturalday }}</span></li>
-                        <li>Built <span>2002</span></li>
+                        <li>Construction Year <span>{{ object.construction_year }}</span></li>
                     </ul>
 
                     <!-- Description -->
                     <h3 class="desc-headline">Description</h3>
-                    <div class="show-more">
-                        <p>{{ object.description }}</p>
+
+                    {% if object.description|wordcount > 50 %}
+                        <div class="show-more">
+                            <p>{{ object.description }}</p>
                         <a href="#" class="show-more-button">Show More <i class="fa fa-angle-down"></i></a>
                     </div>
+                    {% else %}
+                        <div >
+                            <p>{{ object.description }}</p>
+                    </div>
+                    {% endif %}
+
 
                     <!-- Details -->
                     <h3 class="desc-headline">Details</h3>
                     <ul class="property-features margin-top-0">
-                        <li>Available from: <span>{{object.available_from}}</span></li>
-                        <li>Home Type: <span>{{object.home_type}}</span></li>
-                        <li>Cooling: <span>Central Cooling</span></li>
-                        <li>Heating: <span>{{object.heating}}</span></li>
-                        <li>Floor: <span>{{object.floor}}</span></li>
-                        <li>Interior: <span>{{object.interior}}</span></li>
+                        <li>Home Type: <span>{{object.home_type.title }}</span></li>
+                        <li>Listing Type: <span>{{ object.listing_type.title }}</span></li>
+                        <li>Heating System: <span>{{object.heating.title }}</span></li>
+                        <li>Interior: <span>{{ object.interior.title }}</span></li>
                     </ul>
 
 
@@ -111,7 +118,6 @@
                         <li class="{{ object.balcony|yesno:'property-features-on,property-features-off' }}">Balcony</li>
                         <li class="{{ object.parking|yesno:'property-features-on,property-features-off' }}">Parking</li>
                         <li class="{{ object.basement|yesno:'property-features-on,property-features-off' }}">Basement</li>
-                        <li class="{{ object.is_available|yesno:'property-features-on,property-features-off' }}">Is available</li>
                     </ul>
                 </div>
             </div>

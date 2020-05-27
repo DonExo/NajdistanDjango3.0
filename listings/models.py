@@ -1,16 +1,15 @@
 from datetime import datetime
 
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import F
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import RegexValidator
 
+from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE, HEATING_CHOICES
 from users.models import BaseModel, User
 from users.utils import listing_image_directory_path
-from configdata import REGEX_ZIPCODE_VALIDATOR, HOME_TYPE, INTERIOR_CHOICES, LISTING_TYPE, HEATING_CHOICES
-
 from .managers import CustomListingQuerySet
 
 
@@ -22,7 +21,7 @@ class Place(models.Model):
     city = models.CharField(_('City'), max_length=255)
 
     def __str__(self):
-        return f'({self.region}) {self.city} '
+        return self.city
 
     def get_region(self):
         return self.region
@@ -44,29 +43,35 @@ class Listing(BaseModel):
     title = models.CharField(_('Title'), max_length=255)
     description = models.TextField(_('Description'))
     address = models.CharField(_('Address'), max_length=80, blank=True)
-    zip_code = models.CharField(_('Zip-code'), max_length=10, validators=[RegexValidator(regex=REGEX_ZIPCODE_VALIDATOR, message='Zip code must be in format 1234AB', code='invalid_zipcode')])
+    zip_code = models.CharField(_('Zip-code'), max_length=10, validators=[
+        RegexValidator(regex=REGEX_ZIPCODE_VALIDATOR, message='Zip code must be in format 1234AB', code='invalid_zipcode')])
+
     home_type = models.CharField(_('Type of home'), max_length=10, default='apartment', choices=HOME_TYPE)
+    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE)
+    interior = models.CharField(max_length=255, default='unfurnished', choices=INTERIOR_CHOICES)
+
     quadrature = models.PositiveSmallIntegerField(_('Quadrature'))
     rooms = models.PositiveSmallIntegerField(_('Rooms'))
     bedrooms = models.PositiveSmallIntegerField(_('Bedrooms'))
-    floor = models.PositiveSmallIntegerField(_('Floor'))
-    interior = models.CharField(max_length=255, choices=INTERIOR_CHOICES, default='unspecified')
+    floor = models.PositiveSmallIntegerField(_('Floor'), null=True, blank=True)
     heating = models.CharField(max_length=50, choices=HEATING_CHOICES, default='Gas')
     price = models.DecimalField(_('Price in EUR'), max_digits=9, decimal_places=0)
+    construction_year = models.IntegerField(_('Construction Year'),
+                                            validators=[MinValueValidator(1900), MaxValueValidator(2020)], null=True)
+
+    # Listing checkboxes
     basement = models.BooleanField(_('Basement'), default=False)
     parking = models.BooleanField(_('Parking place'), default=False)
     elevator = models.BooleanField(_('Elevator'), default=False)
     balcony = models.BooleanField(_('Balcony'), default=False)
 
-    # Listing data
-    times_visited = models.PositiveIntegerField(_('Times visited'), default=0)
+    # Listing admin data
+    is_approved = models.NullBooleanField(_('Approved?'), default=None)
     is_available = models.BooleanField(_('Available?'), default=True)
+    rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
     available_from = models.DateField(blank=True, null=True)
     rental_period = models.PositiveSmallIntegerField(_('Minimum rental period (in months)'), default=6, blank=True, null=True)
-    is_approved = models.NullBooleanField(_('Approved?'), default=None)
-    rejection_reason = models.CharField(_('Rejection reason'), max_length=255, null=True, blank=True)
-    # @TODO: If the house is for selling - some fields should be deleted in the form
-    listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE)
+    times_visited = models.PositiveIntegerField(_('Times visited'), default=0)
     soft_deleted = models.BooleanField(_('Soft deleted'), default=False)
     slug = models.SlugField(max_length=255, unique=True)
 

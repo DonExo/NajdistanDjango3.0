@@ -20,9 +20,10 @@
 
             <!-- Manage Page -->
             <div class="col-md-8 padding-bottom-70">
+                <h2>Create new Search Profile</h2>
                 {% if reached_max_sp %}
                     <p style="color: red;">You've reached the maximum number of Search profiles you can have.<br>
-                        Please <a href="#">upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
+                        <a href="#">Upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
                 {% endif %}
                 <form method="post" autocomplete="off">
                     {% csrf_token %}
@@ -47,7 +48,33 @@
                             <small class="help-text text-muted">{{ form.title.help_text }}</small>
                         </div>
 
+                        <!-- Price Range -->
+                        <div class="form">
+                            <div class="range-slider">
+                                <label for="{{ form.price.id_for_label }}">Price Range</label>
+                                <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
+                                    <div class="range-slider-values">
+                                        {{ form.min_price.label_tag}}
+                                        {{ form.min_price }}
+
+                                        {{ form.max_price.label_tag}}
+                                        {{ form.max_price }}
+                                    </div>
+                                </div>
+                                <small class="help-text text-muted">{{ form.price.help_text }}</small>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        <!-- Frequency -->
                         <div class="form row with-forms">
+                            <div class="col-md-4">
+                                {{ form.frequency.label_tag }}
+                                {% render_field form.frequency class="chosen-select-no-single" %}
+                                {{ form.frequency.errors }}
+                                <small class="help-text text-muted">{{ form.frequency.help_text }}</small>
+                            </div>
+
                             <!-- City -->
                             <div class="col-md-4">
                                 {{ form.city.label_tag }}
@@ -63,13 +90,31 @@
                                 {{ form.listing_type.errors }}
                                 <small class="help-text text-muted">{{ form.listing_type.help_text }}</small>
                             </div>
+                        </div>
 
+                        <br/>
+                        <h4>Premium fields (Optional):</h4>
+                        <hr/>
+
+                        {% if not user.is_premium_user %}
+                            <p style="color: red;">Upgrade to <a href="#">Premium</a> to access these features. </p>
+                        {% endif %}
+
+                        <div class="form row with-forms">
                             <!-- Home Type -->
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 {{ form.home_type.label_tag }}
                                 {% render_field form.home_type class="chosen-select-no-single" %}
                                 {{ form.home_type.errors }}
                                 <small class="help-text text-muted">{{ form.home_type.help_text }}</small>
+                            </div>
+
+                            <!-- Interior -->
+                            <div class="col-md-6">
+                                {{ form.interior.label_tag }}
+                                {% render_field form.interior class="chosen-select-no-single" %}
+                                {{ form.interior.errors }}
+                                <small class="help-text text-muted">{{ form.interior.help_text }}</small>
                             </div>
                         </div>
 
@@ -90,47 +135,11 @@
                                 <small class="help-text text-muted">{{ form.bedrooms.help_text }}</small>
                             </div>
                         </div>
-
-                        <!-- Price Range -->
-                        <div class="form">
-                            <div class="range-slider">
-                                <label for="{{ form.price.id_for_label }}">Price Range</label>
-                                <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
-                                    <div class="range-slider-values">
-                                        {{ form.min_price.label_tag}}
-                                        {{ form.min_price }}
-
-                                        {{ form.max_price.label_tag}}
-                                        {{ form.max_price }}
-                                    </div>
-                                </div>
-                                <small class="help-text text-muted">{{ form.price.help_text }}</small>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-
-                        <div class="form row with-forms">
-                            <!-- Interior -->
-                            <div class="col-md-6">
-                                {{ form.interior.label_tag }}
-                                {% render_field form.interior class="chosen-select-no-single" %}
-                                {{ form.interior.errors }}
-                                <small class="help-text text-muted">{{ form.interior.help_text }}</small>
-                            </div>
-
-                            <!-- Frequency -->
-                            <div class="col-md-6">
-                                {{ form.frequency.label_tag }}
-                                {% render_field form.frequency class="chosen-select-no-single" %}
-                                {{ form.frequency.errors }}
-                                <small class="help-text text-muted">{{ form.frequency.help_text }}</small>
-                            </div>
-                            
-                        </div>
                     </div>
 
+                    <p><i>More options to be added soon!</i></p>
+
                     <button class="button margin-top-10" type="submit" {% if reached_max_sp %} disabled {% endif %}>Submit</button>
-{#                    <input type="submit" value="Submit">#}
                 </form>
             </div>
         </div>

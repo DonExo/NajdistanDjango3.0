@@ -46,20 +46,22 @@ class Listing(BaseModel):
     zip_code = models.CharField(_('Zip-code'), max_length=10, validators=[
         RegexValidator(regex=REGEX_ZIPCODE_VALIDATOR, message='Zip code must be in format 1234AB', code='invalid_zipcode')])
 
+    # Choices fields
     home_type = models.CharField(_('Type of home'), max_length=10, default='apartment', choices=HOME_TYPE)
     listing_type = models.CharField(_('Listing type'), max_length=10, default='rent', choices=LISTING_TYPE)
     interior = models.CharField(max_length=255, default='unfurnished', choices=INTERIOR_CHOICES)
+    heating = models.CharField(max_length=50, choices=HEATING_CHOICES, default='Gas')
 
+    # Numbers fields
     quadrature = models.PositiveSmallIntegerField(_('Quadrature'))
     rooms = models.PositiveSmallIntegerField(_('Rooms'))
     bedrooms = models.PositiveSmallIntegerField(_('Bedrooms'))
     floor = models.PositiveSmallIntegerField(_('Floor'), null=True, blank=True)
-    heating = models.CharField(max_length=50, choices=HEATING_CHOICES, default='Gas')
     price = models.DecimalField(_('Price in EUR'), max_digits=9, decimal_places=0)
     construction_year = models.IntegerField(_('Construction Year'),
                                             validators=[MinValueValidator(1900), MaxValueValidator(2020)], null=True)
 
-    # Listing checkboxes
+    # Checkbox fields
     basement = models.BooleanField(_('Basement'), default=False)
     parking = models.BooleanField(_('Parking place'), default=False)
     elevator = models.BooleanField(_('Elevator'), default=False)

@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load humanize %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -19,46 +17,53 @@
 				{% include 'includes/shared/profile-sidemenu.html' %}
 			</div>
         </div>
-        
+
         <div class="col-md-8">
-            {% if listings %}
-                <table class="manage-table responsive-table">
-                    <tr>
-                        <th><i class="fa fa-file-text"></i> Property</th>
-                        <th class="expire-date"><i class="fa fa-calendar"></i> Creation Date</th>
-                        <th><i class="fa fa-file-text"></i> Actions</th>
-                    </tr>
+            <h2>My Properties</h2>
+			<div class="style-1">
+				<!-- Tabs Navigation -->
+				<ul class="tabs-nav">
+					<li class="active"><a href="#tab1">Active</a></li>
+					<li><a href="#tab2">Inactive</a></li>
+					<li><a href="#tab3">Pending</a></li>
+				</ul>
 
-                    {% for object in listings %}
-                        <tr>
-                            <td class="title-container">
-                                <img src="{{ object.get_cover_image.url }}" alt="{{ object.title }}">
-                                <div class="title">
-                                    <h4><a href="{% url 'listings:detail' object.slug %}">{{ object.title|truncatewords:8 }}</a></h4>
-                                    <span>{{ object.zip_code }}, {{ object.city }} </span>
-                                    <span class="table-property-price">{{ object.price }} <i>&euro;</i></span>
-                                </div>
-                            </td>
-                            <td class="expire-date">{{ object.created_at|naturalday }}</td>
-                            <td class="action">
-                                <a href="{% url 'listings:update' object.slug %}"><i class="fa fa-pencil"></i> Update</a>
-                                <a href="#"><i class="fa  fa-eye-slash"></i> Hide</a>
-                                <a href="{% url 'listings:delete' object.slug %}" class="delete" onclick="return confirm('Are you sure you want to delete this listing?');">
-                                    <i class="fa fa-remove"></i> Delete</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+				<!-- Tabs Content -->
+				<div class="tabs-container">
 
-                </table>
-                <a href="{% url 'listings:create' %}" class="margin-top-40 button">Submit New Property</a>
-            {% else %}
-                <p>You don't have any listings. Would you like to <a class="margin-top-40 button" href="{% url 'listings:create' %}">create one?</a></p>
-            {% endif %}
+					<div class="tab-content" id="tab1">
+                        <div class="margin-bottom-20">
+                            List of your active properties. <br/>
+                            These properties have undergone a review from the Administration.<br/>
+                            They are shown in the search results and can be accessed without restrictions.
+                        </div>
+                        {% include 'users/group_properties.html' with listings=active %}
+                    </div>
+
+					<div class="tab-content" id="tab2">
+                        <div class="margin-bottom-20">
+                            List of your inactive properties. <br/>
+                            These are properties that you explicitely marked as <b>Inactive</b>. <br/>
+                            They can't be found while searching, nor accessed with a direct link (i.e. bookmarked). <br/>
+                            You can mark your properties as inactive when the property has been booked/sold (i.e. it's unavailable).
+                        </div>
+                        {% include 'users/group_properties.html' with listings=inactive %}
+                    </div>
+
+                    <div class="tab-content" id="tab3">
+                        <div class="margin-bottom-20">
+                            These properties are pending Admin verifications. <br/>
+                            Once that is done, it will move to appropriate category.<br/>
+                            If a property is rejected - it will state a reason for it. <br/>
+                            You can always re-submit a property for another verification. <br/>
+                            Properties are automatically submitted for verification upon their creation.
+                        </div>
+                        {% include 'users/group_properties.html' with listings=pending %}
+                    </div>
+
+                </div>
+			</div>
 		</div>
-
-        <!--
-        <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
-        <h4><a href="{% url 'accounts:profile_update' %}">Update your profile</a> </h4> -->
     </div>
 </div>
 

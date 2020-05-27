@@ -21,9 +21,12 @@ def profile(request):
 
 @login_required
 def properties(request):
+    user_listings = request.user.get_listings()
     context = {
         'title': 'My Properties',
-        'listings': request.user.get_listings(),
+        'active': user_listings.active(),
+        'inactive': user_listings.inactive(),
+        'pending': user_listings.pending(),
     }
     return render(request, 'users/properties.html', context)
 

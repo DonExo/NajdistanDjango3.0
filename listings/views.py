@@ -48,7 +48,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
-    success_message = "Listing successfully created!"
+    success_message = "Property successfully created!"
 
     def get_success_url(self):
         # dummy_task.delay(self.object.slug)
@@ -77,7 +77,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Create Listing'
+        context['title'] = 'Submit Property'
         context['generate_dummy_listing'] = settings.GENERATE_DUMMY_LISTING
         return context
 

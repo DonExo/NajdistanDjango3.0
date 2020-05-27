@@ -38,14 +38,14 @@
             <a href="{% url 'searchprofiles:create' %}"
                 {% url 'searchprofiles:create' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-plus"></i>Add Search Profile
+                <i class="sl sl-icon-plus"></i>Create SP
             </a>
         </li>
         <li>
             <a href="{% url 'searchprofiles:manage' %}"
                 {% url 'searchprofiles:manage' as current_url%}
                 {% if request.path == current_url %} class="current"{% endif %}>
-                <i class="sl sl-icon-notebook"></i>Manage Existing
+                <i class="sl sl-icon-notebook"></i>Manage SP
             </a>
         </li>
     </ul>

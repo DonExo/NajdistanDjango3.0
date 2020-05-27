@@ -11,7 +11,7 @@ from .models import User
 @login_required
 def profile(request):
     context = {
-        'title': 'Profile',
+        'title': 'My Profile',
         'user': request.user,
         'listings': request.user.get_listings(),
         'search_profiles': request.user.get_search_profiles(),
@@ -34,7 +34,7 @@ def properties(request):
 @login_required
 def bookmarks(request):
     context = {
-        'title': 'Bookmarked properties',
+        'title': 'Bookmarked Properties',
         'bookmarks': request.user.get_bookmarks(),
     }
     return render(request, 'users/bookmarks.html', context)
@@ -42,7 +42,7 @@ def bookmarks(request):
 
 @login_required
 def update(request):
-    context = {'title': 'Profile update'}
+    context = {'title': 'Update Profile'}
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
         context.update({'form': form})

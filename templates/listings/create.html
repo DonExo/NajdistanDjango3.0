@@ -22,6 +22,8 @@
 
         <!-- Submit Page -->
         <div class="col-md-8 padding-bottom-70">
+            <h2>Submit Property</h2>
+
             <form method="post" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
 
@@ -42,7 +44,7 @@
                     <input type="submit" value="Submit" id="sabmit" />
                 {% endif %}
 
-                <div class="submit-page">
+                <div class="submit-page margin-top-50">
 
                     <!-- Section -->
                     <h3>Basic Information</h3>

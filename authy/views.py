@@ -57,7 +57,7 @@ class RegisterView(RegistrationView):
 class PasswordChangeView(auth_views.PasswordChangeView):
     form_class = CustomPasswordChangeForm
     success_url = reverse_lazy('authy:password_change_done')
-    extra_context = {'title': _('Password change')}
+    extra_context = {'title': _('Change Password')}
 
 
 class PasswordChangeDoneView(RedirectView):

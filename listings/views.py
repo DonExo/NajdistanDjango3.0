@@ -23,7 +23,8 @@ class ListingIndexView(FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
-        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved()
+        # Make this FEATURED properties
+        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved() / featured()
         return context
 
 

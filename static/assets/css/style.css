@@ -6336,6 +6336,11 @@ body .comment-content p { padding: 5px 0; }
 	color: #ff2929;
 }
 
+.toast-message-warning {
+	background-color: #fff5f1;
+	color: #e57700;
+}
+
 .toast-message-success {
 	background-color: #e5ffe8;
 	color: #21bb33

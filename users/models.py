@@ -55,6 +55,7 @@ class User(AbstractUser, BaseModel):
             return self.profile_image.url
         return self.avatar
 
+    # TODO: Check queries here!
     def get_listings(self):
         return self.listings.prefetch_related('city').all()
 

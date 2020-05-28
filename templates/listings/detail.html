@@ -155,41 +155,12 @@
                             <input type="text" placeholder="Your Phone">
                             <textarea placeholder="Type your message here..."></textarea>
                             <button class="button fullwidth margin-top-5">Send Message</button>
+                            <i>Contact form is under development!</i>
                         </div>
                         <!-- Agent Widget / End -->
 
                     </div>
                     <!-- Widget / End -->
-
-                    {% if user == object.user %}
-                    <!-- Widget -->
-                        <div class="widget">
-
-                            <!-- Agent Widget -->
-
-                            <div class="agent-widget">
-    {#                            <h3>Gallery</h3>#}
-    {#                            <a class="button fullwidth border" href="{% url 'listings:update' object.slug %}">Update</a>#}
-    {##}
-    {#                            <div class="submit-section">                                    #}
-    {#                                <form action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">#}
-    {#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
-    {#                                        {% csrf_token %}#}
-    {#                                        <div class="fallback">#}
-    {#                                            <input type="file" name="images" multiple required >#}
-    {#                                        </div>#}
-    {#                                    <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button>#}
-    {#                                </form>#}
-    {#                            </div>#}
-    {##}
-    {#                            <a class="button fullwidth border" href="{% url 'listings:delete' object.slug %}" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</a>#}
-                            </div>
-                            <!-- Agent Widget / End -->
-
-                        </div>
-                    <!-- Widget / End -->
-                    {% endif %}
-
                 </div>
             </div>
             <!-- Sidebar / End -->

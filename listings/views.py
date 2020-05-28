@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
@@ -88,10 +88,13 @@ class ListingDetailView(generic.DetailView):
     template_name = 'listings/detail.html'
     queryset = Listing.objects.select_related('user')
 
-    def get_object(self, queryset=None):
-        object = super().get_object()
-        object.increment_visited_counter()  # TODO: Make this async
-        return object
+    def get(self, request, *args, **kwargs):
+        listing = self.get_object()
+        listing.increment_visited_counter()  # TODO: Make this async
+        if not listing.is_available and request.user != listing.user:
+            messages.warning(self.request, "You can not access this property. The owner has marked it as un-available!")
+            return redirect(reverse('listings:search'))
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

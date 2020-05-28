@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect
@@ -72,3 +73,13 @@ def user_identifier(request, identifier):
         'listings': user.get_listings()
     }
     return render(request, 'users/user.html', context)
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        request.user.deactivate()
+        logout(request)
+        messages.info(request, "Your account has been disabled! We are sorry to see you go.")
+        return redirect(reverse('index'))
+    return render(request, 'users/delete.html')

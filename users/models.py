@@ -34,6 +34,7 @@ class User(AbstractUser, BaseModel):
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    soft_delete = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return self.get_full_name()
@@ -74,6 +75,11 @@ class User(AbstractUser, BaseModel):
 
     def get_bookmarks(self):
         return self.bookmarks.all()
+
+    def deactivate(self):
+        self.is_active = False
+        self.soft_delete = True
+        self.save()
 
 
 class Bookmarks(models.Model):

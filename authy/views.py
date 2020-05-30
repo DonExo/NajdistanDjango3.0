@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
@@ -87,7 +88,7 @@ class PasswordResetView(auth_views.PasswordResetView):
         # Prevent accessing the URL if user is not authenticated
         if self.redirect_authenticated_user and self.request.user.is_authenticated:
             messages.error(request, _("You can not access this route if you are logged in!"))
-            return HttpResponseRedirect('/user/profile/')
+            return redirect(reverse('accounts:profile'))
         return super().dispatch(request, *args, **kwargs)
 
 

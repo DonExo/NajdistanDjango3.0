@@ -145,8 +145,8 @@
                                     <img src="{{ listing.user.get_profile_image }}" alt="User avatar" />
                                 </div>
                                 <div class="agent-details">
-                                    <h4><a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user }}</a></h4>
-                                    <span><i class="sl sl-icon-call-in"></i>(123) 123-456</span>
+                                    <h4><a href="{% url 'accounts:user_identifier' object.user.identifier %}">{{ object.user.get_short_name }}</a></h4>
+                                    <span><i class="sl sl-icon-call-in"></i>{{ object.user.telephone }}</span>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

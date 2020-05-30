@@ -16,7 +16,7 @@ from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
 
 class ListingIndexView(FilterView):
-    template_name = 'listings/list.html'
+    template_name = 'listings/index.html'
     filterset_class = ListingFilter
 
     # TODO: Check why it has slow database connection on this view

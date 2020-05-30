@@ -56,6 +56,9 @@ class User(AbstractUser, BaseModel):
             return self.profile_image.url
         return self.avatar
 
+    def get_short_name(self):
+        return f"{self.first_name} {self.last_name[:1]}."
+
     # TODO: Check queries here!
     def get_listings(self):
         return self.listings.prefetch_related('city').all()

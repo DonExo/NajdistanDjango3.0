@@ -1016,24 +1016,19 @@ $(document).ready(function(){
 
 	// Price Range
 	$(".price-range").each(function() {
-
-		let uri = window.location.href;
-		let isPricePreset = uri.match(/price_min=([^&]+)/);
-		let presetPriceMin = !!isPricePreset && uri.match(/price_min=([^&]+)/)[1];
-		let presetPriceMax = !!isPricePreset && uri.match(/price_max=([^&]+)/)[1];
+		let presetPriceMin = $(this).find( "#id_price_0" ).val();
+		let presetPriceMax = $(this).find( "#id_price_1" ).val();
 		let dataMin = $(this).attr('data-min');
 		let dataMax = $(this).attr('data-max');
 		let dataUnit = $(this).attr('data-unit');
-
-		$(this).append( "<input type='text' class='first-slider-value' disabled/><input type='text' class='second-slider-value' disabled/>" );
 
 		$(this).slider({
 			range: true,
 			min: parseInt(dataMin, 10),
 			max: parseInt(dataMax, 10),
 			values: [ 
-				!!isPricePreset ? presetPriceMin : dataMin, 
-				!!isPricePreset ? presetPriceMax : dataMax
+				!!presetPriceMin ? presetPriceMin : dataMin, 
+				!!presetPriceMax ? presetPriceMax : dataMax
 			],
 			
 			slide: function( event, ui ) {
@@ -1045,9 +1040,6 @@ $(document).ready(function(){
 				$(this).children( ".second-slider-value" ).val( ui.values[ 1 ].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
 			}
 		});
-		
-		$(this).find( "#id_price_0" ).val( dataMin );
-		$(this).find( "#id_price_1" ).val( dataMax );
 
 		$(this).children( ".first-slider-value" ).val( $( this ).slider( "values", 0 ).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);
 		$(this).children( ".second-slider-value" ).val( $( this ).slider( "values", 1 ).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + dataUnit);

@@ -2719,6 +2719,16 @@ input.second-slider-value {
 	width: 340px;
 }
 
+.csm-message {
+	display: none;
+	padding: 30px;
+    margin-top: 20px;
+}
+
+.csm-message.active {
+	display: block;
+}
+
 .compare-slide-menu.active { right: 0; }
 
 /* Compare Icon */

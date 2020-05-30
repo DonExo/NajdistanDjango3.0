@@ -45,6 +45,10 @@
                         {% endfor %}
                 </div>
 
+                <div class="csm-message">
+                    <p class="notification notice">that bite is too big to swallow champ!</p>
+                </div>
+
                 <div class="csm-buttons">
                     <a href="{% url 'listings:compare' %}?{% for obj in latest_5|slice:":3" %}c={{ obj.slug }}&{% endfor %}" class="button">Compare</a>
                     <a href="#" class="button reset">Reset</a>

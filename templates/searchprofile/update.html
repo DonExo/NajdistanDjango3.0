@@ -49,6 +49,8 @@
                             <div class="range-slider">
                                 <label for="{{ form.price.id_for_label }}">Price Range</label>
                                 <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
+                                    <input type='text' class='first-slider-value' disabled/>
+                                    <input type='text' class='second-slider-value' disabled/>
                                     <div class="range-slider-values">
                                         {{ form.min_price.label_tag}}
                                         {{ form.min_price }}

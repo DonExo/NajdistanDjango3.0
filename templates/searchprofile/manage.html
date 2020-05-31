@@ -35,7 +35,7 @@
                         <th>Title</th>
                         <th>Frequency</th>
                         <th>More info...</th>
-                        <th>Status(Toggle)</th>
+                        <th>Status</th>
                         <th><i class="fa fa-file-text"></i> Actions</th>
                     </tr>
                     {% if search_profiles %}
@@ -44,7 +44,19 @@
                                 <td>{{ sp.title }}</td>
                                 <td>{{ sp.frequency.title }}</td>
                                 <td><a href="#">Tooltip alike balloon</a></td>
-                                <td>{{ sp.is_active|yesno:"Active,Disabled" }}</td>
+
+                                <td>
+                                    <div class="input-wrapper">
+
+                                        <div class="input-checkbox-switch">
+                                            <input type="checkbox" name="{{ sp.pk }}" id="{{ sp.title }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
+                                            <label for="{{ sp.title }}"></label>
+                                        </div>
+
+
+                                    </div>
+                                </td>
+{#                              <td>{{ sp.is_active|yesno:"Active,Disabled" }}</td>#}
 
                                 <td class="action">
                                     <a href="{% url 'searchprofiles:update' sp.pk %}"><i class="fa fa-pencil"></i> Update</a> <br/>

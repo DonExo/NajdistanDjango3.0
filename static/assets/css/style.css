@@ -2288,6 +2288,10 @@ body .search-container button:before {
 	line-height: 50px;
 }
 
+.main-search-box .search-by-price > input {
+	min-width: 10%; /* Mozilla FF width fix */
+}
+
 /* Search Type Buttons*/
 .search-type {
 	display: inline-block;
@@ -2780,10 +2784,6 @@ span.like-icon {
 
 
 /* Widget Button */
-.widget-button.under-development {
-	cursor: not-allowed;
-}
-
 .widget-button.with-tip i.icon-compare {
     outline: none;
     border: none;
@@ -2988,6 +2988,63 @@ span.like-icon {
 
 .csm-content .compact .listing-img-container:after { display: none; }
 .csm-content .compact .listing-img-container:before { opacity: 0.7 !important; }
+
+/* Input - Switch checkbox */
+.input-checkbox-switch {
+	display: flex;
+	align-items: center;
+	min-height: 45px;
+}
+.input-checkbox-switch input[type="checkbox"]{
+	display: none;
+    opacity: 0;
+}
+
+.input-checkbox-switch label {
+	position: relative;
+    padding-left: 43px;
+    margin: 0;
+    color: #3b2e40;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.input-checkbox-switch label::before,
+.input-checkbox-switch label::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.input-checkbox-switch label::before {
+	width: 28px;
+	height: 28px;
+	left: 5px;
+	background-color: #f3f3f3;
+	border-radius: 3px;
+    transition: all .2s cubic-bezier(.45,1.8,.5,.75);
+    z-index: 1;
+}
+
+.input-checkbox-switch label::after {
+    left: 0;
+    border-radius: 3px;
+    width: 70px;
+    height: 38px;
+    background-color: #adadad;
+    transition: background-color .2s;
+}
+
+.input-checkbox-switch input[type=checkbox]:checked + label::before {
+	left: 37px;
+	background-color: #fff;
+}
+
+.input-checkbox-switch input[type=checkbox]:checked + label::after {
+	background-color: #6449E7;
+}
 
 /* Buttons */
 .csm-buttons {
@@ -6344,6 +6401,11 @@ body .comment-content p { padding: 5px 0; }
 .toast-message-error {
 	background-color: #ffe1e1;
 	color: #ff2929;
+}
+
+.toast-message-warning {
+	background-color: #fff5f1;
+	color: #e57700;
 }
 
 .toast-message-success {
@@ -9855,6 +9917,10 @@ body .notification strong { border: none; }
 }
 
 /* Common Styles */
+.under-development {
+	cursor: not-allowed !important;
+}
+
 .social-icons li a i {
 	-webkit-transition: all 0.2s ease-in-out;
 	-moz-transition: all 0.2s ease-in-out;

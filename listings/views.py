@@ -2,8 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
@@ -17,14 +16,15 @@ from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
 
 class ListingIndexView(FilterView):
-    template_name = 'listings/list.html'
+    template_name = 'listings/index.html'
     filterset_class = ListingFilter
 
     # TODO: Check why it has slow database connection on this view
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
-        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved()
+        # Make this FEATURED properties
+        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved() / featured()
         return context
 
 
@@ -49,7 +49,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
     form_class = ListingCreateForm
-    success_message = "Listing successfully created!"
+    success_message = "Property successfully created!"
 
     def get_success_url(self):
         # dummy_task.delay(self.object.slug)
@@ -78,7 +78,7 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Create Listing'
+        context['title'] = 'Submit Property'
         context['generate_dummy_listing'] = settings.GENERATE_DUMMY_LISTING
         return context
 
@@ -88,10 +88,13 @@ class ListingDetailView(generic.DetailView):
     template_name = 'listings/detail.html'
     queryset = Listing.objects.select_related('user')
 
-    def get_object(self, queryset=None):
-        object = super().get_object()
-        object.increment_visited_counter()  # TODO: Make this async
-        return object
+    def get(self, request, *args, **kwargs):
+        listing = self.get_object()
+        listing.increment_visited_counter()  # TODO: Make this async
+        if not listing.is_available and request.user != listing.user:
+            messages.warning(self.request, "You can not access this property. The owner has marked it as un-available!")
+            return redirect(reverse('listings:search'))
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

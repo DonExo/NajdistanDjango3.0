@@ -7,21 +7,16 @@ LISTING_TYPE = (
     ('sell', 'For sell')
 )
 
-LISTING_TYPE_2 = (
-    ('rent', 'For rent'),
-    ('buy', 'For buy')
-)
-
 HOME_TYPE = (
-    ('house', 'A house'),
-    ('apartment', 'An apartment')
+    ('apartment', 'Apartment'),
+    ('house', 'House')
 )
 
 INTERIOR_CHOICES = (
-    ('unspecified', 'Not specified'),
-    ('furnished', 'Fully furnished'),
     ('unfurnished', 'Non furnished'),
-    ('upholstered', 'Semi furnished')
+    ('upholstered', 'Semi furnished'),
+    ('furnished', 'Fully furnished'),
+    ('unspecified', 'Not specified')
 )
 
 HEATING_CHOICES = (

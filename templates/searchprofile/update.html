@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     {% include 'includes/title.html' %}
@@ -17,13 +18,126 @@
                 </div>
             </div>
 
-            <!-- Manage Page -->
             <div class="col-md-8 padding-bottom-70">
-                <h1>Update search profile</h1>
+                <h2>Update search profile</h2>
+
                 <form method="post" autocomplete="off">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Submit">
+                    {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field }}
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="submit-page">
+
+                        <div class="form">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                            {{ form.title.errors }}
+                            <small class="help-text text-muted">{{ form.title.help_text }}</small>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="form">
+                            <div class="range-slider">
+                                <label for="{{ form.price.id_for_label }}">Price Range</label>
+                                <div class="price-range" data-min="0" data-max="400000" data-unit="&euro;">
+                                    <input type='text' class='first-slider-value' disabled/>
+                                    <input type='text' class='second-slider-value' disabled/>
+                                    <div class="range-slider-values">
+                                        {{ form.min_price.label_tag}}
+                                        {{ form.min_price }}
+
+                                        {{ form.max_price.label_tag}}
+                                        {{ form.max_price }}
+                                    </div>
+                                </div>
+                                <small class="help-text text-muted">{{ form.price.help_text }}</small>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        <!-- Frequency -->
+                        <div class="form row with-forms">
+                            <div class="col-md-4">
+                                {{ form.frequency.label_tag }}
+                                {% render_field form.frequency class="chosen-select-no-single" %}
+                                {{ form.frequency.errors }}
+                                <small class="help-text text-muted">{{ form.frequency.help_text }}</small>
+                            </div>
+
+                            <!-- City -->
+                            <div class="col-md-4">
+                                {{ form.city.label_tag }}
+                                {% render_field form.city class="chosen-select-no-single" %}
+                                {{ form.city.errors }}
+                                <small class="help-text text-muted">{{ form.city.help_text }}</small>
+                            </div>
+
+                            <!-- Listing Type -->
+                            <div class="col-md-4">
+                                {{ form.listing_type.label_tag }}
+                                {% render_field form.listing_type class="chosen-select-no-single" %}
+                                {{ form.listing_type.errors }}
+                                <small class="help-text text-muted">{{ form.listing_type.help_text }}</small>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <h4>Premium fields (Optional):</h4>
+                        <hr/>
+
+                        {% if not user.is_premium_user %}
+                            <p style="color: red;">Upgrade to <a href="#">Premium</a> to access these features. </p>
+                        {% endif %}
+
+                        <div class="form row with-forms">
+                            <!-- Home Type -->
+                            <div class="col-md-6">
+                                {{ form.home_type.label_tag }}
+                                {% render_field form.home_type class="chosen-select-no-single" %}
+                                {{ form.home_type.errors }}
+                                <small class="help-text text-muted">{{ form.home_type.help_text }}</small>
+                            </div>
+
+                            <!-- Interior -->
+                            <div class="col-md-6">
+                                {{ form.interior.label_tag }}
+                                {% render_field form.interior class="chosen-select-no-single" %}
+                                {{ form.interior.errors }}
+                                <small class="help-text text-muted">{{ form.interior.help_text }}</small>
+                            </div>
+                        </div>
+
+                        <div class="form row with-forms">
+                            <!-- Rooms -->
+                            <div class="col-md-6">
+                                {{ form.rooms.label_tag }}
+                                {{ form.rooms }}
+                                {{ form.rooms.errors }}
+                                <small class="help-text text-muted">{{ form.rooms.help_text }}</small>
+                            </div>
+
+                            <!-- Bedrooms -->
+                            <div class="col-md-6">
+                                {{ form.bedrooms.label_tag }}
+                                {{ form.bedrooms }}
+                                {{ form.bedrooms.errors }}
+                                <small class="help-text text-muted">{{ form.bedrooms.help_text }}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p><i>More options to be added soon!</i></p>
+
+                    <button class="button margin-top-10" type="submit" {% if reached_max_sp %} disabled {% endif %}>Submit</button>
                 </form>
             </div>
         </div>

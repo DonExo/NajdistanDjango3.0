@@ -18,6 +18,7 @@
         </div>
         
         <div class="col-md-8">
+            <h2>Update profile</h2>
             <form method="post" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
 
@@ -34,8 +35,6 @@
                 {% endif %}
 
                 <div class="col-md-8 my-profile">
-                    <h4 class="margin-top-0 margin-bottom-30">My Account</h4>
-                    
                     <div class="form-group form-row">
                         <label class="control-label" for="{{ form.first_name.id_for_label }}">
                             {{ form.first_name.label }}:

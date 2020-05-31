@@ -14,15 +14,16 @@ from .models import SearchProfiles
 @login_required()
 def search_profile_manage(request):
     context = {'title': "Manage Search Profiles"}
-    search_profiles = request.user.get_search_profiles()
     context.update({'reached_max_sp': request.user.has_search_profile(),
-                    'search_profiles': search_profiles})
+                    'search_profiles': request.user.get_search_profiles(),
+                    'active_sp': request.user.get_search_profiles().count_active()
+                    })
     return render(request, 'searchprofile/manage.html', context)
 
 
 @login_required()
 def search_profile_create(request):
-    context = {'title': "Search Profile"}
+    context = {'title': "Create Search Profile"}
 
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, user=request.user)

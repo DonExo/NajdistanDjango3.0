@@ -26,7 +26,7 @@ data-img-height="1600">
 					<!-- Main Search Container -->
 					<div class="main-search-container">
 						<h2>Find Your Dream Home</h2>
-						
+
 						<!-- Main Search -->
 						<form class="main-search-form" action="{% url 'listings:search' %}" method="get" autocomplete="off">
                             <!-- Type -->
@@ -36,33 +36,32 @@ data-img-height="1600">
 								<label><input name="tab" type="radio">For Rent</label>
 								<div class="search-type-arrow"></div>
                             </div>
-                            
+
                             <!-- Box -->
 							<div class="main-search-box">
 
                                 {{ filter.form.non_field_errors }}
                                 <div class="main-search-input larger-input">
-                                    {{ filter.form.subject.errors }}
-                                    <label for="{{ filter.form.title.id_for_label }}">Search by address:</label>
+                                    {{ filter.form.title.errors }}
+                                    {{ filter.form.title.label_tag }}
                                     {{ filter.form.title }}
                                     <button class="button" type="submit">Search</button>
                                 </div>
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         {{ filter.form.city.errors }}
-										<label for="{{ filter.form.city.id_for_label }}">Search by city:</label>
+										{{ filter.form.city.label_tag }}
 										{% render_field filter.form.city class="chosen-select-no-single" %}
-                                        <!-- {{ filter.form.city }} -->
                                     </div>
                                     <div class="col-md-8 search-by-price">
                                         {{ filter.form.price.errors }}
-                                        <label for="">Search by price range:</label>
+                                        {{ filter.form.price.label_tag }}
                                         {{ filter.form.price }}
                                     </div>
                                 </div>
-                                
+
                             </div>
-                        </form>						
+                        </form>
 
 					</div>
 					<!-- Main Search Container / End -->
@@ -80,7 +79,7 @@ data-img-height="1600">
 	<div class="row">
 	
 		<div class="col-md-12">
-			<h3 class="headline margin-bottom-25 margin-top-65">Newly Added</h3>
+			<h3 class="headline margin-bottom-25 margin-top-65">Featured Properties</h3>
 		</div>
 
 		<!-- Carousel -->
@@ -97,7 +96,7 @@ data-img-height="1600">
 </div>
 
 <!-- Flip banner -->
-<a href="listings-half-map-grid-standard.html"
+<a href="#"
 class="flip-banner parallax"
 data-color="#6449E7"
 data-color-opacity="0.9">

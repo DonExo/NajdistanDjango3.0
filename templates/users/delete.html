@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% include 'includes/title.html' %}
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/shared/breadcrumbs.html' %}
+
+<div class="container padding-bottom-70">
+	<div class="row">
+
+        <!-- Widget -->
+		<div class="col-md-4">
+			<div class="sidebar left">
+				{% include 'includes/shared/profile-sidemenu.html' %}
+			</div>
+        </div>
+
+        <div class="col-md-8">
+            <h2>Delete Account</h2>
+			<p style="color: red;">
+                Are you sure you want to permanently disable your Account? <br/>
+                Once you do that, you will no longer be able to Log-in and Manage your existing properties. <br/>
+                Your account will be disabled and your properties will be deactivated. <br/>
+                If you want to` enable it - please contact us via the Contact form.
+             </p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete account" onclick="return confirm('Are you sure you want to delete your Account?');">
+                </form>
+		</div>
+    </div>
+</div>
+
+{% endblock %}

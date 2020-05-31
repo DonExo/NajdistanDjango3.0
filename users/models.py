@@ -34,6 +34,7 @@ class User(AbstractUser, BaseModel):
     username = None
     profile_image = models.ImageField(upload_to=profile_image_directory_path, blank=True, null=True)
     identifier = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    soft_delete = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return self.get_full_name()
@@ -55,21 +56,33 @@ class User(AbstractUser, BaseModel):
             return self.profile_image.url
         return self.avatar
 
+    def get_short_name(self):
+        return f"{self.first_name} {self.last_name[:1]}."
+
+    # TODO: Check queries here!
     def get_listings(self):
         return self.listings.prefetch_related('city').all()
 
     def get_absolute_url(self):
         return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
 
+    @property
+    def is_premium_user(self):
+        return self.is_staff  # TODO: To be replaced with real logic about being Premium user
+
     def get_search_profiles(self):
-        return self.searchprofiles.prefetch_related('city').all()
+        return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
 
     def has_search_profile(self):
-        #@TODO: Change is_staff with PREMIUM user
-        return not self.is_staff and self.searchprofiles.all().count() >= 1
+        return not self.is_premium_user and self.searchprofiles.all().count() >= 1
 
     def get_bookmarks(self):
         return self.bookmarks.all()
+
+    def deactivate(self):
+        self.is_active = False
+        self.soft_delete = True
+        self.save()
 
 
 class Bookmarks(models.Model):

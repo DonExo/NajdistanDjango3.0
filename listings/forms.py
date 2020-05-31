@@ -5,12 +5,13 @@ from .models import Listing
 
 
 class ListingCreateForm(forms.ModelForm):
+    title = forms.CharField(help_text='Pick a proper Title for your property listing. You can NOT edit it later!')
     images = forms.ImageField(widget = forms.ClearableFileInput(attrs={'multiple': True}))
 
     class Meta:
         model = Listing
-        fields = ('title', 'description', 'images', 'listing_type', 'home_type', 'city', 'zip_code',
-                  'quadrature', 'rooms', 'bedrooms', 'floor', 'heating', 'price')
+        exclude = ('user', 'slug', 'address', 'times_visited', 'soft_deleted', 'is_approved',
+                   'is_available', 'rejection_reason', 'available_from', 'rental_period')
         widgets = {
             'description': forms.Textarea(attrs={'rows': 2, "cols": 15})
         }
@@ -29,7 +30,7 @@ class ListingCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['city'].empty_label = _("Select a city")
+        self.fields['city'].empty_label = None
 
 
 class ListingUpdateForm(ListingCreateForm):

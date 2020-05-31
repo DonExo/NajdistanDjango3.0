@@ -12,7 +12,6 @@
 
 <div class="container padding-bottom-70">
 	<div class="row">
-
         <!-- Widget -->
 		<div class="col-md-4">
 			<div class="sidebar left">
@@ -21,7 +20,10 @@
         </div>
         
         <div class="col-md-8">
-            Some content?
+            <h2>My Profile</h2>
+
+            <i>To be added content and general info soon!</i><br/>
+
             {% with request.user as user %} <br/>
                 {{ user.get_full_name }} <br/>
                 {{ user.last_login }} <br/>
@@ -29,10 +31,6 @@
 
             {% endwith %}
 		</div>
-
-        <!--
-        <h6>Last login: {{ user.last_login|naturaltime }}</h6>        
-        <h4><a href="{% url 'accounts:profile_update' %}">Update your profile</a> </h4> -->
     </div>
 </div>
 

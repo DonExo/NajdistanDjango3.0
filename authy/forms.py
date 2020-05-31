@@ -10,7 +10,7 @@ from .captchas import CustomCaptchaV2Invisible
 class CustomLoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.EmailInput(attrs={'autofocus': True}))
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
-    # captcha = CustomCaptchaV2Invisible()
+    captcha = CustomCaptchaV2Invisible()
 
     # Workaround for the "Inactive user error" to be shown on Login
     # This is a Django bug existing for 3 years already. Bug #28645

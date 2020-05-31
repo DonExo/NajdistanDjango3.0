@@ -85,7 +85,7 @@ class PasswordResetView(auth_views.PasswordResetView):
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        # Prevent accessing the URL if user is not authenticated
+        # Prevent accessing the URL if user is authenticated
         if self.redirect_authenticated_user and self.request.user.is_authenticated:
             messages.error(request, _("You can not access this route if you are logged in!"))
             return redirect(reverse('accounts:profile'))

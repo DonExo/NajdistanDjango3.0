@@ -59,9 +59,13 @@ class User(AbstractUser, BaseModel):
     def get_short_name(self):
         return f"{self.first_name} {self.last_name[:1]}."
 
+    def has_listings(self):
+        return self.listings.exists()
+
     # TODO: Check queries here!
     def get_listings(self):
-        return self.listings.prefetch_related('city').all()
+        if self.has_listings():
+            return self.listings.prefetch_related('city').all()
 
     def get_absolute_url(self):
         return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
@@ -70,18 +74,34 @@ class User(AbstractUser, BaseModel):
     def is_premium_user(self):
         return self.is_staff  # TODO: To be replaced with real logic about being Premium user
 
-    def get_search_profiles(self):
-        return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
+    def has_search_profiles(self):
+        return self.searchprofiles.exists()
 
+    def get_search_profiles(self):
+        if self.has_search_profiles():
+            return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
+
+    # TODO: Rename this one!
     def has_search_profile(self):
         return not self.is_premium_user and self.searchprofiles.all().count() >= 1
 
     def get_bookmarks(self):
         return self.bookmarks.all()
 
-    def deactivate(self):
+    def _deactivate_account(self):
         self.is_active = False
         self.soft_delete = True
+
+    def _deactivate_listings(self):
+        self.get_listings().update(is_available=False)
+
+    def _deactivate_search_profiles(self):
+        self.get_search_profiles().update(is_active=False)
+
+    def deactivate(self):
+        self._deactivate_account()
+        self._deactivate_listings()
+        self._deactivate_search_profiles()
         self.save()
 
 

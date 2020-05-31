@@ -18,7 +18,7 @@ class CustomLoginForm(AuthenticationForm):
     def clean(self):
         self.error_messages.update(
             {'inactive_deleted': 'You have deactivated your account. '
-                                 'Click the "Forgot your password" link to activate it again,'}
+                                 'Click the "Forgot your password" link to activate it again.'}
         )
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')

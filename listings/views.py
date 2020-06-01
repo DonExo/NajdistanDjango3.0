@@ -29,7 +29,7 @@ class ListingIndexView(FilterView):
 
 
 class ListingSearchView(FilterView):
-    queryset = Listing.objects.all()  # .approved()
+    queryset = Listing.objects.active()
     template_name = 'listings/search.html'
     context_object_name = 'objects'
     paginate_by = PAGINATOR_ITEMS_PER_PAGE
@@ -90,10 +90,10 @@ class ListingDetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         listing = self.get_object()
-        listing.increment_visited_counter()  # TODO: Make this async
-        if not listing.is_available and request.user != listing.user:
-            messages.warning(self.request, "You can not access this property. The owner has marked it as un-available!")
+        if not listing.is_active() and listing.user != request.user:
+            messages.warning(self.request, "This property can not be viewed.")
             return redirect(reverse('listings:search'))
+        listing.increment_visited_counter(self.request.user)  # TODO: Make this async
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

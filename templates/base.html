@@ -29,7 +29,7 @@
                 <h4>Compare Properties <div class="csm-mobile-trigger"></div></h4>
 
                 <div class="csm-properties">
-                        {% for listing in latest_5|slice:"3" %}
+                        <!-- {% for listing in latest_5|slice:"3" %}
                             <div class="listing-item compact">
                                 <a href="{% url 'listings:detail' listing.slug %}" class="listing-img-container">
                                     <div class="remove-from-compare"><i class="fa fa-close"></i></div>
@@ -42,7 +42,7 @@
                                     <img src="{{ listing.get_cover_image.url }}" alt="{{ listing }}">
                                 </a>
                             </div>
-                        {% endfor %}
+                        {% endfor %} -->
                 </div>
 
                 <div class="csm-message">
@@ -99,6 +99,7 @@
         <script type="text/javascript" src="{% static 'assets/scripts/tooltips.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/scripts/masonry.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/scripts/custom.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/compare-properties.js' %}"></script>
         <!-- DropZone | Documentation: http://dropzonejs.com -->
         <script type="text/javascript" src="{% static 'assets/scripts/dropzone.min.js' %}"></script>
 

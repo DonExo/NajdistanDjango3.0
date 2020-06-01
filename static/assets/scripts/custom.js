@@ -519,86 +519,14 @@ $(document).ready(function(){
 	/*----------------------------------------------------*/
 	/*  Compare Menu
 	/*----------------------------------------------------*/
-    $('.csm-trigger').on('click', function(){
-		$('.compare-slide-menu').toggleClass('active');
-	});
-
-    $('.csm-mobile-trigger').on('click', function(){
-		$('.compare-slide-menu').removeClass('active');
-	});
-
-    // Tooltips
+	// Tooltips
 	$(".compare-button.with-tip, .like-icon.with-tip, .widget-button.with-tip").each(function() {
 		$(this).on('click', function(e){
-	    	e.preventDefault();
+			e.preventDefault();
 		});
 		let tipContent = $(this).attr('data-tip-content');
 		$(this).append('<div class="tip-content">'+ tipContent + '</div>');
 	});
-
-	function retrieveLocalStorageItem (lsItem) {
-		let prevLsItem = null;
-
-		if ( localStorage.length !== 0 && !!localStorage[lsItem] ){
-			prevLsItem = JSON.parse(localStorage.getItem(lsItem));
-			return prevLsItem;
-		} else {
-			return false;
-		}
-	}
-
-	function storeUniqueLocalStorageObject (props) {
-		const { currentStorage, localStorageKey, storageObjectName, item } = props;
-		const itemExists = currentStorage[storageObjectName].findIndex( slug => slug === item );
-		
-		if( itemExists < 0 ){
-			currentStorage[storageObjectName].push(item);
-			localStorage.setItem(localStorageKey, JSON.stringify(currentStorage));
-		}
-
-		return;
-	}
-
-	function removeSingleLocalStorageItem (lsItem) {
-		if( localStorage.length !== 0 && !!localStorage[lsItem] ) {
-			localStorage.removeItem(LOCALSTORAGE_KEY);
-			console.log("localStorage cleared!");
-		}
-	}
-
-	const LOCALSTORAGE_KEY = 'compareProperties';
-	const UNIQUE_STORAGE_OBJECT_NAME = 'propSlug';
-
-	// Trigger
-	$('.compare-button, .compare-widget-button').on('click', function(){
-		const prevLsProperties = retrieveLocalStorageItem(LOCALSTORAGE_KEY); // Retrieve previous properties
-		const storageProps = { // Prepare data to set new storage
-			currentStorage: { propSlug:[] },
-			localStorageKey: LOCALSTORAGE_KEY,
-			storageObjectName: UNIQUE_STORAGE_OBJECT_NAME,
-			item: $(this).data("slug")
-		}
-
-		!!prevLsProperties && (storageProps.currentStorage = prevLsProperties); // Update LocalStorage clone
-
-		// Store new property to compare
-		if ( storageProps.currentStorage.propSlug.length <= 2 ) {
-			storeUniqueLocalStorageObject(storageProps)
-		} else {
-			$('.compare-slide-menu .csm-message').addClass('active');
-		}
-
-		$('.compare-slide-menu').addClass('active');
-	});
-
-	$(".remove-from-compare").on('click', function(e){
-    	e.preventDefault();
-	});
-
-	$('.csm-buttons .reset').on('click', function(){
-		removeSingleLocalStorageItem(LOCALSTORAGE_KEY)
-	});
-
 
     /*----------------------------------------------------*/
     /*  Like Icon Trigger

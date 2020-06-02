@@ -64,8 +64,7 @@ class User(AbstractUser, BaseModel):
 
     # TODO: Check queries here!
     def get_listings(self):
-        if self.has_listings():
-            return self.listings.prefetch_related('city').all()
+        return self.listings.prefetch_related('city').all()
 
     def get_absolute_url(self):
         return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
@@ -78,8 +77,7 @@ class User(AbstractUser, BaseModel):
         return self.searchprofiles.exists()
 
     def get_search_profiles(self):
-        if self.has_search_profiles():
-            return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
+        return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
 
     # TODO: Rename this one!
     def has_search_profile(self):

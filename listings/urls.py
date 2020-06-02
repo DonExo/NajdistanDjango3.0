@@ -8,4 +8,5 @@ urlpatterns = [
     path('<slug:slug>/', views.ListingDetailView.as_view(), name='detail'),  # Remove the last slash if Django complains
     path('<slug:slug>/update/', views.ListingUpdateView.as_view(), name='update'),
     path('<slug:slug>/delete/', views.ListingDeleteView.as_view(), name='delete'),
+    path('<slug:slug>/toggle_status/', views.ListingToggleStatusView.as_view(), name='update_status'),
 ]

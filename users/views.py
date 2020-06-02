@@ -28,6 +28,7 @@ def properties(request):
         'active': user_listings.active(),
         'inactive': user_listings.inactive(),
         'pending': user_listings.pending(),
+        'has_listings': request.user.has_listings()
     }
     return render(request, 'users/properties.html', context)
 

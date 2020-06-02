@@ -24,7 +24,7 @@ class ListingIndexView(FilterView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
         # Make this FEATURED properties
-        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved() / featured()
+        context['latest_5'] = Listing.objects.active().order_by('-created_at')[:5]  # featured()
         return context
 
 
@@ -151,4 +151,15 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
             # return HttpResponseForbidden(FORBIDDEN_MESAGE)  # This raises error otherwise
         listing.delete()
         messages.info(self.request, "Deleted listing!")
+        return reverse('accounts:properties')
+
+
+class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        if listing.user != self.request.user:
+            messages.error(self.request, FORBIDDEN_MESAGE)
+            return reverse('listings:detail', kwargs={'slug': listing.slug})
+        listing.toggle_status()
+        messages.success(self.request, "Property status updated successfully!")
         return reverse('accounts:properties')

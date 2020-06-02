@@ -112,6 +112,10 @@ class Listing(BaseModel):
     def is_active(self):
         return self.is_available and self.is_approved
 
+    def toggle_status(self):
+        self.is_available = not self.is_available
+        self.save()
+
     def save(self, *args, **kwargs):
         if not self.id:
             # Let's create unique slug for the article

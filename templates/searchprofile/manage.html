@@ -34,16 +34,16 @@
                     <tr>
                         <th>Title</th>
                         <th>Frequency</th>
-                        <th>More info...</th>
+                        <th>Specs</th>
                         <th>Status</th>
                         <th><i class="fa fa-file-text"></i> Actions</th>
                     </tr>
                     {% if search_profiles %}
                         {% for sp in search_profiles %}
                             <tr>
-                                <td>{{ sp.title }}</td>
+                                <td><a href="javascript:;" class="tooltip top" title="{{ sp.title }}">{{ sp.title|truncatewords:"4" }}</a></td>
                                 <td>{{ sp.frequency.title }}</td>
-                                <td><a href="#">Tooltip alike balloon</a></td>
+                                <td><a href="javascript:;" class="tooltip top" title="{{ sp.get_specs_html }}">More info...</a></td>
 
                                 <td>
                                     <div class="input-wrapper">

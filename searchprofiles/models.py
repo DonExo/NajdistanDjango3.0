@@ -44,3 +44,15 @@ class SearchProfiles(BaseModel):
         if self.min_price and self.max_price and self.min_price > self.max_price:
             raise ValidationError({'min_price': "Minimum price can't be bigger than maximum price"})
 
+    def get_specs_html(self):
+        return """
+        Range: {}-{} €<br/>
+        City: {} <br/>
+        Listing type: {} <br/>
+        Home type: {} <br/>
+        Interior: {} <br/>
+        Rooms: {} <br/>
+        Bedrooms: {}
+        """.format(self.min_price, self.max_price, self.city,
+                   self.listing_type.title(), self.home_type.title(),
+                   self.interior.title(), self.rooms, self.bedrooms)

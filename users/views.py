@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from .forms import UserUpdateForm
 from .models import User
+from .tasks import send_deactivation_email
 
 
 @login_required
@@ -81,6 +82,7 @@ def delete_account(request):
     if request.method == 'POST':
         request.user.deactivate()
         logout(request)
+        send_deactivation_email.delay(request.user.pk)
         messages.info(request, "Your account has been disabled! We are sorry to see you go.")
         return redirect(reverse('index'))
     return render(request, 'users/delete.html')

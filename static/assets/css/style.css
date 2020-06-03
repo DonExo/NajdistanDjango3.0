@@ -3086,6 +3086,15 @@ span.like-icon {
 	transform: scale(0.8);
 }
 
+.remove-from-compare::before {
+	font-family: "FontAwesome";
+	content: "\f00d";
+	display: inline-block;
+	text-align: center;
+    line-height: 26px;
+    font-size: 1em;
+}
+
 .compact:hover .remove-from-compare { opacity: 1; transform: scale(1); }
 
 
@@ -4429,6 +4438,13 @@ ul.listing-details li {
 	font-size: 17px;
 	padding: 0;
 	margin: 2px 0 0 0;
+}
+
+/* Compact image */
+.compact .listing-img-container img {
+	object-fit: cover;
+    height: 100%;
+    position: absolute;
 }
 
 

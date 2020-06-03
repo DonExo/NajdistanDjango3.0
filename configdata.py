@@ -8,11 +8,13 @@ LISTING_TYPE = (
 )
 
 HOME_TYPE = (
+    ('', 'Select a Home Type'),
     ('apartment', 'Apartment'),
     ('house', 'House')
 )
 
 INTERIOR_CHOICES = (
+    ('', 'Select Interior'),
     ('unfurnished', 'Non furnished'),
     ('upholstered', 'Semi furnished'),
     ('furnished', 'Fully furnished'),

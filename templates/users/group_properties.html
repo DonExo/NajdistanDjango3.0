@@ -22,7 +22,7 @@
                         <a href="{% url 'listings:update' object.slug %}"><i class="fa fa-pencil"></i> Update</a>
                         <a href="{% url 'listings:update_status' object.slug %}"
                            onclick="return confirm('Are you sure you want to change this property availability status?');">
-                            <i class="fa  fa-eye-slash"></i>{{ action }}
+                            {% if action %}<i class="fa  fa-eye-slash"></i>{{ action }}{% endif %}
                         </a>
                         <a href="{% url 'listings:delete' object.slug %}" class="delete"
                            onclick="return confirm('Are you sure you want to delete this listing?');">

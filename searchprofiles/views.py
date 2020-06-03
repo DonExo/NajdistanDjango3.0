@@ -64,8 +64,9 @@ def search_profile_update(request, pk):
         form = UserSearchProfileForm(request.POST, instance=search_profile, user=request.user, update=True)
         context.update({'form': form})
         if form.is_valid():
-            form.save()
-            messages.info(request, _("Search Profile updated!"))
+            if form.has_changed():
+                form.save()
+                messages.info(request, _("Search Profile updated!"))
             return redirect(reverse('searchprofiles:manage'))
         else:
             return render(request, 'searchprofile/update.html', context)

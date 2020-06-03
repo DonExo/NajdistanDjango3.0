@@ -54,5 +54,9 @@ class SearchProfiles(BaseModel):
         Rooms: {} <br/>
         Bedrooms: {}
         """.format(self.min_price, self.max_price, self.city,
-                   self.listing_type.title(), self.home_type.title(),
-                   self.interior.title(), self.rooms, self.bedrooms)
+                   self.listing_type.title(),
+                   # These are optional, hence the check for value
+                   self.home_type.title() if self.home_type else '',
+                   self.interior.title() if self.interior else '',
+                   self.rooms if self.rooms else '',
+                   self.bedrooms if self.bedrooms else '',)

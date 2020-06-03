@@ -2,14 +2,15 @@
     "use strict";
 
     $(document).ready(function(){
-        const compareSlideMenu = $('.compare-slide-menu');
+        const compareSlideMenu = $(".compare-slide-menu");
+        const compareProperties = $(".csm-properties");
 
-        function retrieveLocalStorageItem (lsItem) {
-            let prevLsItem = null;
+        function retrieveLocalStorageItem (lsKey) {
+            let lsCollection = null;
     
-            if ( localStorage.length !== 0 && !!localStorage[lsItem] ){
-                prevLsItem = JSON.parse(localStorage.getItem(lsItem));
-                return prevLsItem;
+            if ( localStorage.length !== 0 && !!localStorage[lsKey] ){
+                lsCollection = JSON.parse(localStorage.getItem(lsKey));
+                return lsCollection;
             } else {
                 return false;
             }
@@ -48,11 +49,20 @@
             return;
         }
     
-        function removeSingleLocalStorageItem (lsItem) {
-            if( localStorage.length !== 0 && !!localStorage[lsItem] ) {
-                localStorage.removeItem(LOCALSTORAGE_KEY);
-                console.log("localStorage cleared!");
-            }
+        function removeLocalStorageItem (lsKey, lsSlug = null) {
+            if ( localStorage.length !== 0 && !!localStorage[lsKey] ) {
+                if ( !lsSlug ) {
+                    localStorage.removeItem(lsKey);
+                    console.log("localStorage cleared!");
+                } else {
+                    const oldPropCollection = retrieveLocalStorageItem(lsKey);
+                    const currentStorage = { propCollection:[] };
+                    currentStorage.propCollection = oldPropCollection.propCollection.filter(item => item.propSlug !== lsSlug);
+                    localStorage.removeItem(lsKey);
+                    localStorage.setItem(lsKey, JSON.stringify(currentStorage));
+                    console.log("removed single localStorage item!");
+                }
+            } 
         }
 
         function populateRevealCompareContainer () {
@@ -61,7 +71,7 @@
             const mappedProperties = !!propCollection && propCollection.map((item) => {
                 return (`<div class="listing-item compact">`+
                     `<a href="${item.propHref}" class="listing-img-container">`+
-                        `<div class="remove-from-compare"><i class="fa fa-close"></i></div>`+
+                        `<div class="remove-from-compare" data-prop-slug="${item.propSlug}"><i class="fa fa-close"></i></div>`+
                         `<div class="listing-badges">`+
                             `<span>${item.propType}</span>`+
                         `</div>`+
@@ -73,13 +83,12 @@
                 `</div>`);
             });
 
-            compareSlideMenu.find(".csm-properties").html(mappedProperties);
-
-            compareSlideMenu.toggleClass('active');
+            compareProperties.html(mappedProperties);
         }
 
-        function removeItemFromCompareContainer (lsItem = null) {
+        function removeItemFromCompareContainer (lsSlug) {
 
+            removeLocalStorageItem(LOCALSTORAGE_KEY, lsSlug)
         }
     
         const LOCALSTORAGE_KEY = 'compareProperties';
@@ -89,6 +98,7 @@
         /*  Compare Menu
         /*----------------------------------------------------*/
         $('.csm-trigger').on('click', function(){
+            compareSlideMenu.toggleClass('active');
             populateRevealCompareContainer();
         });
 
@@ -122,16 +132,23 @@
             }
 
             populateRevealCompareContainer();
+            !compareSlideMenu.hasClass('active') && compareSlideMenu.addClass('active');
         });
 
         // Remove property from compare list
-        $(".remove-from-compare").on('click', function(e){
+        compareProperties.on('click', $(".remove-from-compare"), function(e){
             e.preventDefault();
+            let propSlug = e.target.parentNode.getAttribute('data-prop-slug');
+            
+            if(propSlug) {
+                removeItemFromCompareContainer(propSlug);
+                $(e.target.parentNode.parentNode.parentNode).remove();
+            }
         });
 
         // Reset local storage
         $('.csm-buttons .reset').on('click', function(){
-            removeSingleLocalStorageItem(LOCALSTORAGE_KEY)
+            removeLocalStorageItem(LOCALSTORAGE_KEY)
             $('.compare-slide-menu .csm-message').removeClass('active');
         });
     });

@@ -28,29 +28,14 @@
             <div class="csm-content">
                 <h4>Compare Properties <div class="csm-mobile-trigger"></div></h4>
 
-                <div class="csm-properties">
-                        <!-- {% for listing in latest_5|slice:"3" %}
-                            <div class="listing-item compact">
-                                <a href="{% url 'listings:detail' listing.slug %}" class="listing-img-container">
-                                    <div class="remove-from-compare"><i class="fa fa-close"></i></div>
-                                    <div class="listing-badges">
-                                        <span>For Sale</span>
-                                    </div>
-                                    <div class="listing-img-content">
-                                        <span class="listing-compact-title">{{ listing.title }}<i>{{ listing.price }}</i></span>
-                                    </div>
-                                    <img src="{{ listing.get_cover_image.url }}" alt="{{ listing }}">
-                                </a>
-                            </div>
-                        {% endfor %} -->
-                </div>
+                <div class="csm-properties"></div>
 
                 <div class="csm-message">
                     <p class="notification notice">that bite is too big to swallow champ!</p>
                 </div>
 
                 <div class="csm-buttons">
-                    <a href="{% url 'listings:compare' %}?{% for obj in latest_5|slice:":3" %}c={{ obj.slug }}&{% endfor %}" class="button">Compare</a>
+                    <a href="{% url 'listings:compare' %}?" class="button btn-prop-compare">Compare</a>
                     <a href="#" class="button reset">Reset</a>
                 </div>
             </div>

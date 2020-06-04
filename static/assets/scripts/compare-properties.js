@@ -1,13 +1,14 @@
 (function($){
     "use strict";
 
-    $(document).ready(function(){
+    $(document).ready(() => {
+        const $window = $(window);
         const compareSlideMenu = $(".compare-slide-menu");
         const compareProperties = $(".csm-properties");
         const LOCALSTORAGE_KEY = 'compareProperties';
         const UNIQUE_STORAGE_OBJECT_NAME = 'propCollection';
 
-        function retrieveLocalStorageItem (lsKey) {
+        let retrieveLocalStorageItem = ( lsKey ) => {
             let lsCollection = null;
     
             if ( localStorage.length !== 0 && !!localStorage[lsKey] ){
@@ -18,19 +19,19 @@
             }
         }
 
-        function addLocalStorageItem ( lsKey, lsItem ) {
+        let addLocalStorageItem = ( lsKey, lsItem ) => {
             removeLocalStorageItem( lsKey );
             localStorage.setItem( lsKey, JSON.stringify(lsItem) );
         }
     
-        function removeLocalStorageItem ( lsKey ) {
+        let removeLocalStorageItem = ( lsKey ) => {
             if ( localStorage.length !== 0 && !!localStorage[lsKey] ) {
                 localStorage.removeItem( lsKey );
                 console.log("localStorage cleared!");
             } 
         }
 
-        function collectAndStoreProperties (props) {
+        let collectAndStoreProperties = (props) => {
             const {
                 currentStorage,
                 localStorageKey,
@@ -43,12 +44,12 @@
                 propType,
             } = props;
 
-            let newPropertyObject = {}
+            let propCollection = {}
 
             const propertyExists = currentStorage[storageObjectName].findIndex( item => item.propSlug === propSlug );
             
             if( propertyExists < 0 ){
-                newPropertyObject = {
+                propCollection = {
                     propSlug: propSlug,
                     propHref: propHref,
                     propPrice: propPrice,
@@ -56,35 +57,39 @@
                     propTitle: propTitle,
                     propType: propType
                 }
-                currentStorage[storageObjectName].push(newPropertyObject);
+                currentStorage[storageObjectName].push(propCollection);
                 addLocalStorageItem(localStorageKey, currentStorage);
+                populateCompareContainer(propCollection);
             }
     
             return;
         }
 
-        function populateCompareContainer () {
-            const { propCollection } = retrieveLocalStorageItem(LOCALSTORAGE_KEY);
-
+        let populateCompareContainer = ( propItem = null ) => {
+            const propText = {
+                propCollection: [propItem]
+            }
+            const { propCollection } = propItem ? propText : retrieveLocalStorageItem(LOCALSTORAGE_KEY);
             const mappedProperties = !!propCollection && propCollection.map((item) => {
                 return (`<div class="listing-item compact">`+
-                    `<a href="${item.propHref}" class="listing-img-container">`+
-                        `<div class="remove-from-compare" data-prop-slug="${item.propSlug}"></div>`+
-                        `<div class="listing-badges">`+
-                            `<span>${item.propType}</span>`+
-                        `</div>`+
-                        `<div class="listing-img-content">`+
-                            `<span class="listing-compact-title">${item.propTitle}<i>${item.propPrice}</i></span>`+
-                        `</div>`+
-                        `<img src="${item.propThumbnail}" alt="${item.propTitle}">`+
-                    `</a>`+
-                `</div>`);
+                        `<a href="${item.propHref}" class="listing-img-container">`+
+                            `<div class="remove-from-compare" data-prop-slug="${item.propSlug}"></div>`+
+                            `<div class="listing-badges">`+
+                                `<span>${item.propType}</span>`+
+                            `</div>`+
+                            `<div class="listing-img-content">`+
+                                `<span class="listing-compact-title">${item.propTitle}<i>${item.propPrice}</i></span>`+
+                            `</div>`+
+                            `<img src="${item.propThumbnail}" alt="${item.propTitle}">`+
+                        `</a>`+
+                    `</div>`
+                );
             });
 
-            compareProperties.html(mappedProperties);
+            compareProperties.append(mappedProperties);
         }
 
-        function removeProperty (lsSlug) {
+        let removeProperty = (lsSlug) => {
             const oldPropCollection = retrieveLocalStorageItem( LOCALSTORAGE_KEY );
             const currentStorage = { propCollection:[] };
 
@@ -92,20 +97,29 @@
             addLocalStorageItem(LOCALSTORAGE_KEY, currentStorage);
         }
 
+        let setQueryString = () => {
+            let qString = '';
+            const { propCollection } = retrieveLocalStorageItem(LOCALSTORAGE_KEY);
+            propCollection.map(( item ) => {
+                return qString += `c=${item.propSlug}&`;
+            });
+
+            return qString;
+        }
+
         /*----------------------------------------------------*/
         /*  Compare Menu
         /*----------------------------------------------------*/
-        $('.csm-trigger').on('click', function(){
+        $('.csm-trigger').on('click', () => {
             compareSlideMenu.toggleClass('active');
-            populateCompareContainer();
         });
 
-        $('.csm-mobile-trigger').on('click', function(){
+        $('.csm-mobile-trigger').on('click', () => {
             compareSlideMenu.removeClass('active');
         });
 
-        // Trigger compare button
-        $('.compare-button, .compare-widget-button').on('click', function(){
+        // Trigger set compare button
+        $('.compare-button, .compare-widget-button').on('click', () => {
             const $this = $(this);
             const prevLsProperties = retrieveLocalStorageItem(LOCALSTORAGE_KEY); // Retrieve previous properties
             const storageProps = { // Prepare data to set new storage
@@ -129,12 +143,11 @@
                 $('.compare-slide-menu .csm-message').addClass('active');
             }
 
-            populateCompareContainer();
             !compareSlideMenu.hasClass('active') && compareSlideMenu.addClass('active');
         });
 
         // Remove property from compare list
-        compareProperties.on('click', $(".remove-from-compare"), function(e){
+        compareProperties.on('click', $(".remove-from-compare"), (e) => {
             let propSlug = e.target.getAttribute('data-prop-slug');
             
             if(propSlug) {
@@ -145,10 +158,29 @@
         });
 
         // Reset local storage
-        $('.csm-buttons .reset').on('click', function(){
+        $('.csm-buttons .reset').on('click', () => {
             removeLocalStorageItem(LOCALSTORAGE_KEY)
             $(".listing-item.compact").remove();
             $('.compare-slide-menu .csm-message').removeClass('active');
+        });
+
+        // Send properties' slugs to compare page
+        $('.btn-prop-compare').on('click', (e) => {
+            e.preventDefault();
+            
+            const $this = $(this);
+            const qString = setQueryString();
+            const domain = e.target.href;
+            const fullPath = domain.concat(qString);
+
+            e.target.setAttribute("href", fullPath);
+            window.location.href = e.target.href;
+        });
+
+
+        // Document events
+        $window.on('load', ()  => {
+            populateCompareContainer();
         });
     });
 })(this.jQuery);

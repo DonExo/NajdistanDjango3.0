@@ -119,7 +119,7 @@
         });
 
         // Trigger set compare button
-        $('.compare-button, .compare-widget-button').on('click', () => {
+        $('.compare-button, .compare-widget-button').on('click', function () {
             const $this = $(this);
             const prevLsProperties = retrieveLocalStorageItem(LOCALSTORAGE_KEY); // Retrieve previous properties
             const storageProps = { // Prepare data to set new storage

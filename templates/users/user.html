@@ -6,17 +6,25 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Welcome to {{ user }}'s little private corner</h2>
-    <img src="{{ user.get_profile_image }}" alt="Profile image" width="150" height="150"/>
-    <h6>Last login: {{ user.last_login|naturaltime }}</h6>
-    Fullname: {{ user.get_full_name }} <br/>
+    {% include 'includes/shared/breadcrumbs.html' %}
 
-    <h4>Listings:</h4>
-    {% if listings %}
-        {% for object in listings %}
-            {% include 'includes/listings/card.html' %}
-        {% endfor %}
-    {% else %}
-        <p>{{ user.first_name }} doens't have any homes listed for sale :(
-    {% endif %}
+    <div class="container padding-bottom-70">
+        <div class="row">
+            <h2>Welcome to {{ publisher }}'s little private corner</h2>
+            <img src="{{ publisher.get_profile_image }}" alt="Profile image" width="150" height="150"/>
+            <h6>Last login: {{ publisher.last_login|naturaltime }}</h6>
+            Fullname: {{ publisher.get_full_name }} <br/>
+
+            <h4>Listings:</h4>
+            {% if listings %}
+                {% for object in listings %}
+                    {% include 'includes/listings/card.html' %}
+                {% endfor %}
+            {% else %}
+                <p>{{ publisher.first_name }} doens't have any homes listed for sale :(
+            {% endif %}
+         </div>
+    </div>
+
+
 {% endblock %}

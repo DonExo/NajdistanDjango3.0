@@ -17,6 +17,10 @@ def profile(request):
         'user': request.user,
         'listings': request.user.get_listings(),
         'search_profiles': request.user.get_search_profiles(),
+        'crumbs': {
+            "Home": reverse('index'),
+            "Account": '#',
+        }
     }
     return render(request, 'users/profile.html', context)
 
@@ -29,7 +33,12 @@ def properties(request):
         'active': user_listings.active(),
         'inactive': user_listings.inactive(),
         'pending': user_listings.pending(),
-        'has_listings': request.user.has_listings()
+        'has_listings': request.user.has_listings(),
+        'crumbs': {
+            "Home": reverse('index'),
+            "Account": reverse('accounts:profile'),
+            "Properties": '#',
+        }
     }
     return render(request, 'users/properties.html', context)
 
@@ -39,13 +48,25 @@ def bookmarks(request):
     context = {
         'title': 'Bookmarked Properties',
         'bookmarks': request.user.get_bookmarks(),
+        'crumbs': {
+            "Home": reverse('index'),
+            "Account": reverse('accounts:profile'),
+            "Bookmarked": '#',
+        }
     }
     return render(request, 'users/bookmarks.html', context)
 
 
 @login_required
 def update(request):
-    context = {'title': 'Update Profile'}
+    context = {'title': 'Update Profile',
+               'crumbs': {
+                   "Home": reverse('index'),
+                   "Account": reverse('accounts:profile'),
+                   "Update": "#"
+               }
+           }
+
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
         context.update({'form': form})
@@ -60,7 +81,7 @@ def update(request):
     return render(request, 'users/update.html', context)
 
 
-def user_identifier(request, identifier):
+def publisher(request, identifier):
     try:
         user = User.objects.prefetch_related('listings__city').get(identifier=identifier)
     except User.DoesNotExist:
@@ -70,19 +91,32 @@ def user_identifier(request, identifier):
         return redirect(reverse('accounts:profile'))
 
     context = {
-        'title': 'User profile',
-        'user': user,
-        'listings': user.get_listings()
+        'title': 'Publisher',
+        'publisher': user,
+        'listings': user.get_listings(),
+        'crumbs': {
+            "Home": reverse('index'),
+            "Publisher": '#',
+        }
+
     }
     return render(request, 'users/user.html', context)
 
 
 @login_required
-def delete_account(request):
+def deactivate_account(request):
+    context = {
+        'title': 'Deactivate Account',
+           'crumbs': {
+               "Home": reverse('index'),
+               "Account": reverse('accounts:profile'),
+               "Deactivate": "#"
+           }
+       }
     if request.method == 'POST':
         request.user.deactivate()
         logout(request)
         send_deactivation_email.delay(request.user.pk)
         messages.info(request, "Your account has been disabled! We are sorry to see you go.")
         return redirect(reverse('index'))
-    return render(request, 'users/delete.html')
+    return render(request, 'users/deactivate.html', context)

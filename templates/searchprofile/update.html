@@ -19,8 +19,6 @@
             </div>
 
             <div class="col-md-8 padding-bottom-70">
-                <h2>Update search profile</h2>
-
                 <form method="post" autocomplete="off">
                     {% csrf_token %}
                     {% for hidden_field in form.hidden_fields %}

@@ -5,66 +5,64 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'includes/shared/breadcrumbs.html' %}
 
-{% include 'includes/shared/breadcrumbs.html' %}
+    <div class="container padding-bottom-70">
+        <div class="row">
 
-<div class="container padding-bottom-70">
-	<div class="row">
-
-        <!-- Widget -->
-		<div class="col-md-4">
-			<div class="sidebar left">
-				{% include 'includes/shared/profile-sidemenu.html' %}
-			</div>
-        </div>
-
-        <div class="col-md-8">
-            <h2>My Properties</h2>
-			<div class="style-2">
-				<!-- Tabs Navigation -->
-				<ul class="tabs-nav">
-					<li class="active"><a href="#tab1a"><i class="sl sl-icon-check"></i> Active</a></li>
-					<li><a href="#tab2a"><i class="sl sl-icon-ban"></i> Inactive</a></li>
-					<li><a href="#tab3a"><i class="sl sl-icon-clock"></i> Pending</a></li>
-				</ul>
-
-				<!-- Tabs Content -->
-				<div class="tabs-container">
-
-					<div class="tab-content" id="tab1a">
-                        <div class="margin-bottom-20">
-                            List of your active properties. <br/>
-                            These properties have undergone a review from the Administration.<br/>
-                            They are shown in the search results and can be accessed without restrictions.
-                        </div>
-                        {% include 'users/group_properties.html' with listings=active action='Set Inactive' %}
-                    </div>
-
-					<div class="tab-content" id="tab2a">
-                        <div class="margin-bottom-20">
-                            List of your inactive properties. <br/>
-                            These are properties that you explicitely marked as <b>Inactive</b>. <br/>
-                            They can't be found while searching, nor accessed with a direct link (i.e. bookmarked). <br/>
-                            You can mark your properties as inactive when the property has been booked/sold (i.e. it's unavailable).
-                        </div>
-                        {% include 'users/group_properties.html' with listings=inactive action='Activate' %}
-                    </div>
-
-                    <div class="tab-content" id="tab3a">
-                        <div class="margin-bottom-20">
-                            List of your properties pending Admin verifications. <br/>
-                            Once approved, it will move to 'Active' tab and it will be shown in search results.<br/>
-                            If a property is rejected - it will move to 'Inactive' tab and state a reason the rejection. <br/>
-                            You can always re-submit a property for another verification. <br/>
-                            Properties are automatically submitted for verification upon their creation.
-                        </div>
-                        {% include 'users/group_properties.html' with listings=pending %}
-                    </div>
-
+            <!-- Widget -->
+            <div class="col-md-4">
+                <div class="sidebar left">
+                    {% include 'includes/shared/profile-sidemenu.html' %}
                 </div>
-			</div>
-		</div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="style-2">
+                    <!-- Tabs Navigation -->
+                    <ul class="tabs-nav">
+                        <li class="active"><a href="#tab1a"><i class="sl sl-icon-check"></i> Active</a></li>
+                        <li><a href="#tab2a"><i class="sl sl-icon-ban"></i> Inactive</a></li>
+                        <li><a href="#tab3a"><i class="sl sl-icon-clock"></i> Pending</a></li>
+                    </ul>
+
+                    <!-- Tabs Content -->
+                    <div class="tabs-container">
+
+                        <div class="tab-content" id="tab1a">
+                            <div class="margin-bottom-20">
+                                List of your active properties. <br/>
+                                These properties have undergone a review from the Administration.<br/>
+                                They are shown in the search results and can be accessed without restrictions.
+                            </div>
+                            {% include 'users/group_properties.html' with listings=active action='Set Inactive' %}
+                        </div>
+
+                        <div class="tab-content" id="tab2a">
+                            <div class="margin-bottom-20">
+                                List of your inactive properties. <br/>
+                                These are properties that you explicitely marked as <b>Inactive</b>. <br/>
+                                They can't be found while searching, nor accessed with a direct link (i.e. bookmarked). <br/>
+                                You can mark your properties as inactive when the property has been booked/sold (i.e. it's unavailable).
+                            </div>
+                            {% include 'users/group_properties.html' with listings=inactive action='Activate' %}
+                        </div>
+
+                        <div class="tab-content" id="tab3a">
+                            <div class="margin-bottom-20">
+                                List of your properties pending Admin verifications. <br/>
+                                Once approved, it will move to 'Active' tab and it will be shown in search results.<br/>
+                                If a property is rejected - it will move to 'Inactive' tab and state a reason the rejection. <br/>
+                                You can always re-submit a property for another verification. <br/>
+                                Properties are automatically submitted for verification upon their creation.
+                            </div>
+                            {% include 'users/group_properties.html' with listings=pending %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
 {% endblock %}

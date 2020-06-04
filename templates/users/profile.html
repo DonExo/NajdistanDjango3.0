@@ -7,31 +7,28 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'includes/shared/breadcrumbs.html' %}
 
-{% include 'includes/shared/breadcrumbs.html' %}
+    <div class="container padding-bottom-70">
+        <div class="row">
+            <!-- Widget -->
+            <div class="col-md-4">
+                <div class="sidebar left">
+                    {% include 'includes/shared/profile-sidemenu.html' %}
+                </div>
+            </div>
 
-<div class="container padding-bottom-70">
-	<div class="row">
-        <!-- Widget -->
-		<div class="col-md-4">
-			<div class="sidebar left">
-				{% include 'includes/shared/profile-sidemenu.html' %}
-			</div>
+            <div class="col-md-8">
+                <i>To be added content and general info soon!</i><br/>
+
+                {% with request.user as user %} <br/>
+                    {{ user.get_full_name }} <br/>
+                    {{ user.last_login }} <br/>
+                    {{ user.telephone }}
+
+                {% endwith %}
+            </div>
         </div>
-        
-        <div class="col-md-8">
-            <h2>My Profile</h2>
-
-            <i>To be added content and general info soon!</i><br/>
-
-            {% with request.user as user %} <br/>
-                {{ user.get_full_name }} <br/>
-                {{ user.last_login }} <br/>
-                {{ user.telephone }}
-
-            {% endwith %}
-		</div>
     </div>
-</div>
 
 {% endblock %}

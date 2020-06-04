@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/shared/breadcrumbs.html' %}
+    {% include '_shared/breadcrumbs.html' %}
 
     <div class="container padding-bottom-70">
         <div class="row">
@@ -13,7 +13,7 @@
             <!-- Widget -->
             <div class="col-md-4">
                 <div class="sidebar left">
-                    {% include 'includes/shared/profile-sidemenu.html' %}
+                    {% include '_shared/profile-sidemenu.html' %}
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                                 These properties have undergone a review from the Administration.<br/>
                                 They are shown in the search results and can be accessed without restrictions.
                             </div>
-                            {% include 'users/group_properties.html' with listings=active action='Set Inactive' %}
+                            {% include 'users/includes/property_group.html' with listings=active action='Set Inactive' %}
                         </div>
 
                         <div class="tab-content" id="tab2a">
@@ -45,7 +45,7 @@
                                 They can't be found while searching, nor accessed with a direct link (i.e. bookmarked). <br/>
                                 You can mark your properties as inactive when the property has been booked/sold (i.e. it's unavailable).
                             </div>
-                            {% include 'users/group_properties.html' with listings=inactive action='Activate' %}
+                            {% include 'users/includes/property_group.html' with listings=inactive action='Activate' %}
                         </div>
 
                         <div class="tab-content" id="tab3a">
@@ -56,7 +56,7 @@
                                 You can always re-submit a property for another verification. <br/>
                                 Properties are automatically submitted for verification upon their creation.
                             </div>
-                            {% include 'users/group_properties.html' with listings=pending %}
+                            {% include 'users/includes/property_group.html' with listings=pending %}
                         </div>
 
                     </div>

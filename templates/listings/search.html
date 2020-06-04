@@ -3,11 +3,11 @@
 {% load widget_tweaks %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/shared/breadcrumbs.html' %}
+    {% include '_shared/breadcrumbs.html' %}
 
     <!-- Titlebar
     ================================================== -->
@@ -77,13 +77,13 @@
                 <div class="listings-container list-layout">
                     {% if object_list %}
                         {% for object in object_list %}
-                            {% include 'includes/listings/card.html' %}
+                            {% include 'listings/includes/horizontal_card.html' %}
                         {% endfor %}
                     {% else %}
                         <p>The given search criteria did not yield any results.</p>
                     {% endif %}
                 </div>
-                {% include 'includes/listings/pagination.html' %}
+                {% include 'listings/includes/pagination.html' %}
 
             </div>
 

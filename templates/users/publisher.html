@@ -2,11 +2,11 @@
 {% load humanize %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/shared/breadcrumbs.html' %}
+    {% include '_shared/breadcrumbs.html' %}
 
     <div class="container padding-bottom-70">
         <div class="row">
@@ -18,7 +18,7 @@
             <h4>Listings:</h4>
             {% if listings %}
                 {% for object in listings %}
-                    {% include 'includes/listings/card.html' %}
+                    {% include 'listings/includes/horizontal_card.html' %}
                 {% endfor %}
             {% else %}
                 <p>{{ publisher.first_name }} doens't have any homes listed for sale :(

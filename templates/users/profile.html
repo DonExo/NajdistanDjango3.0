@@ -3,18 +3,18 @@
 {% load humanize %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/shared/breadcrumbs.html' %}
+    {% include '_shared/breadcrumbs.html' %}
 
     <div class="container padding-bottom-70">
         <div class="row">
             <!-- Widget -->
             <div class="col-md-4">
                 <div class="sidebar left">
-                    {% include 'includes/shared/profile-sidemenu.html' %}
+                    {% include '_shared/profile-sidemenu.html' %}
                 </div>
             </div>
 

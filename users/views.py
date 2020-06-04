@@ -81,8 +81,8 @@ def user_identifier(request, identifier):
 def delete_account(request):
     if request.method == 'POST':
         request.user.deactivate()
-        logout(request)
         send_deactivation_email.delay(request.user.pk)
+        logout(request)
         messages.info(request, "Your account has been disabled! We are sorry to see you go.")
         return redirect(reverse('index'))
     return render(request, 'users/delete.html')

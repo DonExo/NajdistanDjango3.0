@@ -71,7 +71,7 @@
             }
             const { propCollection } = propItem ? propText : retrieveLocalStorageItem(LOCALSTORAGE_KEY);
             const mappedProperties = !!propCollection && propCollection.map((item) => {
-                return (`<div class="listing-item compact">`+
+                return (`<div class="listing-item compact inactive">`+
                         `<a href="${item.propHref}" class="listing-img-container">`+
                             `<div class="remove-from-compare" data-prop-slug="${item.propSlug}"></div>`+
                             `<div class="listing-badges">`+
@@ -87,6 +87,9 @@
             });
 
             compareProperties.append(mappedProperties);
+
+            propItem && 
+                compareProperties.children(".listing-item:last-child").animate({ marginLeft: '0' }, 200);
         }
 
         let removeProperty = (lsSlug) => {
@@ -112,6 +115,7 @@
         /*----------------------------------------------------*/
         $('.csm-trigger').on('click', () => {
             compareSlideMenu.toggleClass('active');
+            compareProperties.children(".listing-item.compact").removeClass("inactive");
         });
 
         $('.csm-mobile-trigger').on('click', () => {
@@ -134,6 +138,27 @@
                 propType: $this.parent().prev(".listing-badges").children(".listing-type").text()
             }
 
+            // Mozes so ova da rabotis na tvoja strana
+            
+            // $.ajax({
+            //     type: "POST",
+            //     url: `/listings/compare/get`,
+            //     async: true,
+            //     dataType: "json",
+            //     data: {"propSlug": $this.data("slug")},
+            //     success: function(response){
+            //         console.log(response);
+            //     },
+            //     error: function(xhr, status, err) {
+            //         console.log(err);
+            //     },
+            //     complete: function(){
+            //         console.log('data pull complete');
+            //     }
+            // });
+
+            compareProperties.children(".listing-item.compact").removeClass("inactive");
+            
             !!prevLsProperties && (storageProps.currentStorage = prevLsProperties); // Update LocalStorage clone
 
             // Store new property to compare
@@ -144,6 +169,7 @@
             }
 
             !compareSlideMenu.hasClass('active') && compareSlideMenu.addClass('active');
+            
         });
 
         // Remove property from compare list
@@ -153,22 +179,26 @@
             if(propSlug) {
                 e.preventDefault();
                 removeProperty(propSlug);
-                $(e.target.parentNode.parentNode).remove();
+
+                $(e.target.parentNode.parentNode).animate({ marginLeft: '120%' }, 200, function(){
+                    $(e.target.parentNode.parentNode).remove();
+                });
             }
         });
 
         // Reset local storage
         $('.csm-buttons .reset').on('click', () => {
-            removeLocalStorageItem(LOCALSTORAGE_KEY)
-            $(".listing-item.compact").remove();
+            removeLocalStorageItem(LOCALSTORAGE_KEY);
+            $(".listing-item.compact").animate({ marginLeft: '120%' }, 200, function(){
+                $(".listing-item.compact").remove();
+            });
+            
             $('.compare-slide-menu .csm-message').removeClass('active');
         });
 
         // Send properties' slugs to compare page
         $('.btn-prop-compare').on('click', (e) => {
             e.preventDefault();
-            
-            const $this = $(this);
             const qString = setQueryString();
             const domain = e.target.href;
             const fullPath = domain.concat(qString);
@@ -176,7 +206,6 @@
             e.target.setAttribute("href", fullPath);
             window.location.href = e.target.href;
         });
-
 
         // Document events
         $window.on('load', ()  => {

@@ -2719,6 +2719,7 @@ input.second-slider-value {
 
 .csm-content {
 	overflow-y: scroll;
+	overflow-x: hidden;
 	height: 100%;
 	width: 340px;
 }
@@ -2955,6 +2956,11 @@ span.like-icon {
 .csm-content .listing-item.compact {
 	padding: 0;
 	height: 180px;
+	margin-left: 0;
+}
+
+.csm-content .listing-item.compact.inactive {
+	margin-left: 120%;
 }
 
 .csm-content .compact .listing-img-content .listing-compact-title {

@@ -30,7 +30,7 @@
                 "Instant" notifications are only available for <a href="#">Premium</a> users.
                 </p>
 
-                <table class="basic-table responsive-table padding-top-20">
+                <table class="basic-table responsive-table padding-top-20 search-profile">
                     <tr>
                         <th>Title</th>
                         <th>Frequency</th>
@@ -49,8 +49,8 @@
                                     <div class="input-wrapper">
 
                                         <div class="input-checkbox-switch">
-                                            <input type="checkbox" name="{{ sp.pk }}" id="{{ sp.title }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
-                                            <label for="{{ sp.title }}"></label>
+                                            <input type="checkbox" name="{{ sp.pk }}" id="spSwitch{{ sp.pk }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
+                                            <label for="spSwitch{{ sp.pk }}"></label>
                                         </div>
 
 

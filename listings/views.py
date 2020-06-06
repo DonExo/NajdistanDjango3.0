@@ -24,12 +24,12 @@ class ListingIndexView(FilterView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
         # Make this FEATURED properties
-        context['latest_5'] = Listing.objects.all().order_by('-created_at')[:5]  # .approved() / featured()
+        context['latest_5'] = Listing.objects.active().order_by('-created_at')[:5]  # featured()
         return context
 
 
 class ListingSearchView(FilterView):
-    queryset = Listing.objects.all()  # .approved()
+    queryset = Listing.objects.active()
     template_name = 'listings/search.html'
     context_object_name = 'objects'
     paginate_by = PAGINATOR_ITEMS_PER_PAGE
@@ -90,15 +90,15 @@ class ListingDetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         listing = self.get_object()
-        listing.increment_visited_counter()  # TODO: Make this async
-        if not listing.is_available and request.user != listing.user:
-            messages.warning(self.request, "You can not access this property. The owner has marked it as un-available!")
+        if not listing.is_active() and listing.user != request.user:
+            messages.warning(self.request, "This property can not be viewed.")
             return redirect(reverse('listings:search'))
+        listing.increment_visited_counter(self.request.user)  # TODO: Make this async
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Listing details'
+        context['title'] = self.get_object().title
         context['prev_page'] = self.request.META.get('HTTP_REFERER', None)
         return context
 
@@ -163,3 +163,14 @@ class ListingCompareView(generic.ListView):
             listings = Listing.objects.filter(slug__in=property_slugs)
             return listings
         return None
+
+
+class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        if listing.user != self.request.user:
+            messages.error(self.request, FORBIDDEN_MESAGE)
+            return reverse('listings:detail', kwargs={'slug': listing.slug})
+        listing.toggle_status()
+        messages.success(self.request, "Property status updated successfully!")
+        return reverse('accounts:properties')

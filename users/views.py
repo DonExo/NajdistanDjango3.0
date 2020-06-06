@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from .forms import UserUpdateForm
 from .models import User
+from .tasks import send_deactivation_email
 
 
 @login_required
@@ -28,6 +29,7 @@ def properties(request):
         'active': user_listings.active(),
         'inactive': user_listings.inactive(),
         'pending': user_listings.pending(),
+        'has_listings': request.user.has_listings()
     }
     return render(request, 'users/properties.html', context)
 
@@ -79,6 +81,7 @@ def user_identifier(request, identifier):
 def delete_account(request):
     if request.method == 'POST':
         request.user.deactivate()
+        send_deactivation_email.delay(request.user.pk)
         logout(request)
         messages.info(request, "Your account has been disabled! We are sorry to see you go.")
         return redirect(reverse('index'))

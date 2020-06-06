@@ -37,7 +37,7 @@
                             These properties have undergone a review from the Administration.<br/>
                             They are shown in the search results and can be accessed without restrictions.
                         </div>
-                        {% include 'users/group_properties.html' with listings=active %}
+                        {% include 'users/group_properties.html' with listings=active action='Set Inactive' %}
                     </div>
 
 					<div class="tab-content" id="tab2a">
@@ -47,14 +47,14 @@
                             They can't be found while searching, nor accessed with a direct link (i.e. bookmarked). <br/>
                             You can mark your properties as inactive when the property has been booked/sold (i.e. it's unavailable).
                         </div>
-                        {% include 'users/group_properties.html' with listings=inactive %}
+                        {% include 'users/group_properties.html' with listings=inactive action='Activate' %}
                     </div>
 
                     <div class="tab-content" id="tab3a">
                         <div class="margin-bottom-20">
-                            These properties are pending Admin verifications. <br/>
-                            Once that is done, it will move to appropriate category.<br/>
-                            If a property is rejected - it will state a reason for it. <br/>
+                            List of your properties pending Admin verifications. <br/>
+                            Once approved, it will move to 'Active' tab and it will be shown in search results.<br/>
+                            If a property is rejected - it will move to 'Inactive' tab and state a reason the rejection. <br/>
                             You can always re-submit a property for another verification. <br/>
                             Properties are automatically submitted for verification upon their creation.
                         </div>

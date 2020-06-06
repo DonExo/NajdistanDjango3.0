@@ -47,24 +47,18 @@
 
                                 <td>
                                     <div class="input-wrapper">
-
                                         <div class="input-checkbox-switch">
                                             <input type="checkbox" name="{{ sp.pk }}" id="spSwitch{{ sp.pk }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
                                             <label for="spSwitch{{ sp.pk }}"></label>
                                         </div>
-
-
                                     </div>
                                 </td>
-{#                              <td>{{ sp.is_active|yesno:"Active,Disabled" }}</td>#}
-
                                 <td class="action">
                                     <a href="{% url 'searchprofiles:update' sp.pk %}"><i class="fa fa-pencil"></i> Update</a> <br/>
                                     <a href="{% url 'searchprofiles:delete' sp.pk %}" class="delete" onclick="return confirm('Are you sure you want to delete this listing?');">
                                         <i class="fa fa-remove"></i> Delete</a>
                                 </td>
                             </tr>
-
                         {% endfor %}
                     {% else %}
                         <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>

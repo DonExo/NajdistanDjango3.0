@@ -39,7 +39,6 @@ data-img-height="1600">
 
                             <!-- Box -->
 							<div class="main-search-box">
-
                                 {{ filter.form.non_field_errors }}
                                 <div class="main-search-input larger-input">
                                     {{ filter.form.title.errors }}
@@ -57,6 +56,13 @@ data-img-height="1600">
                                         {{ filter.form.price.errors }}
                                         {{ filter.form.price.label_tag }}
                                         {{ filter.form.price }}
+                                    </div>
+                                </div>
+
+                                <!-- The hidden input for Listing Type -->
+                                <div class="row with-forms hidden">
+                                    <div class="col-md-4">
+										{% render_field filter.form.type  %}
                                     </div>
                                 </div>
 
@@ -85,6 +91,7 @@ data-img-height="1600">
 		<!-- Carousel -->
 		<div class="col-md-12">
 			<div class="carousel">
+            <!-- @ TODO: Change to featured -->
                 {% for listing in latest_5 %}
                     {% include 'listings/includes/vertical_card.html' %}
                 {% endfor %}

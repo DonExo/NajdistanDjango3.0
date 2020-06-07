@@ -54,19 +54,25 @@
         <li class="sub-nav-title">Settings</li>
         <li>
             <a href="{% url 'accounts:profile_update' %}"
-                {% url 'accounts:profile_update' as current_url%}
+                {% url 'accounts:profile_update' as current_url %}
                 {% if request.path == current_url %} class="current"{% endif %}>
                 <i class="sl sl-icon-user-following"></i> Update Profile
             </a>
         </li>
         <li>
             <a href="{% url 'authy:password_change' %}"
-                {% url 'authy:password_change' as current_url%}
+                {% url 'authy:password_change' as current_url %}
                 {% if request.path == current_url %} class="current"{% endif %}>
                 <i class="sl sl-icon-lock"></i> Change Password
             </a>
         </li>
-        <li><a href="{% url 'users:delete' %}"><i class="sl sl-icon-trash"></i> Deactivate Account</a></li>
+        <li>
+            <a href="{% url 'accounts:deactivate' %}"
+            {% url 'accounts:deactivate' as current_url %}
+            {% if request.path == current_url %} class="current"{% endif %}>
+            <i class="sl sl-icon-trash"></i> Deactivate Account
+            </a>
+        </li>
         <li><a href="{% url 'authy:logout' %}"><i class="sl sl-icon-logout"></i> Log Out</a></li>
     </ul>
 

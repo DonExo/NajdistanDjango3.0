@@ -16,14 +16,27 @@ def search_profile_manage(request):
     context = {'title': "Manage Search Profiles"}
     context.update({'reached_max_sp': request.user.has_search_profile(),
                     'search_profiles': request.user.get_search_profiles(),
-                    'active_sp': request.user.get_search_profiles().count_active()
+                    'active_sp': request.user.get_search_profiles().count_active(),
+                    'crumbs': {
+                        "Home": reverse('index'),
+                        "Account": reverse('accounts:profile'),
+                        "Search Profile": '#',
+                    }
                     })
     return render(request, 'searchprofile/manage.html', context)
 
 
 @login_required()
 def search_profile_create(request):
-    context = {'title': "Create Search Profile"}
+    context = {
+        'title': "Create Search Profile",
+        'crumbs': {
+           "Home": reverse('index'),
+           "Account": reverse('accounts:profile'),
+           "Search Profile": reverse('searchprofiles:manage'),
+           "Create": "#"
+        }
+    }
 
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, user=request.user)
@@ -59,7 +72,15 @@ def search_profile_update(request, pk):
     if search_profile.user != request.user:
         return HttpResponseForbidden(_(FORBIDDEN_MESAGE))
 
-    context = {'title': _('Update Search Profile')}
+    context = {
+        'title': _('Update Search Profile'),
+        'crumbs': {
+            "Home": reverse('index'),
+            "Account": reverse('accounts:profile'),
+            "Search Profile": reverse('searchprofiles:manage'),
+            "Update": "#"
+        }
+    }
 
     if request.method == 'POST':
         form = UserSearchProfileForm(request.POST, instance=search_profile, user=request.user, update=True)

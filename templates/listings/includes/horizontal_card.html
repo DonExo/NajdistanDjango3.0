@@ -45,7 +45,7 @@
         </ul>
 
         <div class="listing-footer">
-            <a href="{% url 'accounts:user_identifier' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
+            <a href="{% url 'accounts:publisher' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
             <span><i class="fa fa-calendar-o"></i>{{ object.created_at|naturalday }}</span>
         </div>
 

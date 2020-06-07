@@ -2,12 +2,16 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.decorators import method_decorator
 from django.views import generic
+from django.http import JsonResponse
 from django_filters.views import FilterView
 
+from .decorators import ajax_only
 from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
@@ -154,6 +158,17 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         return reverse('accounts:properties')
 
 
+class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        if listing.user != self.request.user:
+            messages.error(self.request, FORBIDDEN_MESAGE)
+            return reverse('listings:detail', kwargs={'slug': listing.slug})
+        listing.toggle_status()
+        messages.success(self.request, "Property status updated successfully!")
+        return reverse('accounts:properties')
+
+
 class ListingCompareView(generic.ListView):
     template_name = 'listings/compare.html'
 
@@ -165,12 +180,32 @@ class ListingCompareView(generic.ListView):
         return None
 
 
-class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
-        if listing.user != self.request.user:
-            messages.error(self.request, FORBIDDEN_MESAGE)
-            return reverse('listings:detail', kwargs={'slug': listing.slug})
-        listing.toggle_status()
-        messages.success(self.request, "Property status updated successfully!")
-        return reverse('accounts:properties')
+class ListingJsonData(generic.View):
+    """
+    A view that returns needed data to the frontend with the neeeded data for the CompareView
+    """
+
+    @csrf_exempt
+    @method_decorator(ajax_only)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        slug_key = request.POST.get('propSlug', None)
+        if not slug_key:
+            return JsonResponse({'error': 'Requested key not found in POST.'}, status=403)
+        try:
+            listing = Listing.objects.get(slug=slug_key)
+        except Listing.DoesNotExist:
+            return JsonResponse({'error': 'Requested Listing not found.'}, status=404)
+
+        json_data = {
+            "propSlug": slug_key,
+            'propTitle': listing.title,
+            'propPrice': listing.price,
+            'propHref': listing.get_absolute_url(),
+            'propCoverImage': listing.get_cover_image().url,
+            'propListingType': listing.listing_type,
+            'propHomeType': listing.home_type
+        }
+        return JsonResponse({'data': json_data}, status=200)

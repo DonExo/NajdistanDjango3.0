@@ -5,36 +5,35 @@
         const $window = $(window);
         const compareSlideMenu = $(".compare-slide-menu");
         const compareProperties = $(".csm-properties");
-        const LOCALSTORAGE_KEY = 'compareProperties';
+        const SESSIONSTORAGE_KEY = 'compareProperties';
         const UNIQUE_STORAGE_OBJECT_NAME = 'propCollection';
 
-        let retrieveLocalStorageItem = ( lsKey ) => {
+        let retrieveSessionStorageItem = ( lsKey ) => {
             let lsCollection = null;
     
-            if ( localStorage.length !== 0 && !!localStorage[lsKey] ){
-                lsCollection = JSON.parse(localStorage.getItem(lsKey));
+            if ( sessionStorage.length !== 0 && !!sessionStorage[lsKey] ){
+                lsCollection = JSON.parse(sessionStorage.getItem(lsKey));
                 return lsCollection;
             } else {
                 return false;
             }
         }
 
-        let addLocalStorageItem = ( lsKey, lsItem ) => {
-            removeLocalStorageItem( lsKey );
-            localStorage.setItem( lsKey, JSON.stringify(lsItem) );
+        let addSessionStorageItem = ( lsKey, lsItem ) => {
+            removeSessionStorageItem( lsKey );
+            sessionStorage.setItem( lsKey, JSON.stringify(lsItem) );
         }
     
-        let removeLocalStorageItem = ( lsKey ) => {
-            if ( localStorage.length !== 0 && !!localStorage[lsKey] ) {
-                localStorage.removeItem( lsKey );
-                console.log("localStorage cleared!");
+        let removeSessionStorageItem = ( lsKey ) => {
+            if ( sessionStorage.length !== 0 && !!sessionStorage[lsKey] ) {
+                sessionStorage.removeItem( lsKey );
             } 
         }
 
         let collectAndStoreProperties = (props) => {
             const {
                 currentStorage,
-                localStorageKey,
+                sessionStorageKey,
                 storageObjectName,
                 propSlug,
                 propHref,
@@ -58,7 +57,7 @@
                     propListingType: propListingType
                 }
                 currentStorage[storageObjectName].push(propCollection);
-                addLocalStorageItem(localStorageKey, currentStorage);
+                addSessionStorageItem(sessionStorageKey, currentStorage);
                 populateCompareContainer(propCollection);
                 return true;
             } else {
@@ -70,7 +69,7 @@
             const propText = {
                 propCollection: [propItem]
             }
-            const { propCollection } = propItem ? propText : retrieveLocalStorageItem(LOCALSTORAGE_KEY);
+            const { propCollection } = propItem ? propText : retrieveSessionStorageItem(SESSIONSTORAGE_KEY);
             const mappedProperties = !!propCollection && propCollection.map((item) => {
                 return (`<div class="listing-item compact inactive">`+
                         `<a href="${item.propHref}" class="listing-img-container">`+
@@ -94,27 +93,21 @@
         }
 
         let removeProperty = (lsSlug) => {
-            const oldPropCollection = retrieveLocalStorageItem( LOCALSTORAGE_KEY );
+            const oldPropCollection = retrieveSessionStorageItem( SESSIONSTORAGE_KEY );
             const currentStorage = { propCollection:[] };
 
             currentStorage.propCollection = oldPropCollection.propCollection.filter( item => item.propSlug !== lsSlug );
-            addLocalStorageItem(LOCALSTORAGE_KEY, currentStorage);
+            addSessionStorageItem(SESSIONSTORAGE_KEY, currentStorage);
         }
 
         let setQueryString = () => {
             let qString = '';
-            const { propCollection } = retrieveLocalStorageItem(LOCALSTORAGE_KEY);
+            const { propCollection } = retrieveSessionStorageItem(SESSIONSTORAGE_KEY);
             propCollection.map(( item ) => {
                 return qString += `c=${item.propSlug}&`;
             });
 
             return qString;
-        }
-
-        function objectsHaveSameKeys(...objects) {
-            const allKeys = objects.reduce((keys, object) => keys.concat(Object.keys(object)), []);
-            const union = new Set(allKeys);
-            return objects.every(object => union.size === Object.keys(object).length);
         }
 
         /*----------------------------------------------------*/
@@ -132,16 +125,16 @@
         // Trigger set compare button
         $('.compare-button, .compare-widget-button').on('click', function () {
             const $this = $(this);
-            const prevLsProperties = retrieveLocalStorageItem(LOCALSTORAGE_KEY); // Retrieve previous properties
+            const prevLsProperties = retrieveSessionStorageItem(SESSIONSTORAGE_KEY); // Retrieve previous properties
             const storageProps = { // Prepare data to set new storage
                 currentStorage: { propCollection:[] },
-                localStorageKey: LOCALSTORAGE_KEY,
+                sessionStorageKey: SESSIONSTORAGE_KEY,
                 storageObjectName: UNIQUE_STORAGE_OBJECT_NAME,
             }
 
             compareProperties.children(".listing-item.compact").removeClass("inactive");
             
-            !!prevLsProperties && (storageProps.currentStorage = prevLsProperties); // Update LocalStorage clone
+            !!prevLsProperties && (storageProps.currentStorage = prevLsProperties); // Update sessionStorage clone
 
             // Store new property to compare
             if ( storageProps.currentStorage.propCollection.length <= 2 ) {
@@ -199,7 +192,7 @@
 
         // Reset local storage
         $('.csm-buttons .reset').on('click', () => {
-            removeLocalStorageItem(LOCALSTORAGE_KEY);
+            removeSessionStorageItem(SESSIONSTORAGE_KEY);
             $(".listing-item.compact").animate({ marginLeft: '120%' }, 200, function(){
                 $(".listing-item.compact").remove();
             });
@@ -217,8 +210,8 @@
         });
 
         // Document events
-        $window.on('load', ()  => {
+        //$window.on('load', ()  => {
             populateCompareContainer();
-        });
+        //});
     });
 })(this.jQuery);

@@ -30,10 +30,6 @@
 
                 <div class="csm-properties"></div>
 
-                <div class="csm-message">
-                    <p class="notification notice">that bite is too big to swallow champ!</p>
-                </div>
-
                 <div class="csm-buttons">
                     <a href="{% url 'listings:compare' %}?" class="button btn-prop-compare">Compare</a>
                     <a href="#" class="button reset">Reset</a>
@@ -48,16 +44,18 @@
         {% include 'includes/shared/header.html' %}
         <!-- Header Container / End -->
 
-        {% if messages %}
-            <div class="toast">
-                {% for message in messages %}
-                    <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
-                        <p>{{ message }}</p>
-                        <div class="toast-message-close"><i class="sl sl-icon-close"></i></div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+        <div class="toast-container">
+            {% if messages %}
+                <div class="toast toast-active">
+                    {% for message in messages %}
+                        <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
+                            <p>{{ message }}</p>
+                            <div class="toast-message-close"><i class="sl sl-icon-close"></i></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
         {% block content %}
         {% endblock %}

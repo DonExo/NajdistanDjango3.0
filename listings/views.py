@@ -208,4 +208,4 @@ class ListingJsonData(generic.View):
             'propListingType': listing.listing_type,
             'propHomeType': listing.home_type
         }
-        return JsonResponse({'data': json_data}, status=200)
+        return JsonResponse({'propData': json_data}, status=200)

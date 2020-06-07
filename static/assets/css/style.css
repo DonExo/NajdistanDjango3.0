@@ -2724,16 +2724,6 @@ input.second-slider-value {
 	width: 340px;
 }
 
-.csm-message {
-	display: none;
-	padding: 30px;
-    margin-top: 20px;
-}
-
-.csm-message.active {
-	display: block;
-}
-
 .compare-slide-menu.active { right: 0; }
 
 /* Compare Icon */
@@ -6392,16 +6382,23 @@ body .comment-content p { padding: 5px 0; }
 /* ---------------------------------- */
 /* Toast Messages
 ------------------------------------- */
-.toast {
+
+.toast-container {
 	position: fixed;
-    right: 70px;
-	top: 110px;
-	transition: right, 0.3s;
+    right: 0;
+    top: 100px;
     z-index: 9999;
 }
 
-.toast.toast-hidden {
+.toast {
+	position: relative;
 	right: -100%;
+    transition: right, 0.3s;
+    margin-bottom: 10px;
+}
+
+.toast.toast-active {
+	right: 70px;
 }
 
 .toast-message {
@@ -6448,6 +6445,7 @@ body .comment-content p { padding: 5px 0; }
 
 .toast-message-close i {
 	line-height: 26px;
+	padding: 6px 0;
 	transition: font-size, 0.2s;
 }
 

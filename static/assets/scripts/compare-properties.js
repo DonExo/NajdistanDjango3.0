@@ -39,9 +39,9 @@
                 propSlug,
                 propHref,
                 propPrice,
-                propThumbnail,
+                propCoverImage,
                 propTitle,
-                propType,
+                propListingType,
             } = props;
 
             let propCollection = {}
@@ -53,16 +53,17 @@
                     propSlug: propSlug,
                     propHref: propHref,
                     propPrice: propPrice,
-                    propThumbnail: propThumbnail,
+                    propCoverImage: propCoverImage,
                     propTitle: propTitle,
-                    propType: propType
+                    propListingType: propListingType
                 }
                 currentStorage[storageObjectName].push(propCollection);
                 addLocalStorageItem(localStorageKey, currentStorage);
                 populateCompareContainer(propCollection);
+                return true;
+            } else {
+                return false;
             }
-    
-            return;
         }
 
         let populateCompareContainer = ( propItem = null ) => {
@@ -75,12 +76,12 @@
                         `<a href="${item.propHref}" class="listing-img-container">`+
                             `<div class="remove-from-compare" data-prop-slug="${item.propSlug}"></div>`+
                             `<div class="listing-badges">`+
-                                `<span>${item.propType}</span>`+
+                                `<span>${item.propListingType}</span>`+
                             `</div>`+
                             `<div class="listing-img-content">`+
                                 `<span class="listing-compact-title">${item.propTitle}<i>${item.propPrice}</i></span>`+
                             `</div>`+
-                            `<img src="${item.propThumbnail}" alt="${item.propTitle}">`+
+                            `<img src="${item.propCoverImage}" alt="${item.propTitle}">`+
                         `</a>`+
                     `</div>`
                 );
@@ -110,6 +111,12 @@
             return qString;
         }
 
+        function objectsHaveSameKeys(...objects) {
+            const allKeys = objects.reduce((keys, object) => keys.concat(Object.keys(object)), []);
+            const union = new Set(allKeys);
+            return objects.every(object => union.size === Object.keys(object).length);
+        }
+
         /*----------------------------------------------------*/
         /*  Compare Menu
         /*----------------------------------------------------*/
@@ -126,34 +133,11 @@
         $('.compare-button, .compare-widget-button').on('click', function () {
             const $this = $(this);
             const prevLsProperties = retrieveLocalStorageItem(LOCALSTORAGE_KEY); // Retrieve previous properties
-            // const storageProps = { // Prepare data to set new storage
-            //     currentStorage: { propCollection:[] },
-            //     localStorageKey: LOCALSTORAGE_KEY,
-            //     storageObjectName: UNIQUE_STORAGE_OBJECT_NAME,
-            //     propSlug: $this.data("slug"),
-            //     propHref: $this.parent().parent().attr("href"),
-            //     propPrice: $this.parent().children(".listing-price").text(),
-            //     propThumbnail: $this.parent().next(".listing-carousel").find(".owl-item > div > img")[0].getAttribute("src"),
-            //     propTitle: $this.parent().parent().next(".listing-content").find(".listing-title h4 a").text(),
-            //     propType: $this.parent().prev(".listing-badges").children(".listing-type").text()
-            // }
-
-            $.ajax({
-                type: "POST",
-                url: `/listings/get_json_data/`,
-                async: true,
-                dataType: "json",
-                data: {"propSlug": $this.data("slug")},
-                success: function(response){
-                    console.log(response);
-                },
-                error: function(xhr, status, err) {
-                    console.log(err);
-                },
-                complete: function(){
-                    console.log('data pull complete');
-                }
-            });
+            const storageProps = { // Prepare data to set new storage
+                currentStorage: { propCollection:[] },
+                localStorageKey: LOCALSTORAGE_KEY,
+                storageObjectName: UNIQUE_STORAGE_OBJECT_NAME,
+            }
 
             compareProperties.children(".listing-item.compact").removeClass("inactive");
             
@@ -161,13 +145,42 @@
 
             // Store new property to compare
             if ( storageProps.currentStorage.propCollection.length <= 2 ) {
-                collectAndStoreProperties(storageProps)
+                $.ajax({
+                    type: "POST",
+                    url: `/listings/get_json_data/`,
+                    async: true,
+                    dataType: "json",
+                    data: {"propSlug": $this.data("slug")},
+                    success: function(res){
+                        const { propData } = res;
+                        const storagePropsWithData = {...storageProps, ...propData}
+
+                        if (collectAndStoreProperties(storagePropsWithData) === false) {
+                            const toastOptions = {
+                                toastType: "warning",
+                                toastMsg: "Property is already being comapred!"
+                            }
+
+                            addToast(toastOptions); // toast function from global script (currently najdistan-script.js)
+                        }
+                    },  
+                    error: function(xhr, status, err) {
+                        console.log(xhr, err);
+                    },
+                    // complete: function(){
+                    //     console.log('data pull complete');
+                    // }
+                });
             } else {
-                $('.compare-slide-menu .csm-message').addClass('active');
+                const toastOptions = {
+                    toastType: "error",
+                    toastMsg: "Max capacity reached for compare properties!"
+                }
+
+                addToast(toastOptions); // toast function from global script (currently najdistan-script.js)
             }
 
             !compareSlideMenu.hasClass('active') && compareSlideMenu.addClass('active');
-            
         });
 
         // Remove property from compare list
@@ -190,8 +203,6 @@
             $(".listing-item.compact").animate({ marginLeft: '120%' }, 200, function(){
                 $(".listing-item.compact").remove();
             });
-            
-            $('.compare-slide-menu .csm-message').removeClass('active');
         });
 
         // Send properties' slugs to compare page

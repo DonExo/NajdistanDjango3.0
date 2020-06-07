@@ -36,44 +36,94 @@ function generateListingData() {
 }
 
 
+///////////////////////////// STICKY MENU (WIP) ///////////////////////////
 function stickySideMenuInit($footer) {
-  let sideMenu = $(".my-account-nav-container"),
-      top_of_element = $footer.offset().top + 120,
-      bottom_of_element = $footer.offset().top + $footer.outerHeight(),
-      bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
-      top_of_screen = $(window).scrollTop() ;
+    let sideMenu = $(".my-account-nav-container"),
+        top_of_element = $footer.offset().top + 120,
+        bottom_of_element = $footer.offset().top + $footer.outerHeight(),
+        bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
+        top_of_screen = $(window).scrollTop() ;
 
-  if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
-    sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
-  } else {
-    if (!sideMenu.hasClass("side-menu-sticky")) {
-      sideMenu.addClass("side-menu-sticky");
+    if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
+        sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
+    } else {
+        if (!sideMenu.hasClass("side-menu-sticky")) {
+        sideMenu.addClass("side-menu-sticky");
+        }
     }
-  }
 }
 
 $(window).on("scroll", function(){
-  stickySideMenuInit($(".footer-shadow"));
+    stickySideMenuInit($(".footer-shadow"));
 });
 
-let $window = $(window);
-let toastEle = $(".toast");
-let toastCloseBtn = $(".toast-message-close");
 
-function removeToast($this) {
-  //let toastEle = $this.parent().parent();
-  let timeout;
-  toastEle.addClass("toast-hidden");
-  //remove element after timeout
-  timeout = setTimeout(function(){
-    toastEle.remove();
-    clearTimeout(timeout);
-  }, 1000);
+/////////////////////////// TOAST INIT ///////////////////////////
+let $window = $(window);
+let toastEleContainer = $(".toast-container");
+let toastCloseBtn = $(".toast-message-close");
+let toastEle = $(".toast");
+
+function trackToastDOMAppend() {
+    const oldHtml = window.jQuery.fn.append;
+
+    window.jQuery.fn.append = function () {
+        const enhancedHtml = oldHtml.apply(this, arguments);
+
+        if (arguments.length && enhancedHtml.find('.toast').length) {
+            const toastAdded = enhancedHtml.find('.toast');
+            let addToast = null;
+            let autoRemoveToast = null;
+            
+            addToast = setTimeout(function() {
+                toastAdded.addClass("toast-active");
+                clearTimeout(addToast);
+            }, 10);
+
+            autoRemoveToast = setTimeout(function() {
+                removeToast(toastAdded);
+                clearTimeout(autoRemoveToast);
+            }, 6000);
+            
+            return toastAdded;
+        }
+    }
 }
 
-toastCloseBtn.on('click', function () {
-  removeToast();
+function addToast ({ toastType, toastMsg }) {
+    toastEleContainer
+        .append(`<div class="toast">`+
+                    `<div class="toast-message toast-message-${toastType}">`+
+                        `<p>${toastMsg}</p>`+
+                        `<div class="toast-message-close"><i class="sl sl-icon-close"></i></div>`+
+                    `</div>`+
+                `</div>`
+    );
+}
+
+function removeToast(targetToast = toastEle) {
+    let timeout;
+
+    targetToast.removeClass("toast-active");
+    //remove element after timeout
+    timeout = setTimeout(function(){
+        targetToast.remove();
+        clearTimeout(timeout);
+    }, 300);
+}
+
+toastEleContainer.on('click', $(".toast-message-close"), function (e) {
+    let $eTarget = $(e.target);
+    let targetToast = null;
+
+    if($eTarget.hasClass('sl-icon-close')){
+        targetToast = $eTarget.parent().parent().parent();
+        removeToast(targetToast);
+    }
 });
+
+// Track append event to check DOM if toast has been added
+$(trackToastDOMAppend);
 
 $window.on('load', function() {
   if(toastCloseBtn.length > 0) {
@@ -85,9 +135,7 @@ $window.on('load', function() {
 });
 
 
-
-
-// DROPZONE
+/////////////////////////// DROPZONE ///////////////////////////
 // Dropzone.autoDiscover = false;
 //
 // let $_dropzoneHost = $("#propertyUploadImages2");

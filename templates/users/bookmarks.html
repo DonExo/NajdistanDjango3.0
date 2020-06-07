@@ -3,24 +3,23 @@
 {% load humanize %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
-    {% include 'includes/shared/breadcrumbs.html' %}
+    {% include '_shared/breadcrumbs.html' %}
+
     <div class="container padding-bottom-70">
         <div class="row">
 
             <!-- Widget -->
             <div class="col-md-4">
                 <div class="sidebar left">
-                    {% include 'includes/shared/profile-sidemenu.html' %}
+                    {% include '_shared/profile-sidemenu.html' %}
                 </div>
             </div>
 
             <div class="col-md-8">
-                <h2>Bookmarked Properties</h2>
-
                 <i>This functionality is <b>Under Development!</b></i>
 
 {#                {% if bookmarks %}#}

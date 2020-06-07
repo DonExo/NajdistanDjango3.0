@@ -25,6 +25,6 @@ def param_replace(context, **kwargs):
     for key, value in kwargs.items():
         query_string[key] = value
     # Remove all the empty query string values
-    for key in [key for key, value in query_string.items() if not value]:
-        del query_string[key]
+    # for key in [key for key, value in query_string.items() if not value]:
+    #     del query_string[key]
     return query_string.urlencode()

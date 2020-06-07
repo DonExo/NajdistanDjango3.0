@@ -4,7 +4,7 @@
 {% load widget_tweaks %}
 
 {% block title %}
-    {% include 'includes/title.html' %}
+    {% include '_shared/title.html' %}
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,8 @@
 ================================================== -->
 <div class="parallax" 
 data-background="{% static 'assets/images/home-parallax.jpg' %}" 
-data-color="#36383e" 
-data-color-opacity="0.45" 
+data-color="#36383e"
+data-color-opacity="0.45"
 data-img-width="2500" 
 data-img-height="1600">
 	<div class="parallax-content">
@@ -39,7 +39,6 @@ data-img-height="1600">
 
                             <!-- Box -->
 							<div class="main-search-box">
-
                                 {{ filter.form.non_field_errors }}
                                 <div class="main-search-input larger-input">
                                     {{ filter.form.title.errors }}
@@ -57,6 +56,13 @@ data-img-height="1600">
                                         {{ filter.form.price.errors }}
                                         {{ filter.form.price.label_tag }}
                                         {{ filter.form.price }}
+                                    </div>
+                                </div>
+
+                                <!-- The hidden input for Listing Type -->
+                                <div class="row with-forms hidden">
+                                    <div class="col-md-4">
+										{% render_field filter.form.type  %}
                                     </div>
                                 </div>
 
@@ -85,8 +91,9 @@ data-img-height="1600">
 		<!-- Carousel -->
 		<div class="col-md-12">
 			<div class="carousel">
+            <!-- @ TODO: Change to featured -->
                 {% for listing in latest_5 %}
-                    {% include 'includes/listings/vertical_card.html' %}
+                    {% include 'listings/includes/vertical_card.html' %}
                 {% endfor %}
 			</div>
 		</div>

@@ -1,0 +1,17 @@
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{ title }}</h2>
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                     <ul>
+                         {% for crumb, link in crumbs.items %}
+                            <li><a href="{{ link }}">{{ crumb }}</a></li>
+                         {% endfor %}
+                     </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

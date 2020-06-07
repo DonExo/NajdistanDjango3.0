@@ -27,9 +27,13 @@ class ListingFilter(filters.FilterSet):
         empty_label='All cities',
     )
 
+    type = filters.CharFilter(
+        field_name='listing_type',
+    )
+
     class Meta:
         model = Listing
-        fields = ['title', 'city', 'price']
+        fields = ['title', 'city', 'price', 'type']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

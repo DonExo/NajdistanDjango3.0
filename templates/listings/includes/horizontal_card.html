@@ -5,7 +5,7 @@
 
         <div class="listing-badges">
             <span class="featured">Featured</span>
-            <span class="listing-type">For Sale</span>
+            <span>For {{ object.listing_type.title }}</span>
         </div>
 
         <div class="listing-img-content">
@@ -44,7 +44,7 @@
         </ul>
 
         <div class="listing-footer">
-            <a href="{% url 'accounts:user_identifier' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
+            <a href="{% url 'accounts:publisher' object.user.identifier %}"><i class="fa fa-user"></i> {{ object.user }}</a>
             <span><i class="fa fa-calendar-o"></i>{{ object.created_at|naturalday }}</span>
         </div>
 

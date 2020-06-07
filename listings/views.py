@@ -44,7 +44,11 @@ class ListingSearchView(FilterView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Search Listings'
+        context['title'] = 'Listings'
+        context['crumbs'] = {
+            "Home": reverse('index'),
+            "Listings": '#',
+        }
         return context
 
 
@@ -84,7 +88,14 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         context = super().get_context_data(**kwargs)
         context['title'] = 'Submit Property'
         context['generate_dummy_listing'] = settings.GENERATE_DUMMY_LISTING
+        context['crumbs'] = {
+            "Home": reverse('index'),
+            "Listings": reverse('listings:search'),
+            "Create": '#',
+        }
         return context
+
+
 
 
 class ListingDetailView(generic.DetailView):

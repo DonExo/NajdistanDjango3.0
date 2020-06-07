@@ -67,7 +67,7 @@ class User(AbstractUser, BaseModel):
         return self.listings.prefetch_related('city').all()
 
     def get_absolute_url(self):
-        return reverse('accounts:user_identifier', kwargs={'identifier': self.identifier})
+        return reverse('accounts:publisher', kwargs={'identifier': self.identifier})
 
     @property
     def is_premium_user(self):

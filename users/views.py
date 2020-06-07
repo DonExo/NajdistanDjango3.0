@@ -100,7 +100,7 @@ def publisher(request, identifier):
         }
 
     }
-    return render(request, 'users/user.html', context)
+    return render(request, 'users/publisher.html', context)
 
 
 @login_required

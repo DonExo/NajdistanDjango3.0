@@ -50,8 +50,3 @@ def get_new_listings(value):
         send_info_to_user.delay(search_profile.pk, list(matching_listings_pks))
         # JSON-only serializable data, no model objects or QuerySets
 
-
-@shared_task
-def dummy_task(val):
-    print(f"Printing {val} value!")
-    return val

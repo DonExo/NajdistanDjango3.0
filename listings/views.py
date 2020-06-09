@@ -56,7 +56,6 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     success_message = "Property successfully created!"
 
     def get_success_url(self):
-        # dummy_task.delay(self.object.slug)
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
@@ -78,6 +77,8 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
             if invalid_files:
                 messages.error(self.request,
                                _(f"You have submitted {len(invalid_files)} invalid files that have been rejected."))
+
+        # TASKS.check for active SPs with value 'instant' (check MRO of this View)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

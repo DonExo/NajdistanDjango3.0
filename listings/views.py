@@ -11,6 +11,7 @@ from django_filters.views import FilterView
 from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
+from .mixins import CustomLoginRequiredMixin
 from .utils import _check_image_validness
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
@@ -48,7 +49,7 @@ class ListingSearchView(FilterView):
         return context
 
 
-class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class ListingCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Listing
     login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
@@ -93,8 +94,6 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return context
 
 
-
-
 class ListingDetailView(generic.DetailView):
     model = Listing
     template_name = 'listings/detail.html'
@@ -115,7 +114,7 @@ class ListingDetailView(generic.DetailView):
         return context
 
 
-class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
+class ListingUpdateView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'
     form_class = ListingUpdateForm
@@ -154,24 +153,27 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
         return context
 
 
-class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
+class ListingDeleteView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    # Checks if the listing owner is different than the request user
+    def test_func(self):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        return self.request.user == listing.user
+
     def get_redirect_url(self, *args, **kwargs):
         listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
-        if listing.user != self.request.user:
-            messages.error(self.request, FORBIDDEN_MESAGE)
-            return reverse('listings:detail', kwargs={'slug': listing.slug})
-            # return HttpResponseForbidden(FORBIDDEN_MESAGE)  # This raises error otherwise
         listing.delete()
-        messages.info(self.request, "Deleted listing!")
+        messages.info(self.request, "Listing deleted.")
         return reverse('accounts:properties')
 
 
-class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
+class ListingToggleStatusView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    # Checks if the listing owner is different than the request user
+    def test_func(self):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        return self.request.user == listing.user
+
     def get_redirect_url(self, *args, **kwargs):
         listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
-        if listing.user != self.request.user:
-            messages.error(self.request, FORBIDDEN_MESAGE)
-            return reverse('listings:detail', kwargs={'slug': listing.slug})
         listing.toggle_status()
         messages.success(self.request, "Property status updated successfully!")
         return reverse('accounts:properties')

@@ -32,7 +32,6 @@ class ListingIndexView(FilterView):
 class ListingSearchView(FilterView):
     queryset = Listing.objects.active()
     template_name = 'listings/search.html'
-    context_object_name = 'objects'
     paginate_by = PAGINATOR_ITEMS_PER_PAGE
     filterset_class = ListingFilter
 

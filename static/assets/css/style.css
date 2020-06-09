@@ -2719,6 +2719,7 @@ input.second-slider-value {
 
 .csm-content {
 	overflow-y: scroll;
+	overflow-x: hidden;
 	height: 100%;
 	width: 340px;
 }
@@ -2945,6 +2946,11 @@ span.like-icon {
 .csm-content .listing-item.compact {
 	padding: 0;
 	height: 180px;
+	margin-left: 0;
+}
+
+.csm-content .listing-item.compact.inactive {
+	margin-left: 120%;
 }
 
 .csm-content .compact .listing-img-content .listing-compact-title {
@@ -3076,6 +3082,15 @@ span.like-icon {
 	transform: scale(0.8);
 }
 
+.remove-from-compare::before {
+	font-family: "FontAwesome";
+	content: "\f00d";
+	display: inline-block;
+	text-align: center;
+    line-height: 26px;
+    font-size: 1em;
+}
+
 .compact:hover .remove-from-compare { opacity: 1; transform: scale(1); }
 
 
@@ -3103,7 +3118,7 @@ span.like-icon {
 
 #compare-list {
 	list-style: none;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 }
 
 #compare-list li {
@@ -3148,7 +3163,8 @@ body #compare-list li div:last-child .clp-title { border-right: 1px solid transp
     color: #333;
     text-align: right;
     text-transform: uppercase;
-    font-size: 13px;
+	font-size: 13px;
+	font-weight: 700;
 }
 
 #compare-list li:last-child { border-radius: 0 0 4px 4px; }
@@ -4419,6 +4435,13 @@ ul.listing-details li {
 	font-size: 17px;
 	padding: 0;
 	margin: 2px 0 0 0;
+}
+
+/* Compact image */
+.compact .listing-img-container img {
+	object-fit: cover;
+    height: 100%;
+    position: absolute;
 }
 
 
@@ -6360,16 +6383,23 @@ body .comment-content p { padding: 5px 0; }
 /* ---------------------------------- */
 /* Toast Messages
 ------------------------------------- */
-.toast {
+
+.toast-container {
 	position: fixed;
-    right: 70px;
-	top: 110px;
-	transition: right, 0.3s;
+    right: 0;
+    top: 100px;
     z-index: 9999;
 }
 
-.toast.toast-hidden {
+.toast {
+	position: relative;
 	right: -100%;
+    transition: right, 0.3s;
+    margin-bottom: 10px;
+}
+
+.toast.toast-active {
+	right: 70px;
 }
 
 .toast-message {
@@ -6416,6 +6446,7 @@ body .comment-content p { padding: 5px 0; }
 
 .toast-message-close i {
 	line-height: 26px;
+	padding: 6px 0;
 	transition: font-size, 0.2s;
 }
 

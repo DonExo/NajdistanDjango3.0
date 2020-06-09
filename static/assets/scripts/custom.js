@@ -519,32 +519,14 @@ $(document).ready(function(){
 	/*----------------------------------------------------*/
 	/*  Compare Menu
 	/*----------------------------------------------------*/
-    $('.csm-trigger').on('click', function(){
-		$('.compare-slide-menu').toggleClass('active');
-	});
-
-    $('.csm-mobile-trigger').on('click', function(){
-		$('.compare-slide-menu').removeClass('active');
-	});
-
-    // Tooltips
+	// Tooltips
 	$(".compare-button.with-tip, .like-icon.with-tip, .widget-button.with-tip").each(function() {
 		$(this).on('click', function(e){
-	    	e.preventDefault();
+			e.preventDefault();
 		});
-		var tipContent = $(this).attr('data-tip-content');
+		let tipContent = $(this).attr('data-tip-content');
 		$(this).append('<div class="tip-content">'+ tipContent + '</div>');
 	});
-
-	// Demo Purpose Trigger
-	$('.compare-button, .compare-widget-button').on('click', function(){
-		$('.compare-slide-menu').addClass('active');
-	});
-
-	$(".remove-from-compare").on('click', function(e){
-    	e.preventDefault();
-	});
-
 
     /*----------------------------------------------------*/
     /*  Like Icon Trigger

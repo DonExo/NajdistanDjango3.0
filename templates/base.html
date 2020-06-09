@@ -19,21 +19,43 @@
 <body>
     <div id="wrapper">
 
+            <!-- Compare Properties Widget
+        ================================================== -->
+        <div class="compare-slide-menu">
+
+            <div class="csm-trigger"></div>
+
+            <div class="csm-content">
+                <h4>Compare Properties <div class="csm-mobile-trigger"></div></h4>
+
+                <div class="csm-properties"></div>
+
+                <div class="csm-buttons">
+                    <a href="{% url 'listings:compare' %}?" class="button btn-prop-compare">Compare</a>
+                    <a href="#" class="button reset">Reset</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- Compare Properties Widget / End -->
+
         <!-- Header Container
         ================================================== -->
         {% include '_shared/header.html' %}
         <!-- Header Container / End -->
 
-        {% if messages %}
-            <div class="toast">
-                {% for message in messages %}
-                    <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
-                        <p>{{ message }}</p>
-                        <div class="toast-message-close"><i class="sl sl-icon-close"></i></div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+        <div class="toast-container">
+            {% if messages %}
+                <div class="toast toast-active">
+                    {% for message in messages %}
+                        <div class="toast-message {% if message.tags %} toast-message-{{ message.tags }}{% endif %}">
+                            <p>{{ message }}</p>
+                            <div class="toast-message-close"><i class="sl sl-icon-close"></i></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
         {% block content %}
         {% endblock %}
@@ -62,8 +84,10 @@
         <script type="text/javascript" src="{% static 'assets/scripts/custom.js' %}"></script>
         <!-- DropZone | Documentation: http://dropzonejs.com -->
         <script type="text/javascript" src="{% static 'assets/scripts/dropzone.min.js' %}"></script>
-
-        <!-- Custom NajdiStan script -->
+        
+        <!-- Custom NajdiStan scripts -->
+        <script type="text/javascript" src="{% static 'assets/scripts/toast.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/scripts/compare-properties.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/scripts/najdistan-script.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/scripts/search-profile.js' %}"></script>
 

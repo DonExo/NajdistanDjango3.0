@@ -2,12 +2,16 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.decorators import method_decorator
 from django.views import generic
+from django.http import JsonResponse
 from django_filters.views import FilterView
 
+from .decorators import ajax_required
 from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
@@ -176,3 +180,55 @@ class ListingToggleStatusView(CustomLoginRequiredMixin, UserPassesTestMixin, gen
         listing.toggle_status()
         messages.success(self.request, "Property status updated successfully!")
         return reverse('accounts:properties')
+
+
+class ListingCompareView(generic.ListView):
+    template_name = 'listings/compare.html'
+
+    def get_queryset(self):
+        property_slugs = self.request.GET.getlist('c', None)
+        if property_slugs:
+            listings = Listing.objects.filter(slug__in=property_slugs)
+            return listings
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Compare Properties'
+        context['crumbs'] = {
+            "Home": reverse('index'),
+            "Listings": reverse('listings:search'),
+            "Compare": '#'
+        }
+        return context
+
+
+class ListingJsonData(generic.View):
+    """
+    A view that returns json response to the frontend with the neeeded data for the CompareView functionality
+    """
+
+    @csrf_exempt
+    @method_decorator(ajax_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        slug_key = request.POST.get('propSlug', None)
+        if not slug_key:
+            return JsonResponse({'error': 'Requested key not found in POST.'}, status=403)
+        try:
+            listing = Listing.objects.get(slug=slug_key)
+        except Listing.DoesNotExist:
+            return JsonResponse({'error': 'Requested Listing not found.'}, status=404)
+
+        json_data = {
+            "propSlug": slug_key,
+            'propTitle': listing.title,
+            'propPrice': listing.price,
+            'propHref': listing.get_absolute_url(),
+            'propCoverImage': listing.get_cover_image().url,
+            'propListingType': listing.listing_type,
+            'propHomeType': listing.home_type
+        }
+        return JsonResponse({'propData': json_data}, status=200)

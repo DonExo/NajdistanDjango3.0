@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% include '_shared/title.html' %}
+{% endblock %}
+
+{% block content %}
+
+{% include '_shared/breadcrumbs.html' %}
+
+
+    <!-- Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+
+			<!-- Compare List -->
+			<div class="compare-list-container ">
+				<ul id="compare-list">
+
+					<li class="compare-list-properties">
+                        <div class="blank-div"></div>
+                        {% for listing in object_list %}
+                            <div>
+                                <a href="{% url 'listings:detail' listing.slug %}">
+                                    <div class="clp-img">
+                                        <img src="{{ listing.get_cover_image.url }}" alt="{{ listing.title }}">
+                                        <!-- <span data-prop-slug="{{ listing.propSlug }}" class="remove-from-compare"></span> -->
+                                    </div>
+
+                                    <div class="clp-title">
+                                        <h4>{{ listing.title }}</h4>
+                                        <span>{{ listing.price }} EUR</span>
+                                    </div>
+                                </a>
+							</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Area</div>
+                        {% for listing in object_list %}
+                            <div>{{ listing.quadrature }} m2</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Rooms</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.rooms }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Bedrooms</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.bedrooms }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Floor</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.floor }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Type of building</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.home_type.title }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Listing type</div>
+						{% for listing in object_list %}
+                            <div>For {{ listing.listing_type.title }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Interior</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.interior.title }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Basement</div>
+                        {% for listing in object_list %}
+                            <div>
+                                <span class="{% if not listing.basement %}not-{% endif %}available"></span>
+                            </div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Balcony</div>
+                        {% for listing in object_list %}
+                            <div>
+                                <span class="{% if not listing.balcony %}not-{% endif %}available"></span>
+                            </div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Elevator</div>
+                        {% for listing in object_list %}
+                            <div>
+                                <span class="{% if not listing.elevator %}not-{% endif %}available"></span>
+                            </div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Built</div>
+                        {% for listing in object_list %}
+                            <div>{{ listing.construction_year }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Heating</div>
+						{% for listing in object_list %}
+                            <div>{{ listing.heating.title }}</div>
+                        {% endfor %}
+					</li>
+
+					<li>
+						<div>Parking</div>
+                        {% for listing in object_list %}
+                            <div>
+                                <span class="{% if not listing.parking %}not-{% endif %}available"></span>
+                            </div>
+                        {% endfor %}
+					</li>
+				</ul>
+			</div>
+			<!-- Compare List / End -->
+
+		</div>
+	</div>
+</div>
+
+
+<!-- Flip banner -->
+<a href="#"
+class="flip-banner parallax"
+data-color="#6449E7"
+data-color-opacity="0.9">
+	<div class="flip-banner-content">
+		<h2 class="flip-visible">We help people and homes find each other</h2>
+		<h2 class="flip-hidden">Browse Properties <i class="sl sl-icon-arrow-right"></i></h2>
+	</div>
+</a>
+<!-- Flip banner / End -->
+
+{% endblock %}

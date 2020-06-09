@@ -29,7 +29,7 @@
                                 <a href="{% url 'listings:detail' listing.slug %}">
                                     <div class="clp-img">
                                         <img src="{{ listing.get_cover_image.url }}" alt="{{ listing.title }}">
-                                        <span class="remove-from-compare"><i class="fa fa-close"></i></span>
+                                        <!-- <span data-prop-slug="{{ listing.propSlug }}" class="remove-from-compare"></span> -->
                                     </div>
 
                                     <div class="clp-title">
@@ -37,7 +37,7 @@
                                         <span>{{ listing.price }} EUR</span>
                                     </div>
                                 </a>
-						    </div>
+							</div>
                         {% endfor %}
 					</li>
 

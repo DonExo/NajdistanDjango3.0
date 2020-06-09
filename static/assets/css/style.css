@@ -3118,7 +3118,7 @@ span.like-icon {
 
 #compare-list {
 	list-style: none;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 }
 
 #compare-list li {
@@ -3163,7 +3163,8 @@ body #compare-list li div:last-child .clp-title { border-right: 1px solid transp
     color: #333;
     text-align: right;
     text-transform: uppercase;
-    font-size: 13px;
+	font-size: 13px;
+	font-weight: 700;
 }
 
 #compare-list li:last-child { border-radius: 0 0 4px 4px; }

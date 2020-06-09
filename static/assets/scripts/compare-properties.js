@@ -201,12 +201,23 @@
         // Send properties' slugs to compare page
         $('.btn-prop-compare').on('click', (e) => {
             e.preventDefault();
-            const qString = setQueryString();
-            const domain = e.target.href;
-            const fullPath = domain.concat(qString);
+            const { propCollection } = retrieveSessionStorageItem( SESSIONSTORAGE_KEY );
+            
+            if ( !!propCollection && propCollection.length < 2 ) {
+                const toastOptions = {
+                    toastType: "warning",
+                    toastMsg: "At least two properties are required to compare!"
+                }
 
-            e.target.setAttribute("href", fullPath);
-            window.location.href = e.target.href;
+                addToast(toastOptions);
+            } else {
+                const qString = setQueryString();
+                const domain = e.target.href;
+                const fullPath = domain.concat(qString);
+    
+                e.target.setAttribute("href", fullPath);
+                window.location.href = e.target.href;
+            }
         });
 
         // Document events

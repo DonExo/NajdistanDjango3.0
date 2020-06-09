@@ -4,7 +4,7 @@ from django.http import JsonResponse
 
 
 # A CBV decorator to allow only Ajax requests
-def ajax_only(view):
+def ajax_required(view):
     @wraps(view)
     def _wrapped_view(request, *args, **kwargs):
         if request.is_ajax():

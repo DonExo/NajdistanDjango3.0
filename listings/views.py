@@ -11,7 +11,7 @@ from django.views import generic
 from django.http import JsonResponse
 from django_filters.views import FilterView
 
-from .decorators import ajax_only
+from .decorators import ajax_required
 from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
@@ -96,8 +96,6 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return context
 
 
-
-
 class ListingDetailView(generic.DetailView):
     model = Listing
     template_name = 'listings/detail.html'
@@ -168,7 +166,7 @@ class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
         messages.info(self.request, "Deleted listing!")
         return reverse('accounts:properties')
 
-
+# TODO: User_passes_func
 class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
@@ -190,14 +188,24 @@ class ListingCompareView(generic.ListView):
             return listings
         return None
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Compare Properties'
+        context['crumbs'] = {
+            "Home": reverse('index'),
+            "Listings": reverse('listings:search'),
+            "Compare": '#'
+        }
+        return context
+
 
 class ListingJsonData(generic.View):
     """
-    A view that returns needed data to the frontend with the neeeded data for the CompareView
+    A view that returns json response to the frontend with the neeeded data for the CompareView functionality
     """
 
     @csrf_exempt
-    @method_decorator(ajax_only)
+    @method_decorator(ajax_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 

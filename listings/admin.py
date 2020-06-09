@@ -20,20 +20,26 @@ class ListingAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'user__email', 'city__city', )
     list_filter = ('is_approved', 'zip_code')
     readonly_fields = ('slug', 'times_visited', 'soft_deleted' )
-    actions = ['approve', 'reject', ]
+    actions = ['approve', 'reject', 'make_available']
     inlines = [InlineImagelAdmin, ]
 
     def approve(self, request, queryset):
         count = queryset.filter(is_approved=None).update(is_approved=True)
         if count:
-            self.message_user(request, f"{count} listings have been approved!")
+            self.message_user(request, f"{count} listing(s) have been approved!")
     approve.short_description = 'Approve listings'
 
     def reject(self, request, queryset):
         count = queryset.update(is_approved=False)
         if count:
-            self.message_user(request, f"{count} listings have been rejected!")
+            self.message_user(request, f"{count} listing(s) have been rejected!")
     reject.short_description = 'Reject listings'
+
+    def make_available(self, request, queryset):
+        count = queryset.filter(is_available=False).update(is_available=True)
+        if count:
+            self.message_user(request, f"{count} listing(s) has been made available!")
+    make_available.short_description = 'Make available'
 
 
 # @admin.register(Saved)

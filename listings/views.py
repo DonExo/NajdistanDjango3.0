@@ -15,6 +15,7 @@ from .decorators import ajax_required
 from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
+from .mixins import CustomLoginRequiredMixin
 from .utils import _check_image_validness
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
@@ -35,7 +36,6 @@ class ListingIndexView(FilterView):
 class ListingSearchView(FilterView):
     queryset = Listing.objects.active()
     template_name = 'listings/search.html'
-    context_object_name = 'objects'
     paginate_by = PAGINATOR_ITEMS_PER_PAGE
     filterset_class = ListingFilter
 
@@ -52,7 +52,7 @@ class ListingSearchView(FilterView):
         return context
 
 
-class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class ListingCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Listing
     login_url = reverse_lazy('auth_login')
     template_name = 'listings/create.html'
@@ -60,7 +60,6 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
     success_message = "Property successfully created!"
 
     def get_success_url(self):
-        # dummy_task.delay(self.object.slug)
         return reverse_lazy('listings:detail', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
@@ -82,6 +81,8 @@ class ListingCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
             if invalid_files:
                 messages.error(self.request,
                                _(f"You have submitted {len(invalid_files)} invalid files that have been rejected."))
+
+        # TASKS.check for active SPs with value 'instant' (check MRO of this View)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -116,7 +117,7 @@ class ListingDetailView(generic.DetailView):
         return context
 
 
-class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
+class ListingUpdateView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Listing
     template_name = 'listings/update.html'
     form_class = ListingUpdateForm
@@ -155,24 +156,27 @@ class ListingUpdateView(UserPassesTestMixin, generic.UpdateView):
         return context
 
 
-class ListingDeleteView(LoginRequiredMixin, generic.RedirectView):
+class ListingDeleteView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    # Checks if the listing owner is different than the request user
+    def test_func(self):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        return self.request.user == listing.user
+
     def get_redirect_url(self, *args, **kwargs):
         listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
-        if listing.user != self.request.user:
-            messages.error(self.request, FORBIDDEN_MESAGE)
-            return reverse('listings:detail', kwargs={'slug': listing.slug})
-            # return HttpResponseForbidden(FORBIDDEN_MESAGE)  # This raises error otherwise
         listing.delete()
-        messages.info(self.request, "Deleted listing!")
+        messages.info(self.request, "Listing deleted.")
         return reverse('accounts:properties')
 
-# TODO: User_passes_func
-class ListingToggleStatusView(LoginRequiredMixin, generic.RedirectView):
+
+class ListingToggleStatusView(CustomLoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    # Checks if the listing owner is different than the request user
+    def test_func(self):
+        listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
+        return self.request.user == listing.user
+
     def get_redirect_url(self, *args, **kwargs):
         listing = get_object_or_404(Listing, slug=self.kwargs.get('slug'))
-        if listing.user != self.request.user:
-            messages.error(self.request, FORBIDDEN_MESAGE)
-            return reverse('listings:detail', kwargs={'slug': listing.slug})
         listing.toggle_status()
         messages.success(self.request, "Property status updated successfully!")
         return reverse('accounts:properties')

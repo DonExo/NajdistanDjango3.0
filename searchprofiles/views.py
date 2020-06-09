@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from configdata import FORBIDDEN_MESAGE
 from .forms import UserSearchProfileForm
@@ -98,13 +99,15 @@ def search_profile_update(request, pk):
     return render(request, 'searchprofile/update.html', context)
 
 
+# TODO: Use the ajax_required decorator once 'compare view' is merged
+@require_http_methods(['POST'])
 @csrf_exempt
 def search_profile_toggle(request):
     # Sanity checks
     if not request.is_ajax():
         return JsonResponse({'error': 'Non-Ajax request detected'}, status=403)
-    if not request.method == 'POST':
-        return JsonResponse({'error': 'This request has to be done via POST.'}, status=403)
+    # if not request.method == 'POST':
+    #     return JsonResponse({'error': 'This request has to be done via POST.'}, status=403)
     ajax_user = getattr(request, 'user', None)
     if ajax_user.is_anonymous:
         return JsonResponse({'error': 'You need to be logged-in for this action'}, status=403)

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import F
+# from django.db.models import F
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -102,12 +102,11 @@ class Listing(BaseModel):
         return self.bookmarked_by.all()
 
     def increment_visited_counter(self, user):
-        # Django suggests using F objects for such operation
         if self.user != user:
-            self._meta.model.objects.filter(pk=self.pk).update(times_visited=F('times_visited') + 1)
-        # instead of the regular retrieve&manipulate object
-        # self.times_visited = self.times_visited + 1
-        # self.save()
+            self.times_visited = self.times_visited + 1
+            self.save()
+            # Django also suggests using F objects for this operation
+            # self._meta.model.objects.filter(pk=self.pk).update(times_visited=F('times_visited') + 1)
 
     def is_active(self):
         return self.is_available and self.is_approved

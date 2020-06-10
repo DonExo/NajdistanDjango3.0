@@ -51,20 +51,21 @@
     <div class="container">
         <div class="row margin-bottom-50">
             <div class="col-md-12">
-                            
-                <!-- Slider -->
-                <div class="property-slider default">
-                    {% for image in object.get_images %}
-                        <a href="{{ image.image.url }}" data-background-image="{{ image.image.url }}" class="item mfp-gallery"></a>
-                    {% endfor %}
-                </div>
+                {% with images=object.get_images %}
+                    <!-- Slider -->
+                    <div class="property-slider default">
+                        {% for image in images %}
+                            <a href="{{ image.image.url }}" data-background-image="{{ image.image.url }}" class="item mfp-gallery"></a>
+                        {% endfor %}
+                    </div>
 
-                <!-- Slider Thumbs -->
-                <div class="property-slider-nav">
-                    {% for image in object.get_images %}
-                        <div class="item"><img src="{{ image.image.url }}" alt="{{ image.title }}" /></div>
-                    {% endfor %}
-                </div>
+                    <!-- Slider Thumbs -->
+                    <div class="property-slider-nav">
+                        {% for image in images %}
+                            <div class="item"><img src="{{ image.image.url }}" alt="{{ image.title }}" /></div>
+                        {% endfor %}
+                    </div>
+                {% endwith %}
 
             </div>
         </div>

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -184,6 +184,12 @@ class ListingToggleStatusView(CustomLoginRequiredMixin, UserPassesTestMixin, gen
 
 class ListingCompareView(generic.ListView):
     template_name = 'listings/compare.html'
+
+    def get(self, request, *args, **kwargs):
+        if not self.get_queryset() or self.get_queryset().count() < 2:
+            messages.error(request, "You need at least to properties for compare.")
+            return redirect(reverse('listings:search'))
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         property_slugs = self.request.GET.getlist('c', None)

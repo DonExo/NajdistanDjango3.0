@@ -1026,6 +1026,7 @@ $(document).ready(function(){
 			range: true,
 			min: parseInt(dataMin, 10),
 			max: parseInt(dataMax, 10),
+			step: 100,
 			values: [ 
 				!!presetPriceMin ? presetPriceMin : dataMin, 
 				!!presetPriceMax ? presetPriceMax : dataMax

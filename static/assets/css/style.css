@@ -85,6 +85,17 @@
 ------------------------------------- */
 
 /* Common Styles */
+input[type="text"][disabled],
+input[type="password"][disabled],
+input[type="email"][disabled],
+input[type="number"][disabled],
+input[type="search"][disabled],
+textarea[disabled] {
+	background-color: #e3e1e5;
+    color: #969696;
+    cursor: not-allowed;
+}
+
 #top-bar {
 	background-color: #66676b;
 	color: #fff;
@@ -2690,6 +2701,13 @@ input.first-slider-value {
 	float: left;
 	margin-left: -8px;
 	width: 40%;
+}
+
+input.first-slider-value[disabled],
+input.second-slider-value[disabled] {
+	background-color: transparent;
+	color: #808080;
+	cursor: auto;
 }
 
 input.second-slider-value {

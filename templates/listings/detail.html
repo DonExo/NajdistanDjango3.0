@@ -79,12 +79,42 @@
 
                     <!-- Main Features -->
                     <ul class="property-main-features">
-                        <li>Area <span>{{object.quadrature}} m<sup>2</sup></span></li>
-                        <li>Rooms <span>{{object.rooms}}</span></li>
-                        <li>Bedrooms <span>{{object.bedrooms}}</span></li>
-                        <li>Floor <span>{{object.floor}}</span></li>
-                        <li>Published <span>{{ object.created_at|naturalday }}</span></li>
-                        <li>Built <span>{{ object.construction_year }}</span></li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Structure"></i>
+                            </div>
+                            Area <span>{{object.quadrature}} m<sup>2</sup></span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Door"></i>
+                            </div>
+                            Rooms <span>{{object.rooms}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Sleeping"></i>
+                            </div>
+                            Bedrooms <span>{{object.bedrooms}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Building"></i>
+                            </div>
+                            Floor <span>{{object.floor}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Clock-Back"></i>
+                            </div>
+                            Published <span>{{ object.created_at|naturalday }}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Worker"></i>
+                            </div>
+                            Built <span>{{ object.construction_year }}</span>
+                        </li>
                     </ul>
 
                     <!-- Description -->

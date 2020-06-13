@@ -4083,6 +4083,13 @@ span.like-icon {
 	padding-top: 12px;
 }
 
+.listing-title h4 {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin-bottom: 13px;
+}
+
 .listing-title h4 a {
 	font-size: 20px;
 	color: #333;
@@ -4924,6 +4931,7 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 	margin-right: 44px;
 	padding: 24px 0 0 0;
 	line-height: 30px;
+	text-align: center;
 }
 
 .property-main-features li:last-child {
@@ -4933,6 +4941,10 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 .property-main-features li span {
 	display: block;
 	color: #444;
+}
+
+.property-main-features-icon i {
+	font-size: 3rem;
 }
 
 

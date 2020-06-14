@@ -16,7 +16,7 @@ from .models import SearchProfiles
 @login_required()
 def search_profile_manage(request):
     context = {'title': "Manage Search Profiles"}
-    context.update({'reached_max_sp': request.user.has_search_profile(),
+    context.update({'reached_max_sp': request.user.has_reached_max_number_of_sp(),
                     'search_profiles': request.user.get_search_profiles(),
                     'active_sp': request.user.get_search_profiles().count_active(),
                     'crumbs': {
@@ -54,7 +54,7 @@ def search_profile_create(request):
 
     form = UserSearchProfileForm(user=request.user)
 
-    context.update({'form': form, 'reached_max_sp': request.user.has_search_profile()})
+    context.update({'form': form, 'reached_max_sp': request.user.has_reached_max_number_of_sp()})
     return render(request, 'searchprofile/create.html', context)
 
 

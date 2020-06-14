@@ -39,7 +39,7 @@ class UserSearchProfileForm(forms.ModelForm):
                 self.fields[field].widget.attrs['disabled'] = 'disabled'
                 self.fields[field].required = False
 
-            if not self.is_updating and self.user.has_search_profile():
+            if not self.is_updating and self.user.has_reached_max_number_of_sp():
                 for key, value in self.fields.items():
                     value.disabled = True
 

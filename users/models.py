@@ -80,7 +80,7 @@ class User(AbstractUser, BaseModel):
         return self.searchprofiles.prefetch_related('city').all().order_by('-created_at')
 
     # TODO: Rename this one!
-    def has_search_profile(self):
+    def has_reached_max_number_of_sp(self):
         return not self.is_premium_user and self.searchprofiles.all().count() >= 1
 
     def get_bookmarks(self):
@@ -114,6 +114,6 @@ class Bookmarks(models.Model):
         return f"{self.user} - {self.listing}"
 
     def clean(self):
-        if self.user.pk == self.listing.user.pk:
+        if self.user_id == self.listing.user_id:
             raise ValidationError("You can't bookmark your own listing!")
 

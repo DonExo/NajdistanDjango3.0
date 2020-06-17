@@ -410,7 +410,6 @@ $(document).ready(function(){
 		$('.search-type label').on('change', function() {
 		    $('.search-type input[type="radio"]').parent('label').removeClass('active');
 			$('.search-type input[type="radio"]:checked').parent('label').addClass('active');
-			$('#id_type').attr('value', $(this).data('search-type'));
 
 			indicatorArrowPosition();
 		});

@@ -31,9 +31,9 @@ data-img-height="1600">
 						<form class="main-search-form" action="{% url 'listings:search' %}" method="get" autocomplete="off">
                             <!-- Type -->
 							<div class="search-type">
-								<label class="active" data-search-type="none"><input class="first-tab" name="tab" checked="checked" type="radio">Any Status</label>
-								<label data-search-type="sale"><input name="tab" type="radio">For Sale</label>
-								<label data-search-type="rent"><input name="tab" type="radio">For Rent</label>
+								<label class="active" data-search-type="none"><input class="first-tab" value="" name="type" checked="checked" type="radio">Any Status</label>
+								<label data-search-type="sale"><input name="type" value="sale" type="radio">For Sale</label>
+								<label data-search-type="rent"><input name="type" value="rent" type="radio">For Rent</label>
 								<div class="search-type-arrow"></div>
                             </div>
 
@@ -160,11 +160,11 @@ data-img-height="1600">
 								<!-- More Search Options / End -->
 
                                 <!-- The hidden input for Listing Type -->
-                                <div class="row with-forms hidden">
+                                <!-- <div class="row with-forms hidden">
                                     <div class="col-md-4">
 										{% render_field filter.form.type  %}
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </form>

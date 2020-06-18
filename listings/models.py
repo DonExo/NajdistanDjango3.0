@@ -102,12 +102,11 @@ class Listing(BaseModel):
         return self.bookmarked_by.all()
 
     def increment_visited_counter(self, user):
-        # Django suggests using F objects for such operation
         if self.user != user:
+            # self.times_visited = self.times_visited + 1
+            # self.save()
+            # Django also suggests using F objects for this operation
             self._meta.model.objects.filter(pk=self.pk).update(times_visited=F('times_visited') + 1)
-        # instead of the regular retrieve&manipulate object
-        # self.times_visited = self.times_visited + 1
-        # self.save()
 
     def is_active(self):
         return self.is_available and self.is_approved

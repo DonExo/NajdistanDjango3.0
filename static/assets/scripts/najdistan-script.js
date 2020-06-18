@@ -36,58 +36,29 @@ function generateListingData() {
 }
 
 
+///////////////////////////// STICKY MENU (WIP) ///////////////////////////
 function stickySideMenuInit($footer) {
-  let sideMenu = $(".my-account-nav-container"),
-      top_of_element = $footer.offset().top + 120,
-      bottom_of_element = $footer.offset().top + $footer.outerHeight(),
-      bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
-      top_of_screen = $(window).scrollTop() ;
+    let sideMenu = $(".my-account-nav-container"),
+        top_of_element = $footer.offset().top + 120,
+        bottom_of_element = $footer.offset().top + $footer.outerHeight(),
+        bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
+        top_of_screen = $(window).scrollTop() ;
 
-  if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
-    sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
-  } else {
-    if (!sideMenu.hasClass("side-menu-sticky")) {
-      sideMenu.addClass("side-menu-sticky");
+    if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
+        sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
+    } else {
+        if (!sideMenu.hasClass("side-menu-sticky")) {
+        sideMenu.addClass("side-menu-sticky");
+        }
     }
-  }
 }
 
 $(window).on("scroll", function(){
-  stickySideMenuInit($(".footer-shadow"));
-});
-
-let $window = $(window);
-let toastEle = $(".toast");
-let toastCloseBtn = $(".toast-message-close");
-
-function removeToast($this) {
-  //let toastEle = $this.parent().parent();
-  let timeout;
-  toastEle.addClass("toast-hidden");
-  //remove element after timeout
-  timeout = setTimeout(function(){
-    toastEle.remove();
-    clearTimeout(timeout);
-  }, 1000);
-}
-
-toastCloseBtn.on('click', function () {
-  removeToast();
-});
-
-$window.on('load', function() {
-  if(toastCloseBtn.length > 0) {
-    autoRemoveToast = setTimeout(function() {
-      removeToast();
-      clearTimeout(autoRemoveToast);
-    }, 6000);
-  }
+    stickySideMenuInit($(".footer-shadow"));
 });
 
 
-
-
-// DROPZONE
+/////////////////////////// DROPZONE ///////////////////////////
 // Dropzone.autoDiscover = false;
 //
 // let $_dropzoneHost = $("#propertyUploadImages2");

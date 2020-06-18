@@ -5,8 +5,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from configdata import FORBIDDEN_MESAGE
+from listings.decorators import ajax_required
 from .forms import UserSearchProfileForm
 from .models import SearchProfiles
 
@@ -14,7 +16,7 @@ from .models import SearchProfiles
 @login_required()
 def search_profile_manage(request):
     context = {'title': "Manage Search Profiles"}
-    context.update({'reached_max_sp': request.user.has_search_profile(),
+    context.update({'reached_max_sp': request.user.has_reached_max_number_of_sp(),
                     'search_profiles': request.user.get_search_profiles(),
                     'active_sp': request.user.get_search_profiles().count_active(),
                     'crumbs': {
@@ -52,7 +54,7 @@ def search_profile_create(request):
 
     form = UserSearchProfileForm(user=request.user)
 
-    context.update({'form': form, 'reached_max_sp': request.user.has_search_profile()})
+    context.update({'form': form, 'reached_max_sp': request.user.has_reached_max_number_of_sp()})
     return render(request, 'searchprofile/create.html', context)
 
 
@@ -98,13 +100,11 @@ def search_profile_update(request, pk):
     return render(request, 'searchprofile/update.html', context)
 
 
+@ajax_required
+@require_http_methods(['POST'])
 @csrf_exempt
 def search_profile_toggle(request):
     # Sanity checks
-    if not request.is_ajax():
-        return JsonResponse({'error': 'Non-Ajax request detected'}, status=403)
-    if not request.method == 'POST':
-        return JsonResponse({'error': 'This request has to be done via POST.'}, status=403)
     ajax_user = getattr(request, 'user', None)
     if ajax_user.is_anonymous:
         return JsonResponse({'error': 'You need to be logged-in for this action'}, status=403)

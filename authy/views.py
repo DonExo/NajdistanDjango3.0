@@ -12,7 +12,8 @@ from django.views.generic import RedirectView
 
 from registration.backends.default.views import RegistrationView
 
-from authy.forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm, CustomPasswordChangeForm
+from .forms import CustomPasswordResetForm, CustomRegisterForm, CustomLoginForm, CustomPasswordChangeForm
+from .tasks import task_send_password_change_confirmation_email
 from configdata import LOGIN_COOKIE_EXPIRY
 
 
@@ -77,12 +78,8 @@ class PasswordChangeDoneView(RedirectView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         messages.info(self.request, _("You password has been changed!"))
-        self.send_password_change_confirmation_email()
+        task_send_password_change_confirmation_email.delay(request.user.pk)
         return super().dispatch(request, *args, **kwargs)
-
-    def send_password_change_confirmation_email(self):
-        # TODO: Add the e-mail confirmation here
-        print("Email confirmation: Password changed!")
 
 
 class PasswordResetView(auth_views.PasswordResetView):

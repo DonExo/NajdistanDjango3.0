@@ -46,6 +46,7 @@ function generateListingData() {
                 doubleOffset = 2*sOffset,
                 newPositionOfSticky = screenTop - sticky.top + doubleOffset,
                 stopPoint = controlRef.bottom - sticky.eleHeight - doubleOffset;
+                console.log(stopPoint);
 
             if (stopPoint < screenTop) {
                 sticky.element.css({ top: `${stopPoint - (sOffset)}px` });
@@ -63,26 +64,33 @@ function generateListingData() {
             windowWidth = $window.innerWidth(),
             windowBreakpoint = 992;
 
-        const controlRef = {
+        let controlRef = {
             element: $(".main-content"),
             top: Math.round($(".main-content").offset().top),
             bottom: Math.round($(".main-content").offset().top + $(".main-content").outerHeight())
         }
         
-        const sticky = {
+        let sticky = {
             element: $(".sidebar.left"),
             top: Math.round($(".sidebar.left").offset().top),
             eleHeight: $(".sidebar.left").outerHeight()
         }
 
         let throttleStickyScroll =  _.throttle(
-            function(){
+            function (){
                 stickySideMenuInit(sticky, controlRef, stickyOffset)
-            }, 100, { 'leading': true });
+            }, 100, { "leading": true });
+
+        let debounceResize = _.debounce(
+            function () {
+                controlRef.bottom = Math.round($(".main-content").offset().top + $(".main-content").outerHeight());
+            }, 400
+        )
 
         if ( mainContentHeight > sticky.eleHeight && windowWidth > windowBreakpoint ) {
             sticky.element.addClass("sticky");
-            $window.on('scroll', throttleStickyScroll);
+            $window.on("scroll", throttleStickyScroll);
+            $window.on("resize", debounceResize);
         }
 
     });

@@ -848,9 +848,18 @@ button { outline: none; }
 /*----------------------------------- */
 /* Sidebar
 ------------------------------------- */
+.sidebar.sticky {
+    position: absolute;
+	width: calc( 100% - 50px );
+	top: 0;
+	left: 0;
+	transition: top 0.3s;
+}
+
 .sidebar.left{
 	padding-right: 20px;
 }
+
 
 .sidebar.right {
 	padding-left: 20px;
@@ -12613,6 +12622,7 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 	.my-profile { padding-right: 20px; }
 	.sidebar.left { padding-right: 0; }
+	.sidebar.left.sticky { position: static; width: 100%; }
 }
 
 

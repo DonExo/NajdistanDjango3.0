@@ -22,219 +22,221 @@
 
         <!-- Submit Page -->
         <div class="col-md-8 padding-bottom-70">
-            <div class="update-header">
-                <a class="back-to-listings" href="{% if prev_page %}{{ prev_page }}{% else %}#{% endif %}"></a>
-                <h2>Update your property</h2>
-            </div>
-                <i>Note: At this moment, you can only add new images, but can not delete existing. We are working on it.</i><br/><br/>
-
-            <form method="post" enctype="multipart/form-data" autocomplete="off">
-                {% csrf_token %}
-
-                <div class="submit-page">
-
-                    <!-- Section -->
-                    <h3>Basic Information</h3>
-                    <div class="submit-section">
-
-                        <!-- Title -->
-                        <div class="form">
-                            <label for="id_title">{{ form.title.label }}
-                                <i class="tip"
-                                   data-tip-content="{{ form.title.help_text }}">
-                                </i>
-                            </label>
-                            {{ form.title }}
-
-                        </div>
-
-                        <!-- Row -->
-                        <div class="row with-forms">
-
-                            <!-- Status -->
-                            <div class="col-md-4">
-                                {{ form.listing_type.label_tag }}
-                                {% render_field form.listing_type class="chosen-select-no-single" %}
-                                {{ form.listing_type.errors }}
-                                <small class="help-text text-muted">{{ form.listing_type.help_text }}</small>
-                            </div>
-
-                            <!-- Type -->
-                            <div class="col-md-4">
-                                {{ form.home_type.label_tag }}
-                                {% render_field form.home_type class="chosen-select-no-single" %}
-                                {{ form.home_type.errors }}
-                                <small class="help-text text-muted">{{ form.home_type.help_text }}</small>
-                            </div>
-
-                           <!-- Interior -->
-                            <div class="col-md-4">
-                                {{ form.interior.label_tag }}
-                                {% render_field form.interior class="chosen-select-no-single" %}
-                                {{ form.interior.errors }}
-                                <small class="help-text text-muted">{{ form.interior.help_text }}</small>
-                            </div>
-
-                        </div>
-                        <!-- Row / End -->
-
-                         <div class="row with-forms">
-
-                            <!-- Price -->
-                            <div class="col-md-4">
-                                <label for="{{form.price.id_for_label}}">{{ form.price.label }} <i class="tip"
-                                   data-tip-content="{{ form.price.help_text }}"></i></label>
-                                <div class="select-input disabled-first-option">
-                                    <input type="hidden" data-unit="&euro;">
-                                    {{ form.price }}
-                                </div>
-                                {{ form.price.errors }}
-                            </div>
-
-                            <!-- Area -->
-                            <div class="col-md-4">
-                                <label for="{{form.quadrature.id_for_label}}">Total Area</label>
-                                <div class="select-input disabled-first-option">
-                                    <input type="hidden" data-unit="m2">
-                                    {{ form.quadrature }}
-                                </div>
-                                {{ form.quadrature.errors }}
-                                <small class="help-text text-muted">{{ form.quadrature.help_text }}</small>
-                            </div>
-
-                            <!-- Construction Year -->
-                            <div class="col-md-4">
-                                <label for="{{form.construction_year.id_for_label}}">Construction Year</label>
-                                {{ form.construction_year }}
-                                {{ form.construction_year.errors }}
-                                <small class="help-text text-muted">{{ form.construction_year.help_text }}</small>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!-- Section End -->
-
-                    <!-- Section -->
-                    <h3>Gallery</h3>
-                    <div class="submit-section">
-                        <input type="file" value="images" name="images" multiple>
-                        <small class="help-text text-muted">{{ form.images.help_text }}</small>
-                    </div>
-{#                    <div class="submit-section">#}
-{#                        <div action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">#}
-{#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
-{#                            {% csrf_token %}#}
-{#                            <div class="fallback">#}
-{#                                <input type="file" name="images" multiple required >#}
-{#                            </div>#}
-{#                            <!-- <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button> -->#}
-{#                        </div>#}
-{#                    </div>#}
-                    <!-- Section End -->
-
-                    <!-- Section -->
-                    <h3>Location</h3>
-                    <div class="submit-section">
-
-                        <!-- Row -->
-                        <div class="row with-forms">
-                            <!-- City -->
-                            <div class="col-md-6">
-                                {{ form.city.label_tag }}
-                                {% render_field form.city class="chosen-select-no-single" %}
-                                {{ form.city.errors }}
-                                <small class="help-text text-muted">{{ form.city.help_text }}</small>
-                            </div>
-
-                            <!-- Zip-Code -->
-                            <div class="col-md-6">
-                                {{ form.zip_code.label_tag }}
-                                {{ form.zip_code }}
-                                {{ form.zip_code.errors }}
-                                <small class="help-text text-muted">{{ form.zip_code.help_text }}</small>
-                            </div>
-
-                         </div>
-                        <!-- Row / End -->
-
-                    </div>
-                    <!-- Section End -->
-
-                    <!-- Section -->
-                    <h3>Detailed Information</h3>
-                    <div class="submit-section">
-
-                        <!-- Description -->
-                        <div class="form">
-                            <label for="id_description">Description</label>
-                            {{ form.description }}
-                            {{ form.description.errors }}
-                        </div>
-
-                        <!-- Row -->
-                        <div class="row with-forms">
-                            <!-- Heating -->
-                            <div class="col-md-3">
-                                <label for="{{form.heating.id_for_label}}">Heating</label>
-                                {% render_field form.heating class="chosen-select-no-single" %}
-                                {{ form.heating.errors }}
-                                <small class="help-text text-muted">{{ form.heating.help_text }}</small>
-                            </div>
-
-                            <!-- Rooms -->
-                            <div class="col-md-3">
-                                <label for="{{form.rooms.id_for_label}}">No. of Rooms</label>
-                                {{ form.rooms }}
-                                {{ form.rooms.errors }}
-                                <small class="help-text text-muted">{{ form.construction_year.help_text }}</small>
-                            </div>
-
-                            <!-- Bedrooms -->
-                            <div class="col-md-3">
-                                <label for="{{form.bedrooms.id_for_label}}">No. of Bedrooms</label>
-                                {{ form.bedrooms }}
-                                {{ form.bedrooms.errors }}
-                                <small class="help-text text-muted">{{ form.bedrooms.help_text }}</small>
-                            </div>
-
-                              <!-- Floor -->
-                            <div class="col-md-3">
-                                <label for="{{form.floor.id_for_label}}">Floor <span>(optional)</span></label>
-                                {{ form.floor }}
-                                {{ form.floor.errors }}
-                                <small class="help-text text-muted">{{ form.floor.help_text }}</small>
-                            </div>
-
-                        </div>
-                        <!-- Row / End -->
-
-
-                        <!-- Checkboxes -->
-                        <h5 class="margin-top-30">Other Features <span>(optional)</span></h5>
-                        <div class="checkboxes in-row margin-bottom-20">
-
-                            <input id="check-2" type="checkbox" name="basement" {% if listing.basement %}checked {% endif %}>
-                            <label for="check-2">Basement</label>
-
-                            <input id="check-5" type="checkbox" name="parking" {% if listing.parking %}checked {% endif %}>
-                            <label for="check-5">Parking</label>
-
-                            <input id="check-6" type="checkbox" name="elevator" {% if listing.elevator %}checked {% endif %}>
-                            <label for="check-6">Elevator</label>
-
-                            <input id="check-7" type="checkbox" name="balcony" {% if listing.balcony %}checked {% endif %}>
-                            <label for="check-7">Balcony</label>
-
-                        </div>
-                        <!-- Checkboxes / End -->
-
-                    </div>
-                    <!-- Section / End -->
-
+            <div class="main-content">
+                <div class="update-header">
+                    <a class="back-to-listings" href="{% if prev_page %}{{ prev_page }}{% else %}#{% endif %}"></a>
+                    <h2>Update your property</h2>
                 </div>
-                <button type="submit" class="button">Submit</button>
-            </form>
+                <i>Note: At this moment, you can only add new images, but can not delete existing. We are working on it.</i><br/><br/>
+    
+                <form method="post" enctype="multipart/form-data" autocomplete="off">
+                    {% csrf_token %}
+    
+                    <div class="submit-page">
+    
+                        <!-- Section -->
+                        <h3>Basic Information</h3>
+                        <div class="submit-section">
+    
+                            <!-- Title -->
+                            <div class="form">
+                                <label for="id_title">{{ form.title.label }}
+                                    <i class="tip"
+                                       data-tip-content="{{ form.title.help_text }}">
+                                    </i>
+                                </label>
+                                {{ form.title }}
+    
+                            </div>
+    
+                            <!-- Row -->
+                            <div class="row with-forms">
+    
+                                <!-- Status -->
+                                <div class="col-md-4">
+                                    {{ form.listing_type.label_tag }}
+                                    {% render_field form.listing_type class="chosen-select-no-single" %}
+                                    {{ form.listing_type.errors }}
+                                    <small class="help-text text-muted">{{ form.listing_type.help_text }}</small>
+                                </div>
+    
+                                <!-- Type -->
+                                <div class="col-md-4">
+                                    {{ form.home_type.label_tag }}
+                                    {% render_field form.home_type class="chosen-select-no-single" %}
+                                    {{ form.home_type.errors }}
+                                    <small class="help-text text-muted">{{ form.home_type.help_text }}</small>
+                                </div>
+    
+                               <!-- Interior -->
+                                <div class="col-md-4">
+                                    {{ form.interior.label_tag }}
+                                    {% render_field form.interior class="chosen-select-no-single" %}
+                                    {{ form.interior.errors }}
+                                    <small class="help-text text-muted">{{ form.interior.help_text }}</small>
+                                </div>
+    
+                            </div>
+                            <!-- Row / End -->
+    
+                             <div class="row with-forms">
+    
+                                <!-- Price -->
+                                <div class="col-md-4">
+                                    <label for="{{form.price.id_for_label}}">{{ form.price.label }} <i class="tip"
+                                       data-tip-content="{{ form.price.help_text }}"></i></label>
+                                    <div class="select-input disabled-first-option">
+                                        <input type="hidden" data-unit="&euro;">
+                                        {{ form.price }}
+                                    </div>
+                                    {{ form.price.errors }}
+                                </div>
+    
+                                <!-- Area -->
+                                <div class="col-md-4">
+                                    <label for="{{form.quadrature.id_for_label}}">Total Area</label>
+                                    <div class="select-input disabled-first-option">
+                                        <input type="hidden" data-unit="m2">
+                                        {{ form.quadrature }}
+                                    </div>
+                                    {{ form.quadrature.errors }}
+                                    <small class="help-text text-muted">{{ form.quadrature.help_text }}</small>
+                                </div>
+    
+                                <!-- Construction Year -->
+                                <div class="col-md-4">
+                                    <label for="{{form.construction_year.id_for_label}}">Construction Year</label>
+                                    {{ form.construction_year }}
+                                    {{ form.construction_year.errors }}
+                                    <small class="help-text text-muted">{{ form.construction_year.help_text }}</small>
+                                </div>
+                            </div>
+    
+    
+                        </div>
+                        <!-- Section End -->
+    
+                        <!-- Section -->
+                        <h3>Gallery</h3>
+                        <div class="submit-section">
+                            <input type="file" value="images" name="images" multiple>
+                            <small class="help-text text-muted">{{ form.images.help_text }}</small>
+                        </div>
+    {#                    <div class="submit-section">#}
+    {#                        <div action="/listings/proba/" id="propertyUploadImages" class="dropzone" method="post" enctype="multipart/form-data">#}
+    {#                                    <input id="imageHolder" type="file" name="images" multiple required >#}
+    {#                            {% csrf_token %}#}
+    {#                            <div class="fallback">#}
+    {#                                <input type="file" name="images" multiple required >#}
+    {#                            </div>#}
+    {#                            <!-- <button class="button fullwidth margin-top-5" id="" type="submit">Submit</button> -->#}
+    {#                        </div>#}
+    {#                    </div>#}
+                        <!-- Section End -->
+    
+                        <!-- Section -->
+                        <h3>Location</h3>
+                        <div class="submit-section">
+    
+                            <!-- Row -->
+                            <div class="row with-forms">
+                                <!-- City -->
+                                <div class="col-md-6">
+                                    {{ form.city.label_tag }}
+                                    {% render_field form.city class="chosen-select-no-single" %}
+                                    {{ form.city.errors }}
+                                    <small class="help-text text-muted">{{ form.city.help_text }}</small>
+                                </div>
+    
+                                <!-- Zip-Code -->
+                                <div class="col-md-6">
+                                    {{ form.zip_code.label_tag }}
+                                    {{ form.zip_code }}
+                                    {{ form.zip_code.errors }}
+                                    <small class="help-text text-muted">{{ form.zip_code.help_text }}</small>
+                                </div>
+    
+                             </div>
+                            <!-- Row / End -->
+    
+                        </div>
+                        <!-- Section End -->
+    
+                        <!-- Section -->
+                        <h3>Detailed Information</h3>
+                        <div class="submit-section">
+    
+                            <!-- Description -->
+                            <div class="form">
+                                <label for="id_description">Description</label>
+                                {{ form.description }}
+                                {{ form.description.errors }}
+                            </div>
+    
+                            <!-- Row -->
+                            <div class="row with-forms">
+                                <!-- Heating -->
+                                <div class="col-md-3">
+                                    <label for="{{form.heating.id_for_label}}">Heating</label>
+                                    {% render_field form.heating class="chosen-select-no-single" %}
+                                    {{ form.heating.errors }}
+                                    <small class="help-text text-muted">{{ form.heating.help_text }}</small>
+                                </div>
+    
+                                <!-- Rooms -->
+                                <div class="col-md-3">
+                                    <label for="{{form.rooms.id_for_label}}">No. of Rooms</label>
+                                    {{ form.rooms }}
+                                    {{ form.rooms.errors }}
+                                    <small class="help-text text-muted">{{ form.construction_year.help_text }}</small>
+                                </div>
+    
+                                <!-- Bedrooms -->
+                                <div class="col-md-3">
+                                    <label for="{{form.bedrooms.id_for_label}}">No. of Bedrooms</label>
+                                    {{ form.bedrooms }}
+                                    {{ form.bedrooms.errors }}
+                                    <small class="help-text text-muted">{{ form.bedrooms.help_text }}</small>
+                                </div>
+    
+                                  <!-- Floor -->
+                                <div class="col-md-3">
+                                    <label for="{{form.floor.id_for_label}}">Floor <span>(optional)</span></label>
+                                    {{ form.floor }}
+                                    {{ form.floor.errors }}
+                                    <small class="help-text text-muted">{{ form.floor.help_text }}</small>
+                                </div>
+    
+                            </div>
+                            <!-- Row / End -->
+    
+    
+                            <!-- Checkboxes -->
+                            <h5 class="margin-top-30">Other Features <span>(optional)</span></h5>
+                            <div class="checkboxes in-row margin-bottom-20">
+    
+                                <input id="check-2" type="checkbox" name="basement" {% if listing.basement %}checked {% endif %}>
+                                <label for="check-2">Basement</label>
+    
+                                <input id="check-5" type="checkbox" name="parking" {% if listing.parking %}checked {% endif %}>
+                                <label for="check-5">Parking</label>
+    
+                                <input id="check-6" type="checkbox" name="elevator" {% if listing.elevator %}checked {% endif %}>
+                                <label for="check-6">Elevator</label>
+    
+                                <input id="check-7" type="checkbox" name="balcony" {% if listing.balcony %}checked {% endif %}>
+                                <label for="check-7">Balcony</label>
+    
+                            </div>
+                            <!-- Checkboxes / End -->
+    
+                        </div>
+                        <!-- Section / End -->
+    
+                    </div>
+                    <button type="submit" class="button">Submit</button>
+                </form>
+            </div>
         </div>
 
     </div>

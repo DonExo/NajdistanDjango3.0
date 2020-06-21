@@ -18,15 +18,17 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <i>To be added content and general info soon!</i><br/>
-
-                {% with request.user as user %} <br/>
-                    {{ user.get_full_name }} <br/>
-                    {{ user.last_login }} <br/>
-                    {{ user.telephone }}
-
-                {% endwith %}
+            <div class="col-md-8 padding-bottom-70">
+                <div class="main-content">
+                    <i>To be added content and general info soon!</i><br/>
+    
+                    {% with request.user as user %} <br/>
+                        {{ user.get_full_name }} <br/>
+                        {{ user.last_login }} <br/>
+                        {{ user.telephone }}
+    
+                    {% endwith %}
+                </div>
             </div>
         </div>
     </div>

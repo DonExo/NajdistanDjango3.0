@@ -54,7 +54,9 @@ CELERY_RESULT_BACKEND = 'django-db'  # django-celery-results
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TASK_ALWAYS_EAGER = True  # Set this to false to start using Celery
+
+# This is the main setting for triggering Celery. It is inherited in the local.py and production.py settings
+# CELERY_TASK_ALWAYS_EAGER = True
 
 # https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#extensions
 
@@ -67,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.sites',
-    'registration', # django-registration-redux, needs to be at this position
+    'registration',  # django-registration-redux, needs to be at this position
     'django.contrib.admin',
 
     # Third party libraries

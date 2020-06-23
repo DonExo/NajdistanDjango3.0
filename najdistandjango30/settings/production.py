@@ -39,3 +39,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 
 GENERATE_DUMMY_LISTING = False
+
+# This means yes, we want to use Celery in production
+CELERY_TASK_ALWAYS_EAGER = False

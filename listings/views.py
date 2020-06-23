@@ -16,6 +16,7 @@ from .filters import ListingFilter
 from .forms import ListingCreateForm, ListingUpdateForm
 from .models import Listing, Image
 from .mixins import CustomLoginRequiredMixin
+from .tasks import task_increment_visited_times_counter
 from .utils import _check_image_validness
 from configdata import FORBIDDEN_MESAGE, PAGINATOR_ITEMS_PER_PAGE
 
@@ -107,7 +108,7 @@ class ListingDetailView(generic.DetailView):
         if not listing.is_active() and listing.user != request.user:
             messages.warning(self.request, "This property can not be viewed.")
             return redirect(reverse('listings:search'))
-        listing.increment_visited_counter(self.request.user)  # TODO: Make this async
+        task_increment_visited_times_counter.delay(listing.pk, self.request.user.pk)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

@@ -35,3 +35,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'najdistan.db'),
     }
 }
+
+# Don't use Celery in local env. Change this to False if you explicitely want to use Celery locally
+CELERY_TASK_ALWAYS_EAGER = False

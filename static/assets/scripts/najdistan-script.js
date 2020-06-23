@@ -46,9 +46,10 @@ function generateListingData() {
                 doubleOffset = 2*sOffset,
                 newPositionOfSticky = screenTop - sticky.top + doubleOffset,
                 stopPoint = controlRef.bottom - sticky.eleHeight - doubleOffset;
-                console.log(stopPoint);
 
+                
             if (stopPoint < screenTop) {
+                console.log("stopPoint= "+stopPoint, "controlBottom= "+controlRef.bottom, "stickyHeight= "+sticky.eleHeight);
                 sticky.element.css({ top: `${stopPoint - (sOffset)}px` });
             } else if (sticky.top < screenTop + doubleOffset) {
                 sticky.element.css({ top: `${newPositionOfSticky}px` });
@@ -71,9 +72,9 @@ function generateListingData() {
         }
         
         let sticky = {
-            element: $(".sidebar.left"),
-            top: Math.round($(".sidebar.left").offset().top),
-            eleHeight: $(".sidebar.left").outerHeight()
+            element: $(".sidebar"),
+            top: Math.round($(".sidebar").offset().top),
+            eleHeight: $(".sidebar").outerHeight()
         }
 
         let throttleStickyScroll =  _.throttle(

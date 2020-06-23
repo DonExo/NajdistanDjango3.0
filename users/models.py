@@ -116,4 +116,3 @@ class Bookmarks(models.Model):
     def clean(self):
         if self.user_id == self.listing.user_id:
             raise ValidationError("You can't bookmark your own listing!")
-

@@ -10,10 +10,6 @@ help_texts = [
     _('If property is for sell - type overall selling price. <br/> If property is for rent - type monthly rent cost.')
 ]
 
-validation_errors = [
-
-]
-
 
 class ListingCreateForm(forms.ModelForm):
     title = forms.CharField(label='Property title', help_text=help_texts[0])

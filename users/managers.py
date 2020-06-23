@@ -1,6 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
+
 class CustomUserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
 

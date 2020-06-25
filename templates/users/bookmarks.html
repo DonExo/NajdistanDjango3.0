@@ -19,40 +19,42 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <i>This functionality is <b>Under Development!</b></i>
-
-{#                {% if bookmarks %}#}
-{#                    <table class="manage-table responsive-table">#}
-{#                        <tr>#}
-{#                            <th><i class="fa fa-file-text"></i> Property</th>#}
-{#                            <th><i class="fa fa-file-text"></i> Actions</th>#}
-{#                        </tr>#}
-{#                        {% for bookmark in bookmarks %}#}
-{#                            <tr>#}
-{#                                <td class="title-container">#}
-{#                                    <img src="{{ bookmark.listing.get_cover_image.url }}"#}
-{#                                         alt="{{ bookmark.listing.title }}">#}
-{#                                    <div class="title">#}
-{#                                        <h4>#}
-{#                                            <a href="{% url 'listings:detail' bookmark.listing.slug %}">{{ bookmark.listing.title|truncatewords:8 }}</a>#}
-{#                                        </h4>#}
-{#                                        <span>{{ bookmark.listing.zip_code }}, {{ bookmark.listing.city }} </span>#}
-{#                                        <span class="table-property-price">{{ bookmark.listing.price }} <i>&euro;</i></span>#}
-{#                                    </div>#}
-{#                                </td>#}
-{#                                <td class="action">#}
-{#                                    <a href="{% url 'listings:update' bookmark.listing.slug %}"><i#}
-{#                                            class="fa fa-star-o"></i> Remove Bookmark</a>#}
-{#                                    <a href="{% url 'listings:update' bookmark.listing.slug %}"><i#}
-{#                                            class="fa fa-star-o"></i> Contact Owner</a>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                    </table>#}
-{#                {% else %}#}
-{#                    <p>You don't have any bookmarked properties.</p>#}
-{#                {% endif %}#}
+            <div class="col-md-8 padding-bottom-70">
+                <div class="main-content">
+                    <i>This functionality is <b>Under Development!</b></i>
+    
+    {#                {% if bookmarks %}#}
+    {#                    <table class="manage-table responsive-table">#}
+    {#                        <tr>#}
+    {#                            <th><i class="fa fa-file-text"></i> Property</th>#}
+    {#                            <th><i class="fa fa-file-text"></i> Actions</th>#}
+    {#                        </tr>#}
+    {#                        {% for bookmark in bookmarks %}#}
+    {#                            <tr>#}
+    {#                                <td class="title-container">#}
+    {#                                    <img src="{{ bookmark.listing.get_cover_image.url }}"#}
+    {#                                         alt="{{ bookmark.listing.title }}">#}
+    {#                                    <div class="title">#}
+    {#                                        <h4>#}
+    {#                                            <a href="{% url 'listings:detail' bookmark.listing.slug %}">{{ bookmark.listing.title|truncatewords:8 }}</a>#}
+    {#                                        </h4>#}
+    {#                                        <span>{{ bookmark.listing.zip_code }}, {{ bookmark.listing.city }} </span>#}
+    {#                                        <span class="table-property-price">{{ bookmark.listing.price }} <i>&euro;</i></span>#}
+    {#                                    </div>#}
+    {#                                </td>#}
+    {#                                <td class="action">#}
+    {#                                    <a href="{% url 'listings:update' bookmark.listing.slug %}"><i#}
+    {#                                            class="fa fa-star-o"></i> Remove Bookmark</a>#}
+    {#                                    <a href="{% url 'listings:update' bookmark.listing.slug %}"><i#}
+    {#                                            class="fa fa-star-o"></i> Contact Owner</a>#}
+    {#                                </td>#}
+    {#                            </tr>#}
+    {#                        {% endfor %}#}
+    {#                    </table>#}
+    {#                {% else %}#}
+    {#                    <p>You don't have any bookmarked properties.</p>#}
+    {#                {% endif %}#}
+                </div>
 
             </div>
         </div>

@@ -17,90 +17,92 @@
 			</div>
         </div>
         
-        <div class="col-md-8">
-            <form method="post" enctype="multipart/form-data" autocomplete="off">
-                {% csrf_token %}
-
-                {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field }}
-                {% endfor %}
-
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger" role="alert">
-                    {% for error in form.non_field_errors %}
-                        {{ error }}
+        <div class="col-md-8 padding-bottom-70">
+            <div class="main-content">
+                <form method="post" enctype="multipart/form-data" autocomplete="off">
+                    {% csrf_token %}
+    
+                    {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field }}
                     {% endfor %}
+    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+    
+                    <div class="col-md-8 my-profile">
+                        <div class="form-group form-row">
+                            <label class="control-label" for="{{ form.first_name.id_for_label }}">
+                                {{ form.first_name.label }}:
+                                <i class="im im-icon-Font-Name"></i>
+                                {{ form.first_name }}
+                            </label>
+                            {{ form.first_name.errors }}
+                            <small class="help-text text-muted">{{ form.first_name.help_text }}</small>
+                        </div>
+    
+                        <div class="form-group form-row">
+                            <label class="control-label" for="{{ form.last_name.id_for_label }}">
+                                {{ form.last_name.label }}:
+                                <i class="im im-icon-Font-Name"></i>
+                                {{ form.last_name }}
+                            </label>
+                            {{ form.last_name.errors }}
+                            <small class="help-text text-muted">{{ form.last_name.help_text }}</small>
+                        </div>
+    
+                        <div class="form-group form-row">
+                            <label class="control-label" for="{{ form.telephone.id_for_label }}">
+                                {{ form.telephone.label }}:
+                                <i class="im im-icon-Phone-2"></i>
+                                {{ form.telephone }}
+                            </label>
+                            {{ form.telephone.errors }}
+                            <small class="help-text text-muted">{{ form.telephone.help_text }}</small>
+                        </div>
+    
+                        <div class="form-group form-row">
+                            <label class="control-label" for="{{ form.email.id_for_label }}">
+                                {{ form.email.label }}:
+                                <i class="im im-icon-Mail"></i>
+                                {{ form.email }}
+                            </label>
+                            {{ form.email.errors }}
+                            <small class="help-text text-muted">{{ form.email.help_text }}</small>
+                        </div>
+    
+                        <div class="form-group form-row">
+                            <label class="control-label" for="{{ form.password.id_for_label }}">
+                                {{ form.password.label }}:
+                                <i class="im im-icon-Lock-2"></i>
+                                {{ form.password }}
+                            </label>
+                            {{ form.password.errors }}
+                            <small class="help-text text-muted">{{ form.password.help_text }}</small>
+                        </div>
+                        
+                        <button type="submit" class="button margin-top-20 margin-bottom-20">Save Changes</button>
                     </div>
-                {% endif %}
-
-                <div class="col-md-8 my-profile">
-                    <div class="form-group form-row">
-                        <label class="control-label" for="{{ form.first_name.id_for_label }}">
-                            {{ form.first_name.label }}:
-                            <i class="im im-icon-Font-Name"></i>
-                            {{ form.first_name }}
-                        </label>
-                        {{ form.first_name.errors }}
-                        <small class="help-text text-muted">{{ form.first_name.help_text }}</small>
-                    </div>
-
-                    <div class="form-group form-row">
-                        <label class="control-label" for="{{ form.last_name.id_for_label }}">
-                            {{ form.last_name.label }}:
-                            <i class="im im-icon-Font-Name"></i>
-                            {{ form.last_name }}
-                        </label>
-                        {{ form.last_name.errors }}
-                        <small class="help-text text-muted">{{ form.last_name.help_text }}</small>
-                    </div>
-
-                    <div class="form-group form-row">
-                        <label class="control-label" for="{{ form.telephone.id_for_label }}">
-                            {{ form.telephone.label }}:
-                            <i class="im im-icon-Phone-2"></i>
-                            {{ form.telephone }}
-                        </label>
-                        {{ form.telephone.errors }}
-                        <small class="help-text text-muted">{{ form.telephone.help_text }}</small>
-                    </div>
-
-                    <div class="form-group form-row">
-                        <label class="control-label" for="{{ form.email.id_for_label }}">
-                            {{ form.email.label }}:
-                            <i class="im im-icon-Mail"></i>
-                            {{ form.email }}
-                        </label>
-                        {{ form.email.errors }}
-                        <small class="help-text text-muted">{{ form.email.help_text }}</small>
-                    </div>
-
-                    <div class="form-group form-row">
-                        <label class="control-label" for="{{ form.password.id_for_label }}">
-                            {{ form.password.label }}:
-                            <i class="im im-icon-Lock-2"></i>
-                            {{ form.password }}
-                        </label>
-                        {{ form.password.errors }}
-                        <small class="help-text text-muted">{{ form.password.help_text }}</small>
-                    </div>
-                    
-                    <button type="submit" class="button margin-top-20 margin-bottom-20">Save Changes</button>
-                </div>
-
-                <div class="col-md-4">
-                    <!-- Avatar -->
-                    <div class="edit-profile-photo">
-                        <img src="{{ request.user.get_profile_image }}" alt="alt">
-                        <div class="change-photo-btn">
-                            <div class="photoUpload">
-                                <span><i class="fa fa-upload"></i> Change Photo</span>
-                                <input type="file" name="profile_image" accept="image/*" id="id_profile_image" class="upload" />
+    
+                    <div class="col-md-4">
+                        <!-- Avatar -->
+                        <div class="edit-profile-photo">
+                            <img src="{{ request.user.get_profile_image }}" alt="alt">
+                            <div class="change-photo-btn">
+                                <div class="photoUpload">
+                                    <span><i class="fa fa-upload"></i> Change Photo</span>
+                                    <input type="file" name="profile_image" accept="image/*" id="id_profile_image" class="upload" />
+                                </div>
                             </div>
                         </div>
+    
                     </div>
-
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

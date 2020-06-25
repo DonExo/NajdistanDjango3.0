@@ -44,53 +44,54 @@
         <div class="row sticky-wrapper">
     
             <div class="col-md-8 padding-bottom-70">
-                <!-- Sorting / Layout Switcher -->
-                <div class="row margin-bottom-15">
-
-                    <div class="col-md-6">
-                        <!-- Sort by -->
-                        <div class="sort-by">
-                            <label>Sort by:</label>
-
-                            <div class="sort-by-select">
-                                <select data-placeholder="Default order" class="chosen-select-no-single" >
-                                    <option>Default Order</option>	
-                                    <option>Price Low to High</option>
-                                    <option>Price High to Low</option>
-                                    <option>Newest Properties</option>
-                                    <option>Oldest Properties</option>
-                                </select>
+                <div class="main-content">
+                    <!-- Sorting / Layout Switcher -->
+                    <div class="row margin-bottom-15">
+    
+                        <div class="col-md-6">
+                            <!-- Sort by -->
+                            <div class="sort-by">
+                                <label>Sort by:</label>
+    
+                                <div class="sort-by-select">
+                                    <select data-placeholder="Default order" class="chosen-select-no-single" >
+                                        <option>Default Order</option>	
+                                        <option>Price Low to High</option>
+                                        <option>Price High to Low</option>
+                                        <option>Newest Properties</option>
+                                        <option>Oldest Properties</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-6">
+                            <!-- Layout Switcher -->
+                            <div class="layout-switcher">
+                                <a href="#" class="list"><i class="fa fa-th-list"></i></a>
+                                <a href="#" class="grid"><i class="fa fa-th-large"></i></a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <!-- Layout Switcher -->
-                        <div class="layout-switcher">
-                            <a href="#" class="list"><i class="fa fa-th-list"></i></a>
-                            <a href="#" class="grid"><i class="fa fa-th-large"></i></a>
-                        </div>
+    
+                    <!-- Listings -->
+                    <div class="listings-container list-layout">
+                        {% if object_list %}
+                            {% for object in object_list %}
+                                {% include 'listings/includes/horizontal_card.html' %}
+                            {% endfor %}
+                        {% else %}
+                            <p>The given search criteria did not yield any results.</p>
+                        {% endif %}
                     </div>
+                    {% include 'listings/includes/pagination.html' %}
                 </div>
-
-                <!-- Listings -->
-                <div class="listings-container list-layout">
-                    {% if object_list %}
-                        {% for object in object_list %}
-                            {% include 'listings/includes/horizontal_card.html' %}
-                        {% endfor %}
-                    {% else %}
-                        <p>The given search criteria did not yield any results.</p>
-                    {% endif %}
-                </div>
-                {% include 'listings/includes/pagination.html' %}
-
             </div>
 
             <!-- Sidebar
             ================================================== -->
             <div class="col-md-4">
-                <div class="sidebar sticky right">
+                <div class="sidebar right">
                     <!-- Widget -->
                     <div class="widget margin-bottom-40">
                         <h3 class="margin-top-0 margin-bottom-35">Find New Home</h3>

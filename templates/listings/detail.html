@@ -76,16 +76,46 @@
     
             <!-- Property Description -->
             <div class="col-lg-8 col-md-7 sp-content padding-bottom-100">
-                <div class="property-description">
+                <div class="main-content property-description">
 
                     <!-- Main Features -->
                     <ul class="property-main-features">
-                        <li>Area <span>{{object.quadrature}} m<sup>2</sup></span></li>
-                        <li>Rooms <span>{{object.rooms}}</span></li>
-                        <li>Bedrooms <span>{{object.bedrooms}}</span></li>
-                        <li>Floor <span>{{object.floor}}</span></li>
-                        <li>Published <span>{{ object.created_at|naturalday }}</span></li>
-                        <li>Built <span>{{ object.construction_year }}</span></li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Structure"></i>
+                            </div>
+                            Area <span>{{object.quadrature}} m<sup>2</sup></span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Door"></i>
+                            </div>
+                            Rooms <span>{{object.rooms}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <img src="{% static 'assets/icons/icon-bedroom.svg' %}" alt="">
+                            </div>
+                            Bedrooms <span>{{object.bedrooms}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <img src="{% static 'assets/icons/icon-floor-2.svg' %}" alt="">
+                            </div>
+                            Floor <span>{{object.floor}}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Clock-Back"></i>
+                            </div>
+                            Published <span>{{ object.created_at|naturalday }}</span>
+                        </li>
+                        <li>
+                            <div class="property-main-features-icon">
+                                <i class="im im-icon-Worker"></i>
+                            </div>
+                            Built <span>{{ object.construction_year }}</span>
+                        </li>
                     </ul>
 
                     <!-- Description -->
@@ -127,7 +157,7 @@
 
             <!-- Sidebar -->
             <div class="col-lg-4 col-md-5 sp-sidebar">
-                <div class="sidebar sticky right">
+                <div class="sidebar right">
                     <!-- Widget -->
                     <div class="widget margin-bottom-30">
                         <button class="widget-button with-tip" data-tip-content="Print"><i class="sl sl-icon-printer"></i></button>

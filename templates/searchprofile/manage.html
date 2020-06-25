@@ -19,51 +19,53 @@
 
             <!-- Manage Page -->
             <div class="col-md-8 padding-bottom-70">
-                {% if reached_max_sp %}
-                        <p style="color: red;">You've reached the maximum number of Search profiles you can have.<br>
-                           <a href="#">Upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
-                {% endif %}
-                <p>"Search Profile" is a functionality that notifies you via e-mail when a new property has been listed
-                on our website that matches your criteria. <br/>
-                The notification interval is set in the Search Profile itself. <br/>
-                "Instant" notifications are only available for <a href="#">Premium</a> users.
-                </p>
-
-                <table class="basic-table responsive-table padding-top-20 search-profile">
-                    <tr>
-                        <th>Title</th>
-                        <th>Frequency</th>
-                        <th>Specs</th>
-                        <th>Status</th>
-                        <th><i class="fa fa-file-text"></i> Actions</th>
-                    </tr>
-                    {% if search_profiles %}
-                        {% for sp in search_profiles %}
-                            <tr>
-                                <td><a href="javascript:;" class="tooltip top" title="{{ sp.title }}">{{ sp.title|truncatewords:"4" }}</a></td>
-                                <td>{{ sp.frequency.title }}</td>
-                                <td><a href="javascript:;" class="tooltip top" title="{{ sp.get_specs_html }}">More info...</a></td>
-
-                                <td>
-                                    <div class="input-wrapper">
-                                        <div class="input-checkbox-switch">
-                                            <input type="checkbox" name="{{ sp.pk }}" id="spSwitch{{ sp.pk }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
-                                            <label for="spSwitch{{ sp.pk }}"></label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="action">
-                                    <a href="{% url 'searchprofiles:update' sp.pk %}"><i class="fa fa-pencil"></i> Update</a> <br/>
-                                    <a href="{% url 'searchprofiles:delete' sp.pk %}" class="delete" onclick="return confirm('Are you sure you want to delete this listing?');">
-                                        <i class="fa fa-remove"></i> Delete</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
+                <div class="main-content">
+                    {% if reached_max_sp %}
+                            <p style="color: red;">You've reached the maximum number of Search profiles you can have.<br>
+                               <a href="#">Upgrade to Premium</a> to have access to more Search profiles and many other cool features.</p>
                     {% endif %}
-                </table>
-            <p class="margin-top-20"><i>Total Search profiles: {{ search_profiles|length }}, out of which {{ active_sp }} are active.</i></p>
+                    <p>"Search Profile" is a functionality that notifies you via e-mail when a new property has been listed
+                    on our website that matches your criteria. <br/>
+                    The notification interval is set in the Search Profile itself. <br/>
+                    "Instant" notifications are only available for <a href="#">Premium</a> users.
+                    </p>
+    
+                    <table class="basic-table responsive-table padding-top-20 search-profile">
+                        <tr>
+                            <th>Title</th>
+                            <th>Frequency</th>
+                            <th>Specs</th>
+                            <th>Status</th>
+                            <th><i class="fa fa-file-text"></i> Actions</th>
+                        </tr>
+                        {% if search_profiles %}
+                            {% for sp in search_profiles %}
+                                <tr>
+                                    <td><a href="javascript:;" class="tooltip top" title="{{ sp.title }}">{{ sp.title|truncatewords:"4" }}</a></td>
+                                    <td>{{ sp.frequency.title }}</td>
+                                    <td><a href="javascript:;" class="tooltip top" title="{{ sp.get_specs_html }}">More info...</a></td>
+    
+                                    <td>
+                                        <div class="input-wrapper">
+                                            <div class="input-checkbox-switch">
+                                                <input type="checkbox" name="{{ sp.pk }}" id="spSwitch{{ sp.pk }}" value="{{ sp.is_active }}" {% if sp.is_active %}checked {% endif %} />
+                                                <label for="spSwitch{{ sp.pk }}"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="action">
+                                        <a href="{% url 'searchprofiles:update' sp.pk %}"><i class="fa fa-pencil"></i> Update</a> <br/>
+                                        <a href="{% url 'searchprofiles:delete' sp.pk %}" class="delete" onclick="return confirm('Are you sure you want to delete this listing?');">
+                                            <i class="fa fa-remove"></i> Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <p>You don't have any Search Profiles. Would you like to <a href="{% url 'searchprofiles:create' %}">create one?</a></p>
+                        {% endif %}
+                    </table>
+                    <p class="margin-top-20"><i>Total Search profiles: {{ search_profiles|length }}, out of which {{ active_sp }} are active.</i></p>
+                </div>
             </div>
         </div>
     </div>

@@ -848,9 +848,18 @@ button { outline: none; }
 /*----------------------------------- */
 /* Sidebar
 ------------------------------------- */
+.sidebar.sticky {
+    position: absolute;
+	width: calc( 100% - 50px );
+	top: 0;
+	left: 0;
+	transition: top 0.3s;
+}
+
 .sidebar.left{
 	padding-right: 20px;
 }
+
 
 .sidebar.right {
 	padding-left: 20px;
@@ -12422,6 +12431,8 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 /* Smaller than standard 1180 (devices and browsers) */
 @media (max-width: 1239px) {
 
+	.sidebar.sticky {width: calc( 100% - 10px );}
+
 	#map-container.homepage-map { height: 480px; }
 
 	#header.cloned { display: none; }
@@ -12498,7 +12509,6 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 	.header-widget { height: auto; }
 	.parallax #titlebar { padding: 75px 0; }
 }
-
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media (max-width: 992px) {
@@ -12613,6 +12623,7 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 
 	.my-profile { padding-right: 20px; }
 	.sidebar.left { padding-right: 0; }
+	.sidebar.sticky { position: static; width: 100%; }
 }
 
 

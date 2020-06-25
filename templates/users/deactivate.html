@@ -17,16 +17,18 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <p style="color: red;">
-                    Are you sure you want to permanently deactivate your Account? <br/>
-                    Once you do that, you will no longer be able to Log-in and Manage your existing properties. <br/>
-                    Your account, your properties and your Search Profiles will be deactivated. <br/>
-                </p>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Deactivate" onclick="return confirm('Are you sure you want to delete your Account?');">
-                </form>
+            <div class="col-md-8 padding-bottom-70">
+                <div class="main-content">
+                    <p style="color: red;">
+                        Are you sure you want to permanently deactivate your Account? <br/>
+                        Once you do that, you will no longer be able to Log-in and Manage your existing properties. <br/>
+                        Your account, your properties and your Search Profiles will be deactivated. <br/>
+                    </p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Deactivate" onClick="return confirm('Are you sure you want to delete your Account?');">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

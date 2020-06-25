@@ -36,27 +36,67 @@ function generateListingData() {
 }
 
 
-///////////////////////////// STICKY MENU (WIP) ///////////////////////////
-function stickySideMenuInit($footer) {
-    let sideMenu = $(".my-account-nav-container"),
-        top_of_element = $footer.offset().top + 120,
-        bottom_of_element = $footer.offset().top + $footer.outerHeight(),
-        bottom_of_screen = $(window).scrollTop() + $(window).innerHeight(),
-        top_of_screen = $(window).scrollTop() ;
+///////////////////////////// STICKY SIDEMENU (WIP) ///////////////////////////
+(function($){
+    "use strict";
 
-    if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)) {
-        sideMenu.hasClass("side-menu-sticky") && sideMenu.removeClass("side-menu-sticky");
-    } else {
-        if (!sideMenu.hasClass("side-menu-sticky")) {
-        sideMenu.addClass("side-menu-sticky");
+    $(document).ready(function(){
+        function stickySideMenuInit(sticky, controlRef, sOffset) {
+            let screenTop = Math.round($(window).scrollTop()), // returns number
+                doubleOffset = 2*sOffset,
+                newPositionOfSticky = screenTop - sticky.top + doubleOffset,
+                stopPoint = controlRef.bottom - sticky.eleHeight - doubleOffset;
+
+                
+            if (stopPoint < screenTop) {
+                console.log("stopPoint= "+stopPoint, "controlBottom= "+controlRef.bottom, "stickyHeight= "+sticky.eleHeight);
+                sticky.element.css({ top: `${stopPoint - (sOffset)}px` });
+            } else if (sticky.top < screenTop + doubleOffset) {
+                sticky.element.css({ top: `${newPositionOfSticky}px` });
+            } else {
+                sticky.element.css({ top: 0 });
+            }
         }
-    }
-}
 
-$(window).on("scroll", function(){
-    stickySideMenuInit($(".footer-shadow"));
-});
+        const mainContent = $(".main-content"),
+            mainContentHeight = mainContent.outerHeight(),
+            stickyOffset = 65,
+            $window = $(window),
+            windowWidth = $window.innerWidth(),
+            windowBreakpoint = 992;
 
+        let controlRef = {
+            element: $(".main-content"),
+            top: Math.round($(".main-content").offset().top),
+            bottom: Math.round($(".main-content").offset().top + $(".main-content").outerHeight())
+        }
+        
+        let sticky = {
+            element: $(".sidebar"),
+            top: Math.round($(".sidebar").offset().top),
+            eleHeight: $(".sidebar").outerHeight()
+        }
+
+        let throttleStickyScroll =  _.throttle(
+            function (){
+                stickySideMenuInit(sticky, controlRef, stickyOffset)
+            }, 100, { "leading": true });
+
+        let debounceResize = _.debounce(
+            function () {
+                controlRef.bottom = Math.round($(".main-content").offset().top + $(".main-content").outerHeight());
+            }, 400
+        )
+
+        if ( mainContentHeight > sticky.eleHeight && windowWidth > windowBreakpoint ) {
+            sticky.element.addClass("sticky");
+            $window.on("scroll", throttleStickyScroll);
+            $window.on("resize", debounceResize);
+        }
+
+    });
+
+})(this.jQuery);
 
 /////////////////////////// DROPZONE ///////////////////////////
 // Dropzone.autoDiscover = false;

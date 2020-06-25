@@ -38,8 +38,6 @@ mark.color {
 }
 
 .user-menu ul li a:hover,
-.user-menu.active .user-name:after,
-.user-menu:hover .user-name:after,
 .user-menu.active .user-name,
 .user-menu:hover .user-name,
 table.manage-table td.action a:hover,
@@ -81,6 +79,11 @@ a,
 a.button.border,
 a.button.border.white:hover {
     color: #6449E7
+}
+
+.user-menu.active .user-name:after,
+.user-menu:hover .user-name:after {
+    color: #fff;
 }
 
 #header-container.top-border {

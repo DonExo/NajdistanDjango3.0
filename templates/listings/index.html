@@ -31,9 +31,9 @@ data-img-height="1600">
 						<form class="main-search-form" action="{% url 'listings:search' %}" method="get" autocomplete="off">
                             <!-- Type -->
 							<div class="search-type">
-								<label class="active"><input class="first-tab" name="tab" checked="checked" type="radio">Any Status</label>
-								<label><input name="tab" type="radio">For Sale</label>
-								<label><input name="tab" type="radio">For Rent</label>
+								<label class="active" data-search-type="none"><input class="first-tab" value="" name="type" checked="checked" type="radio">Any Status</label>
+								<label data-search-type="sell"><input name="type" value="sell" type="radio">For Sale</label>
+								<label data-search-type="rent"><input name="type" value="rent" type="radio">For Rent</label>
 								<div class="search-type-arrow"></div>
                             </div>
 
@@ -57,14 +57,114 @@ data-img-height="1600">
                                         {{ filter.form.price.label_tag }}
                                         {{ filter.form.price }}
                                     </div>
-                                </div>
+								</div>
+								
+								<!-- More Search Options -->
+								<a href="#" class="more-search-options-trigger" data-open-title="More Options" data-close-title="Less Options"></a>
+
+								<div class="more-search-options">
+									<div class="more-search-options-container">
+
+										<!-- Row -->
+										<div class="row with-forms">
+
+											<!-- Min Price -->
+											<div class="col-md-6">
+												
+												<!-- Select Input -->
+												<div class="select-input">
+													<input type="text" placeholder="Min Area" data-unit="Sq Ft">
+												</div>
+												<!-- Select Input / End -->
+
+											</div>
+
+											<!-- Max Price -->
+											<div class="col-md-6">
+												
+												<!-- Select Input -->
+												<div class="select-input">
+													<input type="text" placeholder="Max Area" data-unit="Sq Ft">
+												</div>
+												<!-- Select Input / End -->
+
+											</div>
+
+										</div>
+										<!-- Row / End -->
+
+
+										<!-- Row -->
+										<div class="row with-forms">
+
+											<!-- Min Area -->
+											<div class="col-md-6">
+												<select data-placeholder="Beds" class="chosen-select-no-single" >
+													<option label="blank"></option>	
+													<option>Beds (Any)</option>	
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>5</option>
+												</select>
+											</div>
+
+											<!-- Max Area -->
+											<div class="col-md-6">
+												<select data-placeholder="Baths" class="chosen-select-no-single" >
+													<option label="blank"></option>	
+													<option>Baths (Any)</option>	
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>5</option>
+												</select>
+											</div>
+
+										</div>
+										<!-- Row / End -->
+			
+
+										<!-- Checkboxes -->
+										<div class="checkboxes in-row">
+									
+											<input id="check-2" type="checkbox" name="check">
+											<label for="check-2">Air Conditioning</label>
+
+											<input id="check-3" type="checkbox" name="check">
+											<label for="check-3">Swimming Pool</label>
+
+											<input id="check-4" type="checkbox" name="check" >
+											<label for="check-4">Central Heating</label>
+
+											<input id="check-5" type="checkbox" name="check">
+											<label for="check-5">Laundry Room</label>	
+
+
+											<input id="check-6" type="checkbox" name="check">
+											<label for="check-6">Gym</label>
+
+											<input id="check-7" type="checkbox" name="check">
+											<label for="check-7">Alarm</label>
+
+											<input id="check-8" type="checkbox" name="check">
+											<label for="check-8">Window Covering</label>
+									
+										</div>
+										<!-- Checkboxes / End -->
+
+									</div>
+								</div>
+								<!-- More Search Options / End -->
 
                                 <!-- The hidden input for Listing Type -->
-                                <div class="row with-forms hidden">
+                                <!-- <div class="row with-forms hidden">
                                     <div class="col-md-4">
 										{% render_field filter.form.type  %}
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </form>
@@ -81,7 +181,7 @@ data-img-height="1600">
 
 <!-- Content
 ================================================== -->
-<div class="container margin-bottom-100">
+<div class="container">
 	<div class="row">
 	
 		<div class="col-md-12">
@@ -101,6 +201,74 @@ data-img-height="1600">
 
 	</div>
 </div>
+
+<!-- Popular -->
+<section class="fullwidth margin-top-95 margin-bottom-0">
+	<h3 class="headline-box">Most Popular Places</h3>
+	<div class="container">
+		<div class="row">
+
+			<!-- <div class="col-md-12">
+				<h3 class="headline centered margin-bottom-35 margin-top-10">Most Popular Places <span>Properties In Most Popular Places</span></h3>
+			</div> -->
+			
+			<div class="col-md-4">
+
+				<!-- Image Box -->
+				<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="images/popular-location-01.jpg">
+
+					<!-- Badge -->
+					<div class="listing-badges">
+						<span class="featured">Featured</span>
+					</div>
+
+					<div class="img-box-content visible">
+						<h4>New York </h4>
+						<span>14 Properties</span>
+					</div>
+				</a>
+
+			</div>	
+				
+			<div class="col-md-8">
+
+				<!-- Image Box -->
+				<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="images/popular-location-02.jpg">
+					<div class="img-box-content visible">
+						<h4>Los Angeles</h4>
+						<span>24 Properties</span>
+					</div>
+				</a>
+
+			</div>	
+
+			<div class="col-md-8">
+
+				<!-- Image Box -->
+				<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="images/popular-location-03.jpg">
+					<div class="img-box-content visible">
+						<h4>San Francisco </h4>
+						<span>12 Properties</span>
+					</div>
+				</a>
+
+			</div>	
+				
+			<div class="col-md-4">
+
+				<!-- Image Box -->
+				<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="images/popular-location-04.jpg">
+					<div class="img-box-content visible">
+						<h4>Miami</h4>
+						<span>9 Properties</span>
+					</div>
+				</a>
+
+			</div>
+
+		</div>
+	</div>
+</section>
 
 <!-- Flip banner -->
 <a href="#"

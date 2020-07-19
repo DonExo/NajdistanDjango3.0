@@ -2,6 +2,9 @@ from django.db import models
 
 
 class CustomSearchProfileQueryset(models.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
     def daily(self):
         return self.filter(frequency='daily', is_active=True)
 

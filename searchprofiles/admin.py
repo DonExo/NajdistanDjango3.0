@@ -6,3 +6,4 @@ from .models import SearchProfiles
 @admin.register(SearchProfiles)
 class SearchProfileAdmin(admin.ModelAdmin):
     list_display = ('title', 'pk', 'user', 'city', 'min_price', 'max_price', 'frequency', 'is_active')
+    list_filter = ('frequency', 'is_active')

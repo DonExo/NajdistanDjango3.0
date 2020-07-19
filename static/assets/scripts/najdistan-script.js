@@ -44,37 +44,39 @@ function generateListingData() {
         function stickySideMenuInit(sticky, controlRef, sOffset) {
             let screenTop = Math.round($(window).scrollTop()), // returns number
                 doubleOffset = 2*sOffset,
-                newPositionOfSticky = screenTop - sticky.top + doubleOffset,
+                stickyTopPos = 0,
+                stickyBottomPos = controlRef.eleHeight - sticky.eleHeight,
+                stickyMovingPos = screenTop - sticky.top + doubleOffset,
                 stopPoint = controlRef.bottom - sticky.eleHeight - doubleOffset;
 
-                
             if (stopPoint < screenTop) {
-                console.log("stopPoint= "+stopPoint, "controlBottom= "+controlRef.bottom, "stickyHeight= "+sticky.eleHeight);
-                sticky.element.css({ top: `${stopPoint - (sOffset)}px` });
+                sticky.element.css({ top: `${stickyBottomPos}px` }); // Bottom-most position of sticky
             } else if (sticky.top < screenTop + doubleOffset) {
-                sticky.element.css({ top: `${newPositionOfSticky}px` });
+                sticky.element.css({ top: `${stickyMovingPos}px` }); // Moving position of sticky
             } else {
-                sticky.element.css({ top: 0 });
+                sticky.element.css({ top: `${stickyTopPos}px` }); // Top-most position of sticky
             }
         }
 
         const mainContent = $(".main-content"),
-            mainContentHeight = mainContent.outerHeight(),
+            mainContentHeight = Math.round(mainContent.outerHeight()),
+            sidebar = $(".sidebar"),
             stickyOffset = 65,
             $window = $(window),
-            windowWidth = $window.innerWidth(),
+            windowWidth = Math.round($window.innerWidth()),
             windowBreakpoint = 992;
 
         let controlRef = {
-            element: $(".main-content"),
-            top: Math.round($(".main-content").offset().top),
-            bottom: Math.round($(".main-content").offset().top + $(".main-content").outerHeight())
+            element: mainContent,
+            top: Math.round(mainContent.offset().top),
+            bottom: Math.round(mainContent.offset().top + mainContent.outerHeight()),
+            eleHeight: Math.round(mainContent.outerHeight())
         }
         
         let sticky = {
-            element: $(".sidebar"),
-            top: Math.round($(".sidebar").offset().top),
-            eleHeight: $(".sidebar").outerHeight()
+            element: sidebar,
+            top: Math.round(sidebar.offset().top),
+            eleHeight: Math.round(sidebar.outerHeight())
         }
 
         let throttleStickyScroll =  _.throttle(
@@ -84,7 +86,7 @@ function generateListingData() {
 
         let debounceResize = _.debounce(
             function () {
-                controlRef.bottom = Math.round($(".main-content").offset().top + $(".main-content").outerHeight());
+                controlRef.bottom = Math.round(mainContent.offset().top + mainContent.outerHeight());
             }, 400
         )
 

@@ -3440,6 +3440,10 @@ body #compare-list li div:last-child .clp-title,
 /* ---------------------------------- */
 /* Titlebar
 ------------------------------------- */
+.parallax #titlebar {
+	margin-top: -65px;
+}
+
 #titlebar {
 	background-color: #f8f8f8;
 	position: relative;

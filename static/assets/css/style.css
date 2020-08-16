@@ -4693,6 +4693,11 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 	transform: translateY(-50%);
 	text-align: right;
 	line-height: 34px;
+
+	padding: 10px 20px;
+    border-radius: 3px;
+    color: #fff;
+    background: #6449E7;
 }
 
 
@@ -5187,6 +5192,51 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 
 .edit-profile-photo {
 	position: relative;
+}
+
+.profile-header {
+	position: relative;
+}
+
+.profile-header-login {
+	font-size: 12px;
+	margin-top: 15px;
+}
+
+.profile-header::before {
+	content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    background-color: #6449E7;
+    width: calc(100% - 30px);
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.profile-header-photo {
+    max-width: 160px;
+	margin-left: auto;
+	padding: 5px;
+	border-radius: 50%;
+	background-color: #fff;
+    border: 2px solid #6449E7;
+	overflow: hidden;
+}
+
+.profile-header-photo img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+    object-fit: contain;
+}
+
+.profile-body {
+	margin-top: 20px;
+}
+
+.profile-body label {
+	color: #6449E7;
 }
 
 .change-photo-btn {

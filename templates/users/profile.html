@@ -51,7 +51,32 @@
                         <div class="col-md-9">
                             <p>{{ user.telephone }}</p>
                         </div>
-                    </div>                       
+                        <div class="col-md-3">
+                            <label>Submitted properties:</label>
+                        </div>
+                        <div class="col-md-9">
+                            {% if user.has_listings %}
+                                <p><a href="{% url 'accounts:properties' %}">You have a total of 4 (2 active) properties</a></p>
+                            {% else %}
+                                <p>No properties submitted so far... Well? What are you waiting for?</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <label>Search profiles:</label>
+                        </div>
+                        <div class="col-md-9">
+                            {% if user.is_premium_user %}
+                            <!-- <p>Only premium users can activate search profiles</p> -->
+                            <div class="premium-cta">            
+                                <p>This feature is only available for premium users</p>
+                                <a class="button" href="#">Go Premium Today!</a>
+                            </div>
+                            {% else %}
+                            <p><a href="{% url 'searchprofiles:manage' %}">4 active search profiles</a></p>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
                     {% endwith %}
                 </div>
             </div>

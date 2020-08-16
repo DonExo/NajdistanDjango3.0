@@ -5258,6 +5258,34 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
     min-width: 180px;
 }
 
+@media (max-width: 768px) {
+    .profile-header {
+		margin-bottom: 40px;
+	}
+	
+	.profile-header::before {
+		top: 80px;
+	}
+	
+	.profile-header-photo {
+		margin: 0 auto;
+	}
+
+	.premium-cta {
+		flex-direction: column;
+	}
+
+	.premium-cta p {
+		padding: 0;
+	}
+
+	.premium-cta .button {
+		width: 100%;
+		margin-top: 20px;
+		text-align: center;
+	}
+}
+
 .change-photo-btn {
 	border-radius: 2px;
 	display: inline-block;

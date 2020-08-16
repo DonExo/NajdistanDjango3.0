@@ -20,60 +20,74 @@
 
             <div class="col-md-8 padding-bottom-70">
                 <div class="main-content">
-                    {% with request.user as user %} <br/>
+                    {% with request.user as user %}
                     <div class="row profile-header">
-                        <div class="col-md-8">
+                        <div class="col-sm-8 col-xs-12">
                             <h3 class="desc-headline no-border margin-top-45">Profile details</h3>
                             <p class="profile-header-login"><span>Last login:</span> {{ user.last_login }}</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-4 col-xs-12">
                             <div class="profile-header-photo">
                                 <img src="{{ user.get_profile_image }}" alt="user profile image">
                             </div>
                         </div>
                     </div>
-                    <div class="row profile-body">
-                        <div class="col-md-3">
-                            <label>Full name:</label>
-                        </div>
-                        <div class="col-md-9">
-                            <p>{{ user.get_full_name }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Email:</label>
-                        </div>
-                        <div class="col-md-9">
-                            <p>{{ user.email }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Phone:</label>
-                        </div>
-                        <div class="col-md-9">
-                            <p>{{ user.telephone }}</p>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Submitted properties:</label>
-                        </div>
-                        <div class="col-md-9">
-                            {% if user.has_listings %}
-                                <p><a href="{% url 'accounts:properties' %}">You have a total of 4 (2 active) properties</a></p>
-                            {% else %}
-                                <p>No properties submitted so far... Well? What are you waiting for?</p>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-3">
-                            <label>Search profiles:</label>
-                        </div>
-                        <div class="col-md-9">
-                            {% if user.is_premium_user %}
-                            <!-- <p>Only premium users can activate search profiles</p> -->
-                            <div class="premium-cta">            
-                                <p>This feature is only available for premium users</p>
-                                <a class="button" href="#">Go Premium Today!</a>
+                    <div class="profile-body">
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <label>Full name:</label>
                             </div>
-                            {% else %}
-                            <p><a href="{% url 'searchprofiles:manage' %}">4 active search profiles</a></p>
-                            {% endif %}
+                            <div class="col-sm-9 col-xs-12">
+                                <p>{{ user.get_full_name }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <label>Email:</label>
+                            </div>
+                            <div class="col-sm-9 col-xs-12">
+                                <p>{{ user.email }}</p>
+                            </div>
+                        </div>
+                         
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <label>Phone:</label>
+                            </div>
+                            <div class="col-sm-9 col-xs-12">
+                                <p>{{ user.telephone }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <label>Submitted properties:</label>
+                            </div>
+                            <div class="col-sm-9 col-xs-12">
+                                {% if user.has_listings %}
+                                    <p><a href="{% url 'accounts:properties' %}">You have a total of 4 (2 active) properties</a></p>
+                                {% else %}
+                                    <p>No properties submitted so far... Well? What are you waiting for?</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <label>Search profiles:</label>
+                            </div>
+                            <div class="col-sm-9 col-xs-12">
+                                {% if user.is_premium_user %}
+                                    <div class="premium-cta">            
+                                        <p>This feature is only available for premium users</p>
+                                        <a class="button" href="#">Go Premium Today!</a>
+                                    </div>
+                                {% else %}
+                                    <p><a href="{% url 'searchprofiles:manage' %}">4 active search profiles</a></p>
+                                {% endif %}
+                            </div>
                         </div>
                         
                     </div>
